@@ -1,8 +1,5 @@
 import { useState } from 'react';
 
-
-//import style from './gestion_almacen.module.css'; // CSS Module enabled
-
 interface Data {
     cantidad: number;
     materiales: string;
@@ -10,7 +7,7 @@ interface Data {
     
   }
   
-  const Almacen: React.FC = () => {
+  const Almacen = () => {
     const [data, setData] = useState<Data[]>([
       { cantidad: 1, materiales: 'caja grande', tipo: '30' },
       { cantidad: 2, materiales: 'carton para bonche', tipo: '100' },

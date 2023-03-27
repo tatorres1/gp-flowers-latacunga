@@ -10,33 +10,32 @@ const Login = () => {
   };
 
   return (
-    <div className='flex justify-end w-full h-screen items-center bg-gradient-to-r from-lime-900	 to-lime-400 '>
-      <div>
-        <img className='flex-col items-center' src={'../assets/images/logo.png'} alt="" />
+
+    <div className='flex justify-end w-full h-screen items-center bg-gradient-to-r from-cyan-500 to-lime-500'>
+      <div className='grid grid-cols-2  place-items-start '>
+        <img src={'../assets/images/logo.png'} alt="" />
       </div>
       <div className='flex flex-col items-center pr-60'>
-        <h2 className='font-bold'>Login</h2>
+        <h2 className='font-bold text-4xl'>Login</h2>
+        <br />
         <form onSubmit={handleSubmit}>
-          <label>
-            Usuario : </label>
-          <input className='rounded-md	border-2 border-rose-500'
+          <label className='text-2xl'> USUARIO : </label>
+          <input className='rounded-md	border-2 border-lime-900'
             type="text"
             name="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-          <br/>
-          <label>
-            Contrasena : </label>
-            <input className='rounded-md	border-2 border-rose-500'
-              type="password"
-              name="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          
           <br />
-          <button className='font-bold flex-col items-center border-solid border-2 border-sky-500' type="submit">Ingresar</button>
+          <label className='text-2xl'> CONTRASENA : </label>
+          <input className='rounded-md	border-2 border-lime-900'
+            type="password"
+            name="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <br /><br />
+          <button className='px-4 py-1 text-xl font-bold rounded-lg bg-lime-500 hover:bg-cyan-500 border hover:border-lime-500' type="submit"> Ingresar </button>
         </form>
       </div>
     </div>
