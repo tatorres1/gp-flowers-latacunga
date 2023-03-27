@@ -11,6 +11,7 @@ const Home = () => {
   return (
     <div>
       <h1>Home Page</h1>
+<<<<<<< HEAD
        
       <h1 className="text-3 xl font-bold underline text-red-600">
       Simple React Typescript Tailwind Sample
@@ -27,6 +28,8 @@ const Home = () => {
 
       
       
+=======
+>>>>>>> cabaa00e0982cce04a2c17e373b61b45191d62b7
     </div>
     
   );
