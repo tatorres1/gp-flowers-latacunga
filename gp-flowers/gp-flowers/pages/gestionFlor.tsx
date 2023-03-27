@@ -28,7 +28,7 @@ const Flor = () => {
     ]);
 
     return (
-        {/*
+        
         <div>
 
             <div>
@@ -84,7 +84,7 @@ const Flor = () => {
                     ))}
                 </tbody>
             </table>
-        </div>*/
+        </div>
                         
 
     );
