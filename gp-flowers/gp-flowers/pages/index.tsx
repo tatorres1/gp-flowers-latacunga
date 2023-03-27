@@ -15,18 +15,6 @@ const Home = () => {
       <h1 className="text-3 xl font-bold underline text-red-600">
       Simple React Typescript Tailwind Sample
     </h1>
-
-      {//<Login />
-      //<Reportes_admin/>
-      //<Proveedores/>
-      //<Almacen/>
-      //<Reportes_admin/>
-     // <Reportes/>
-       }
-      
-
-      
-      
     </div>
     
   );
