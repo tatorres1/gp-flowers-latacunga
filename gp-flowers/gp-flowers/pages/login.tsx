@@ -10,31 +10,33 @@ const Login = () => {
   };
 
   return (
-    <div className ='flex justify-end w-full h-screen items-center bg-emerald-900'>
-      <div className =' flex flex-col items-center pr-60'>
-        <h2 className = 'font-bold'>Login</h2>
-        <form onSubmit = {handleSubmit}>
+    <div className='flex justify-end w-full h-screen items-center bg-gradient-to-r from-lime-900	 to-lime-400 '>
+      <div>
+        <img className='flex-col items-center' src={'../assets/images/logo.png'} alt="" />
+      </div>
+      <div className='flex flex-col items-center pr-60'>
+        <h2 className='font-bold'>Login</h2>
+        <form onSubmit={handleSubmit}>
           <label>
-            Usuario:
-            <input
-              type="text"
-              name="username"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </label>
-          <br />
+            Usuario : </label>
+          <input className='rounded-md	border-2 border-rose-500'
+            type="text"
+            name="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <br/>
           <label>
-            Contrasena:
-            <input
+            Contrasena : </label>
+            <input className='rounded-md	border-2 border-rose-500'
               type="password"
               name="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-          </label>
+          
           <br />
-          <button type="submit">Ingresar</button>
+          <button className='font-bold flex-col items-center border-solid border-2 border-sky-500' type="submit">Ingresar</button>
         </form>
       </div>
     </div>
