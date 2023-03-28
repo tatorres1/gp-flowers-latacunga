@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import React from 'react';
 
@@ -21,73 +22,81 @@ interface Data {
     tVariedad: number;
 }
 
-const Flor = () => {
+const Table = () => {
     const [data, setData] = useState<Data[]>([
-        { cantidad: 1, proveedor: "Sonia Quinaluisa", variedad: 'BRIGHTON', tMallas: 6, tTallosMalla: 25, tallosSueltos: 0, tTallos: 150, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 1, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
-
+        { cantidad: 1, proveedor: "SONIA QUINALUISA", variedad: 'BRIGHTON', tMallas: 6, tTallosMalla: 25, tallosSueltos: 0, tTallos: 150, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 1, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
+        { cantidad: 2, proveedor: "SONIA QUINALUISA", variedad: 'SHIMER', tMallas: 6, tTallosMalla: 25, tallosSueltos: 0, tTallos: 150, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 1, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
+        { cantidad: 3, proveedor: "MARINA QUINALUISA", variedad: 'MONDIAL', tMallas: 6, tTallosMalla: 25, tallosSueltos: 0, tTallos: 150, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 5, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
+        { cantidad: 4, proveedor: "JOSE L. PADILLA", variedad: 'P. BLANCA', tMallas: 6, tTallosMalla: 25, tallosSueltos: 15, tTallos: 165, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 5, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
+        { cantidad: 5, proveedor: "MARINA QUINALUISA", variedad: 'MONDIAL', tMallas: 6, tTallosMalla: 25, tallosSueltos: 0, tTallos: 150, tCuarenta: 0, tCincuenta: 0, tSesenta: 1, tSetenta: 0, tOchenta: 0, tNoventa: 0, tBonches: 5, tNacional: 121, tallosSobrantes: 4, tVariedad: 150 },
     ]);
-
     return (
-        
-        <div>
-
-            <div>
-                <button>insertar nuevo</button>
+        <div className=" w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500">
+            <div className='relative h-50 w-full bg-[#50d71e] bg-opacity-25' >
+                <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
+                    <img src={'../assets/images/logo.png'} alt="" />
+                </div>
+                <br /> <br /> <br />
             </div>
+            <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">AGREGAR NUEVO</button>
 
-            <table className="hover:table-fixed">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>PROVEEDOR</th>
-                        <th>VARIEDAD</th>
-                        <th>T. MALLAS</th>
-                        <th>T. TALLOS x MALLA</th>
-                        <th>TALLOS SUELTOS</th>
-                        <th>T. TALLOS</th>
-                        <th>40</th>
-                        <th>50</th>
-                        <th>60</th>
-                        <th>70</th>
-                        <th>80</th>
-                        <th>90</th>
-                        <th>T. BONCHES</th>
-                        <th>T. NACIONAL</th>
-                        <th>TALLOS SOBRANTES</th>
-                        <th>T. VARIEDAD</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map(row => (
-                        <tr key={row.cantidad}>
-                            <td>{row.cantidad}</td>
-                            <td>{row.proveedor}</td>
-                            <td>{row.tMallas}</td>
-                            <td>{row.tTallosMalla}</td>
-                            <td>{row.tallosSueltos}</td>
-                            <td>{row.tTallos}</td>
-                            <td>{row.tCuarenta}</td>
-                            <td>{row.tCincuenta}</td>
-                            <td>{row.tSesenta}</td>
-                            <td>{row.tSetenta}</td>
-                            <td>{row.tOchenta}</td>
-                            <td>{row.tNoventa}</td>
-                            <td>{row.tBonches}</td>
-                            <td>{row.tNacional}</td>
-                            <td>{row.tallosSobrantes}</td>
-                            <td>{row.tVariedad}</td>
-                            <td><button>EDITAR</button></td>
-                            <td><button>ELIMINAR</button></td>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3 font-medium"># </th>
+                            <th scope="col" className="px-6 py-3 text-base">PROVEEDOR</th>
+                            <th scope="col" className="px-6 py-3 text-base"> VARIEDAD </th>
+                            <th scope="col" className="px-6 py-3 text-base">T. MALLAS</th>
+                            <th scope="col" className="px-6 py-3 text-base">T. TALLOSxMALLA</th>
+                            <th scope="col" className="px-6 py-3 text-base">TALLOS SUELTOS</th>
+                            <th scope="col" className="px-6 py-3 text-base">T. TALLOS</th>
+                            <th scope="col" className="px-6 py-3">40</th>
+                            <th scope="col" className="px-6 py-3">50</th>
+                            <th scope="col" className="px-6 py-3">60</th>
+                            <th scope="col" className="px-6 py-3">70</th>
+                            <th scope="col" className="px-6 py-3">80</th>
+                            <th scope="col" className="px-6 py-3">90</th>
+                            <th scope="col" className="px-6 py-3 text-base">T. BONCHES</th>
+                            <th scope="col" className="px-6 py-3 text-base">T. NACIONAL</th>
+                            <th scope="col" className="px-6 py-3 text-base">TALLOS SOBRANTES</th>
+                            <th scope="col" className="px-6 py-3 text-base">T. VARIEDAD</th>
+                            <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
+                            <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-                        
+                    </thead>
+                    <tbody>
+                        {data.map(row => (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={row.cantidad}>
+                                <td className="px-6 py-4">{row.cantidad}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{row.proveedor}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-lime-500">{row.variedad}</td>
+                                <td className="px-6 py-4">{row.tMallas}</td>
+                                <td className="px-6 py-4">{row.tTallosMalla}</td>
+                                <td className="px-6 py-4">{row.tallosSueltos}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{row.tTallos}</td>
+                                <td className="px-6 py-4">{row.tCuarenta}</td>
+                                <td className="px-6 py-4">{row.tCincuenta}</td>
+                                <td className="px-6 py-4">{row.tSesenta}</td>
+                                <td className="px-6 py-4">{row.tSetenta}</td>
+                                <td className="px-6 py-4">{row.tOchenta}</td>
+                                <td className="px-6 py-4">{row.tNoventa}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{row.tBonches}</td>
+                                <td className="px-6 py-4">{row.tNacional}</td>
+                                <td className="px-6 py-4">{row.tallosSobrantes}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{row.tVariedad}</td>
+                                <td className="px-6 py-4 text-right">
+                                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">EDITAR</a></td>
+                                <td className="px-6 py-4 text-right">
+                                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">ELIMINAR</a> </td>
 
+                            </tr>
+                        ))}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     );
 };
-
-export default Flor;
+export default Table;
