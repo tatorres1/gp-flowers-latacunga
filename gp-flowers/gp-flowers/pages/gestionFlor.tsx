@@ -32,14 +32,17 @@ const Table = () => {
     ]);
     return (
         <div className=" w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500">
-            <div className='relative h-50 w-full bg-[#50d71e] bg-opacity-25' >
+            <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                    INICIO
+                </span>
+            </button>
+            <div className='relative h-50 w-full ' >
                 <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
                     <img src={'../assets/images/logo.png'} alt="" />
                 </div>
-                <br /> <br /> <br />
             </div>
             <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">AGREGAR NUEVO</button>
-
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

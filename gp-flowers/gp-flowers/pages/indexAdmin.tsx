@@ -3,10 +3,17 @@ import React from 'react';
 
 function App() {
     return (
-        <div className='flex justify-center w-full h-screen items-center bg-gradient-to-r from-cyan-500 to-lime-500'>
-            {/*<div className='flex items-start'>
-                <img src={'../assets/images/logo.png'} alt="" />
-    </div>*/}
+        <div className='w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500'>
+            <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                    SALIR
+                </span>
+            </button>
+            <div className='relative h-50 w-full ' >
+                <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
+                    <img src={'../assets/images/logo.png'} alt="" />
+                </div>
+            </div><br />
             <div className="flex flex-col justify-center  items-center">
                 <button type="button" className="text-4xl font-bold bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2">GESTION FLOR</button>
                 <button type="button" className="text-4xl font-bold bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-800 rounded-lg px-5 py-2.5 text-center mr-2 mb-2">ALMACEN</button>
@@ -18,7 +25,8 @@ function App() {
                 <button type="button" className="text-4xl font-bold bg-gradient-to-br from-blue-600 to-green-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2">FACTURACION</button>
 
             </div>
-            
+
+
         </div>
     );
 }
