@@ -1,13 +1,21 @@
 [{
     "username" : "henry",
-    "password" : "clave1"
+    "password" : "clave1",
+    "rol" : "admin"
 },
 {
     "username" : "thalia",
-    "password" : "clave2"
+    "password" : "clave2",
+    "rol" : "admin"
 },
 {
     "username" : "tercero",
-    "password" : "clave3"
+    "password" : "clave3",
+    "rol" : "usuario"
+},
+{
+    "username" : "cuarto",
+    "password" : "clave4",
+    "rol" : "usuario"
 }
 ]

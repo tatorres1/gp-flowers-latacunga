@@ -23,30 +23,44 @@ const Login = () => {
     //alert(password);
     var longit = usuarios.length;
     var contador = 0;
-    //var username= 'tercero';
-    //var password = 'clave5';
-    var ingresa = false;
+
+    var ingresa_admin = false;
+    var ingresa_usuario = false;
+    var direccion_admin = "./indexAdmin"; 
+    var direccion_usuario="./indexUser";
+
   
       while(contador < longit)
       {
         if(usuarios[contador].username == username
-          && usuarios[contador].password == password)
+          && usuarios[contador].password == password
+          && usuarios[contador].rol == 'admin')
         {
-          ingresa = true;
+          ingresa_admin = true;
           break;
-        }else if(usuarios[contador].username != username
+        }else if(usuarios[contador].username == username
+          && usuarios[contador].password == password
+          && usuarios[contador].rol == 'usuario')
+          {
+            ingresa_usuario = true;
+            break;
+          }else if(usuarios[contador].username != username
           || usuarios[contador].password != password){
-          ingresa = false;
+          ingresa_admin = false;
+          ingresa_usuario = false;
         };
         //const item = usuarios[0].username;
         contador++;
         //alert(item);
       }
-      alert(ingresa);
+      //alert("esto es para controlar true o false");
     
-      if(ingresa == true) {
-        var direccion="./indexUser";
-        router.push(direccion);
+      if(ingresa_admin == true) {
+        router.push(direccion_admin);
+      }else if(ingresa_usuario == true){
+        router.push(direccion_usuario);
+      }else{
+        alert("DATOS INCORRECTOS, INTENTE DE NUEVO");
       }
     }
   
