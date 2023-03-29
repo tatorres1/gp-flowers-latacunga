@@ -1,4 +1,3 @@
-
 import Login from '../pages/login';
 import Almacen from '../pages/almacen/gestionAlmacen';
 import Proveedores from './proveedores/gestion_proveedores';
@@ -7,15 +6,25 @@ import Reportes_admin from './reportes/reportes_admin';
 
 
 
+
 const Home = () => {
       return (
 
             <div>
                   {
-                        <Almacen/>
+                        <Login/>
+
+                                             
                   }
+
+
+
+                  
             </div>
       );
 };
+
+
+
 
 export default Home;
