@@ -66,34 +66,31 @@ const Login = () => {
   
 
   return (
-    <div className='flex justify-end w-full h-screen items-center bg-gradient-to-r from-lime-900	 to-lime-400 '>
-      <div>
-        <img className='flex-col items-center' src={'../assets/images/logo.png'} alt="" />
+    <div className='flex w-full justify-end h-screen items-center bg-gradient-to-r from-cyan-500	 to-lime-400 '>
+      <div className='ml-2 mr-60'>
+        <img  src={'../assets/images/logo.png'} alt="" />
       </div>
-      <div className='flex flex-col items-center pr-60'>
-        <h2 className='font-bold'>Login</h2>
+      <div className='flex flex-col text-xl items-center mr-40 bg-green-300 p-8 rounded-lg '>
+        <h2 className='text-3xl font-serif font-bold'>GP FLOWERS</h2><br/>
         <form onSubmit={handleSubmit}>
-          <label>
-            Usuario : </label>
-          <input className='rounded-md	border-2 border-rose-500'
+          <label className='text-3xl'> Usuario: </label>
+          <input className='text-2xl rounded-md border-2 border-green-400'
             type="text"
             name="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
           <br/>
-          <label>
-            Contrasena : </label>
-            <input className='rounded-md	border-2 border-rose-500'
+          <label className='text-3xl'>Contrasena: </label>
+            <input className='text-2xl rounded-md	border-2 border-green-400'
               type="password"
               name="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-            />
+            /><br/>
           
           <br />
-          <button className='font-bold flex-col items-center 
-          border-solid border-2 border-sky-500' 
+          <button className='font-bold px-8 text-2xl flex-col items-center text-gray-900 bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded-lg py-2.5 text-center mr-2 mb-2 ' 
           type="submit" onClick={VerificarLogin} >Ingresar</button>
         </form>
       </div>

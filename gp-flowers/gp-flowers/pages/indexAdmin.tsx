@@ -36,10 +36,10 @@ function App() {
     }
 
     return (
-        <div className='w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500'>
-            <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+        <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
+            <button className="ml-8 mt-6 p-4 relative inline-flex  text-xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={SalirSesion}>
-                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                <span className="font-black">
                     SALIR
                 </span>
             </button>
@@ -48,25 +48,25 @@ function App() {
                     <img src={'../assets/images/logo.png'} alt="" />
                 </div>
             </div><br />
-            <div className="flex flex-col justify-center  items-center">
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+            <div className="flex flex-col-2 justify-center  items-center">
+                <button type="button" className="p-8 text-6xl font-bold bg-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg text-center mr-4 mb-6"
                     onClick={IrGestionFlores}>
                     GESTION FLOR</button>
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-800 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+                <button type="button" className="text-6xl font-bold bg-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-800 rounded-lg p-8 text-center mr-4 mb-6"
                     onClick={IrAlmacen}
                 >ALMACEN</button>
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-800 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+                <button type="button" className="text-6xl font-bold bg-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-800 rounded-lg p-8 text-center mr-4 mb-6"
                     onClick={IrPersonal}
                 >PERSONAL</button>
             </div>
-            <div className="flex flex-col justify-center  items-center">
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-blue-600 to-green-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+            <div className="flex flex-col-2 justify-center  items-center">
+                <button type="button" className="text-6xl font-bold bg-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg p-8 text-center mr-4"
                     onClick={IrProveedores}
                 >PROVEEDORES</button>
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+                <button type="button" className="text-6xl font-bold bg-red-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg p-8 text-center mr-4"
                     onClick={IrReportes}
                 >REPORTES</button>
-                <button type="button" className="text-4xl font-bold bg-gradient-to-br from-blue-600 to-green-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
+                <button type="button" className="text-6xl font-bold bg-amber-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none rounded-lg p-8 text-center mr-4"
                     onClick={IrFacturacion}
                 >FACTURACION</button>
 

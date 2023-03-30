@@ -1,77 +1,62 @@
 import { useState } from 'react';
 
 interface Data {
-    cantidad: number;
-    materiales: string;
-    tipo: string;
-    
-  }
-  
-  const Almacen = () => {
-    const [data, setData] = useState<Data[]>([
-      { cantidad: 20, materiales: 'caja grande', tipo: 'consumible' },
-      { cantidad: 150, materiales: 'carton para bonche', tipo: 'consumible' },
-      { cantidad: 2, materiales: 'compresor 10 litros', tipo: 'herramienta' }
-    ]);
-  
-    return (
-      <div >
+  cantidad: number;
+  materiales: string;
+  tipo: string;
 
-        <div className='relative h-50 w-full ... bg-[#50d71e] ... bg-opacity-25' >
-          <div className='lg:flex lg:justify-end lg:object-right ... sm:justify-center sm:flex'>
-            <img src={'../assets/images/logo.png'}  alt="" />
-          </div>
-        </div>
+}
 
-        <div className='shadow-lg shadow-black ... m-8 ...  sm:text-sm md:text-2xl ... text-center 
-        ... relative w-fit ... rounded-full 
-        ... bg-[#ffb703] bg-opacity-45 ... hover:bg-sky-700 hover:text-white ... py-1 ... px-1'>
-          <button className='p-4' >insertar nuevo</button>
-        </div>
+const Almacen = () => {
+  const [data, setData] = useState<Data[]>([
+    { cantidad: 20, materiales: 'CAJA TOP', tipo: 'CONSUMIBLE' },
+    { cantidad: 20, materiales: 'CAJA BOTTOM', tipo: 'CONSUMIBLE' },
+    { cantidad: 150, materiales: 'CARTON BONCHE', tipo: 'CONSUMIBLE' },
+    { cantidad: 2, materiales: 'COMPRESOR 10lt', tipo: 'HERRAMIENTA' }
+  ]);
 
-        <div className='w-full p-8'>
-          <table className=' table-auto border-x rounded-2xl border-8 rounded border-b w-full ... 
-          rounded-l-lg border-separate border-green-600'>
-            <thead className= 'bg-sky-700 text-white'>
-              <tr>
-                
-                <th>CANTIDAD</th>
-                <th>MATERIALES</th>
-                <th>TIPO</th>
-                <th></th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {data.map(row => (
-                <tr key={row.cantidad}>
-                    <td className='border border-green-600 text-center ... sm:text-sm md:text-2xl'>{row.cantidad}</td>
-                    <td className='border border-green-600 text-center ... sm:text-sm md:text-2xl '>{row.materiales}</td>
-                    <td className='border border-green-600 text-center ... sm:text-sm md:text-2xl '>{row.tipo}</td>
-                    <td className='shadow-lg shadow-black ... m-8 ...  sm:text-sm md:text-2xl
-                      ... text-center ... rounded-full ... bg-[#ffb703] bg-opacity-45 ... 
-                      hover:bg-sky-700 hover:text-white ... py-2 ... px-1 ...`
-                      flex flex-col space-y-2 ... border border-green-600'>
-                      <button>EDITAR</button>
-                    </td>
-                    <td className='shadow-lg shadow-black ... m-8 ...  sm:text-sm md:text-2xl
-                      ... text-center ... rounded-full ... bg-[#ffb703] bg-opacity-45 ... 
-                      hover:bg-red-700 hover:text-white ... py-2 ... px-1 ...`
-                      flex flex-col space-y-2 ... border border-green-600'>
-                      <button>ELIMINAR</button>
-                    </td>
-                    
-
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-        </div>
-        
+  return (
+    <div className='w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500' >
+      <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
+        <img src={'../assets/images/logo.png'} alt="" />
       </div>
-      
-    );
-  };
+      <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">AGREGAR NUEVO</button>
+
+      <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+        <table className='sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CANTIDAD</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">MATERIALES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TIPO</th>
+              <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
+              <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(row => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={row.cantidad}>
+                <td className='border border-lime-900 text-center text-gray-900 whitespace-nowrap dark:text-white'>{row.cantidad}</td>
+                <td className='border border-lime-900 text-center text-lg '>{row.materiales}</td>
+                <td className='border border-lime-900 text-center text-lg '>{row.tipo}</td>
+                <td className="border border-lime-900 px-6 py-4 text-center">
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">EDITAR</a></td>
+                <td className="border border-lime-900 px-6 py-4 text-center">
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">ELIMINAR</a> </td>
+
+
+
+
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  );
+};
 
 export default Almacen;
