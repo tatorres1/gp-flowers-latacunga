@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 
 function App() {
@@ -7,10 +7,10 @@ function App() {
     var direccion_salida = "./login";
     var direccion_gestionFLores = "./gestionFlor";
     var direccion_almacen = "./almacen/gestionAlmacen";
-    var direccion_personal = "./personal/gestion_personal";
-    var direccion_proveedores = "./proveedores/gestion_proveedores";
-    var direccion_reportes = "./reportes/reportes_admin";
-    var direccion_facturacion = "./facturacion/gestion_facturacion";
+    var direccion_personal = "./personal/gestionPersonal";
+    var direccion_proveedores = "./proveedores/gestionProveedores";
+    var direccion_reportes = "./reportes/reportesAdmin";
+    var direccion_facturacion = "./facturacion/gestionFacturacion";
 
     const router = useRouter();
     function SalirSesion() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     var direccion_salida = "./login";
     var direccion_gestionFLores = "./gestionFlor";
     var direccion_almacen = "./almacen/gestionAlmacen";
-    var direccion_proveedores = "./proveedores/gestion_proveedores";
+    var direccion_proveedores = "./proveedores/gestionProveedores";
 
     const router = useRouter();
     function SalirSesion() {
@@ -22,8 +22,6 @@ function App() {
     function IrProveedores() {
         router.push(direccion_proveedores);
     }
-
-
 
     return (
         <div className='w-full h-screen bg-gradient-to-r from-lime-300 to-cyan-300'>
