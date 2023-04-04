@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import usuarios from "../usuarios.json";
-import { Link } from "react-router-dom"; 
 import { useRouter } from 'next/router'
 
 

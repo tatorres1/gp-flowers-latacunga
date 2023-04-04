@@ -2,17 +2,18 @@ import { useState } from 'react';
 
 
 interface Data {
-  cedula: number;
+  id: number,
+  cedula: string;
   nombre: string;
-  telefono: number;
+  telefono: string;
   direccion: string;
 }
 
 const Proveedores: React.FC = () => {
   const [data, setData] = useState<Data[]>([
-    { cedula: 504002589, nombre: 'proveedor1', telefono: 999999999, direccion: 'direccion1' },
-    { cedula: 504111589, nombre: 'proveedor2', telefono: 988888888, direccion: 'direccion2' },
-    { cedula: 504000089, nombre: 'proveedor3', telefono: 977777777, direccion: 'direccion3' }
+    { id:1,cedula: '504002589', nombre: 'Sonia Quinaluisa', telefono: '0995856261', direccion: 'direccion1' },
+    { id:2,cedula: '504111589', nombre: 'proveedor2', telefono: '0495184989', direccion: 'direccion2' },
+    { id:3,cedula: '504000089', nombre: 'proveedor3', telefono: '0894749784',direccion: 'direccion3' }
   ]);
 
   return (

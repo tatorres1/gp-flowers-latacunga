@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "cedula": "123456789",
+        "nombre": "Juan Perez",
+        "telefono": "555-1234",
+        "direccion": "Calle Falsa 123"
+    },
+    {
+        "id": 2,
+        "cedula": "055896789",
+        "nombre": "Marina Quinaluisa",
+        "telefono": "355-1234",
+        "direccion": "Calle 123"
+    },
+    {
+        "id": 3,
+        "cedula": "987654321",
+        "nombre": "Maria Garcia",
+        "telefono": "555-5678",
+        "direccion": "Avenida Siempre Viva 742"
+    }
+]
