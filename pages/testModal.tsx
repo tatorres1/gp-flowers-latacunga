@@ -63,7 +63,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose }) => {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : <></>}
     </>
   );
 };
