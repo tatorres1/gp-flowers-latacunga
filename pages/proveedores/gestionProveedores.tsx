@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 interface Data {
@@ -10,11 +10,32 @@ interface Data {
 }
 
 const Proveedores: React.FC = () => {
-  const [data, setData] = useState<Data[]>([
+  /*const [data, setData] = useState<Data[]>([
     { id:1,cedula: '504002589', nombre: 'Sonia Quinaluisa', telefono: '0995856261', direccion: 'direccion1' },
     { id:2,cedula: '504111589', nombre: 'proveedor2', telefono: '0495184989', direccion: 'direccion2' },
     { id:3,cedula: '504000089', nombre: 'proveedor3', telefono: '0894749784',direccion: 'direccion3' }
-  ]);
+  ]);*/
+
+  ////////////////////////
+
+  const [products, setProducts] = useState([]);
+
+  async function getProducts(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products`,
+    postData);
+    const response = await res.json();
+    setProducts(response.products);
+  }
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className='w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500'>
@@ -36,23 +57,30 @@ const Proveedores: React.FC = () => {
               <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">DIRECCION</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
+
               <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
               <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
             </tr>
           </thead>
           <tbody>
-            {data.map(row => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={row.cedula}>
-                <td className='border border-lime-900 text-center text-lg'>{row.cedula}</td>
-                <td className='border border-lime-900 text-center text-lg '>{row.nombre}</td>
-                <td className='border border-lime-900 text-center text-lg '>{row.telefono}</td>
-                <td className='border border-lime-900 text-center text-lg '>{row.direccion}</td>
+            
+            {products.map((products, index) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={products.codigo_personal}>
+                <td className='border border-lime-900 text-center text-lg'>{products.codigo_personal}</td>
+                <td className='border border-lime-900 text-center text-lg '>{products.cedula_personal}</td>
+                <td className='border border-lime-900 text-center text-lg '>{products.nombre_personal}</td>
+                <td className='border border-lime-900 text-center text-lg '>{products.direccion_personal}</td>
+                <td className='border border-lime-900 text-center text-lg '>{products.telefono_personal}</td>
+
                 <td className="border border-lime-900 px-6 py-4 text-center">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">EDITAR</a></td>
                 <td className="border border-lime-900 px-6 py-4 text-center">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">ELIMINAR</a> </td>
               </tr>
             ))}
+            
+            
           </tbody>
         </table>
 
