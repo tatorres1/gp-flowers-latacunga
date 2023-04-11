@@ -5,9 +5,18 @@ const Proveedores: React.FC = () => {
 
   const proveedorNombreRef = useRef();
 
+  //constantes para actualizar
+  const proveedorIdToUpdateRef = useRef();
+  const proveedorCedulaToUpdateRef = useRef();
+  const proveedorNombreToUpdateRef = useRef();
+  const proveedorTelefonoToUpdateRef = useRef();
+  const proveedorObservacionesToUpdateRef = useRef();
+
   const [proveedores, setProveedores] = useState([]);
 
+  //control de mensaje de exito
   const [created, setCreated] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +24,7 @@ const Proveedores: React.FC = () => {
   const [showModalEliminar, setShowModalEliminar] = useState(false);
 
   //control de valores de ingreso
+  const [valorId, setValorId] = useState();
   const [valorCedula, setValorCedula] = useState();
   const [valorNombre, setvalorNombre] = useState();
   const [valorTelefono, setvalorTelefono] = useState();
@@ -62,9 +72,47 @@ const Proveedores: React.FC = () => {
     setCreated(true);
   }
 
+  async function updateProveedor(){
+    //const productName = productNameRef.current.value.trim();
+    const idProveedorToUpdate = proveedorIdToUpdateRef.current;
+    const nombreProveedorToUpdate = proveedorNombreToUpdateRef.current;
+    const cedulaProveedorToUpdate = proveedorCedulaToUpdateRef.current;
+    const telefonoProveedorToUpdate = proveedorTelefonoToUpdateRef.current;
+    const observacionesProveedorToUpdate = proveedorObservacionesToUpdateRef.current;
+
+    //if(!idProveedorToUpdate.length) return;
+    const postData = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cedula_proveedor: valorCedula,
+        nombre_proveedor: valorNombre,
+        telefono_proveedor: valorTelefono,
+        observaciones_proveedor: valorObservaciones
+        //product_name: "productName",
+
+      }),
+    };
+    //if(productName.length <3) return;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+      postData
+    );
+    const response = await res.json();
+    if(response.response.message != "success") return;
+    setUpdated(true);
+  }
+
+
   useEffect(() => {
     getProveedores();
   }, []);
+
+  const asignarId = event => {
+    setValorId(event.target.value);
+  }
 
   const asignarCedula = event => {
     setValorCedula(event.target.value);
@@ -96,7 +144,9 @@ const Proveedores: React.FC = () => {
       <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
               onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
-      {created ? <div>Success!</div>:
+      {created ? <div>Ingresado!</div>:
+      null}
+      {updated ? <div>Actualizado!</div>:
       null}
 
 
@@ -170,10 +220,43 @@ const Proveedores: React.FC = () => {
               </div>
     </Modal>
     <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
-              editar
+              <div>
+                <form className="w-full max-w-lg">
+
+                  <div className="w-full md:w-full px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        ID
+                      </label>
+                      <input value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        CEDULA
+                      </label>
+                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        NOMBRE
+                      </label>
+                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        TELEFONO
+                      </label>
+                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        OBSERVACIONES
+                      </label>
+                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+
+                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >Actualizar</button>
+
+                  </div>
+                </form>
+              </div>
     </Modal>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
-              eliminar
+              ¿Desea eliminar el elemento seleccionado?
+
+              <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >Guardar</button>
     </Modal>
 
     
