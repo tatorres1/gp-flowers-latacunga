@@ -1,6 +1,8 @@
 import { query } from "@/lib/database";
 
 export default async function handler(req, res){
+
+
     let message;
 
     if(req.method === "GET"){
@@ -36,7 +38,6 @@ export default async function handler(req, res){
         let proveedor = {
             id_proveedor: addProveedor.insertId,
             nombre_proveedor: nombreProveedor, 
-            telefono_proveedor: telefonoProveedor,
         };
         res.status(200).json({response: {message: message, proveedor: proveedor}});
     }
@@ -49,20 +50,15 @@ export default async function handler(req, res){
         const observacionesProveedor = req.body.observaciones_proveedor;
 
         const updateProveedor = await query({
-            query: "UPDATE proveedor SET (cedula_proveedor, nombre_proveedor, telefono_proveedor, observaciones_proveedor) = (?,?,?,?) WHERE id_proveedor = ? ",              
-            values: ([
-                    idProveedor,
-                    cedulaProveedor,
-                    nombreProveedor,
-                    telefonoProveedor,
-                    observacionesProveedor]),
-            //query: "UPDATE proveedor SET cedula_proveedor = 'Canyon 123' WHERE id_proveedor = '25'",
-            /*query: "INSERT INTO proveedor (cedula_proveedor, nombre_proveedor, telefono_proveedor, observaciones_proveedor) VALUES (?,?,?,?)",              
-            values: ([cedulaProveedor,
-                    nombreProveedor,
-                    telefonoProveedor,
-                    observacionesProveedor]),*/
+
+            query: "UPDATE proveedor SET cedula_proveedor=?, nombre_proveedor=?, telefono_proveedor=?, observaciones_proveedor=?, WHERE id_proveedor=?",
+            values: ([cedulaProveedor,nombreProveedor,telefonoProveedor, observacionesProveedor,idProveedor]),
+            
+        
         });
+
+        //indicar varias constantes para la actualizacion de variables mediante query,
+        //primero revisar el tutorial para ver si realmente funciona
         
         const result = updateProveedor.affectedRows;
         if(result){
@@ -79,5 +75,20 @@ export default async function handler(req, res){
         };
         res.status(200).json({response: {message: message, proveedor: proveedor}});
     }
+    
 
+    if (req.method === "DELETE") {
+        const idProveedor = req.body.id_proveedor;
+        const deleteProveedor = await query({
+          query: "DELETE FROM proveedor WHERE id_proveedor = '25'",
+          //values: [idProveedor],
+        });
+        const result = deleteProveedor.affectedRows;
+        if (result) {
+          message = "success";
+        } else {
+          message = "error";
+        }
+        res.status(200).json({ response: { message: message, id_proveedor: idProveedor } });
+      }
 }
