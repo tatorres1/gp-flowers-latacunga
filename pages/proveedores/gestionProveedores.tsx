@@ -15,7 +15,13 @@ const Proveedores: React.FC = () => {
   const [showModalEditar, setShowModalEditar] = useState(false);
   const [showModalEliminar, setShowModalEliminar] = useState(false);
 
+  //control de valores de ingreso
+  const [valorCedula, setValorCedula] = useState();
+  const [valorNombre, setvalorNombre] = useState();
+  const [valorTelefono, setvalorTelefono] = useState();
+  const [valorObservaciones, setvalorObservaciones] = useState();
 
+  
 
   async function getProveedores(){
     const postData = {
@@ -30,12 +36,6 @@ const Proveedores: React.FC = () => {
     setProveedores(response.proveedores);
   }
 
-
-  let variable1 = "able1";
-  let variable2 = "able2";
-  let variable3 = "able3";
-  let variable4 = "able4";
-
   async function addProveedor(){
     //const productName = productNameRef.current.value.trim();
     const nombreProveedor = proveedorNombreRef.current;
@@ -45,10 +45,10 @@ const Proveedores: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        cedula_proveedor: variable1,
-        nombre_proveedor: variable2,
-        telefono_proveedor: variable3,
-        observaciones_proveedor: variable4
+        cedula_proveedor: valorCedula,
+        nombre_proveedor: valorNombre,
+        telefono_proveedor: valorTelefono,
+        observaciones_proveedor: valorObservaciones
         //product_name: "productName",
 
       }),
@@ -66,6 +66,22 @@ const Proveedores: React.FC = () => {
   useEffect(() => {
     getProveedores();
   }, []);
+
+  const asignarCedula = event => {
+    setValorCedula(event.target.value);
+  }
+
+  const asignarNombre = event => {
+    setvalorNombre(event.target.value);
+  }
+
+  const asignarTelefono = event => {
+    setvalorTelefono(event.target.value);
+  }
+
+  const asignarObservaciones = event => {
+    setvalorObservaciones(event.target.value);
+  }
 
   return (
     <Fragment>
@@ -131,21 +147,22 @@ const Proveedores: React.FC = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         CEDULA
                       </label>
-                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         NOMBRE
                       </label>
-                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         TELEFONO
                       </label>
-                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         OBSERVACIONES
                       </label>
-                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
-                      <button onClick={addProveedor}>Guardar</button>
+                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >Guardar</button>
 
                   </div>
 
