@@ -6,22 +6,28 @@ const Proveedores: React.FC = () => {
 
   const productNameRef = useRef();
 
-  const [products, setProducts] = useState([]);
+  const [proveedores, setProveedores] = useState([]);
 
   const [created, setCreated] = useState(false);
 
+  //control de modal, declaracion de const
+  const [showModal, setShowModal] = useState(false);
+  const [showModalEditar, setShowModalEditar] = useState(false);
+  const [showModalEliminar, setShowModalEliminar] = useState(false);
 
-  async function getProducts(){
+
+
+  async function getProveedores(){
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
     postData);
     const response = await res.json();
-    setProducts(response.products);
+    setProveedores(response.proveedores);
   }
 let variable = "probando variable";
   async function addProduct(){
@@ -40,7 +46,7 @@ let variable = "probando variable";
     };
     //if(productName.length <3) return;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/products`,
+      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData
     );
     const response = await res.json();
@@ -49,7 +55,7 @@ let variable = "probando variable";
   }
 
   useEffect(() => {
-    getProducts();
+    getProveedores();
   }, []);
 
   return (
@@ -64,7 +70,7 @@ let variable = "probando variable";
         <img src={'../assets/images/logo.png'} alt="" />
       </div>
       <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              onClick={addProduct}>AGREGAR NUEVO</button>
+              onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
       {created ? <div>Success!</div>:
       null}
@@ -74,27 +80,29 @@ let variable = "probando variable";
         <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">DIRECCION</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
               <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
               <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
             </tr>
           </thead>
           <tbody>
             
-            {products.map((products, index) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={products.product_id}>
-                <td className='border border-lime-900 text-center text-lg'>{products.product_id}</td>
-                <td className='border border-lime-900 text-center text-lg '>{products.product_name}</td>
-                <td className='border border-lime-900 text-center text-lg '>{products.product_name}</td>
-                <td className='border border-lime-900 text-center text-lg '>{products.product_name}</td>
+            {proveedores.map((proveedores, index) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
+                <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
+                <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
+                <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
+                <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
 
                 <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">EDITAR</a></td>
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>setShowModalEditar(true)}>EDITAR</a></td>
                 <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">ELIMINAR</a> </td>
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>setShowModalEliminar(true)}>ELIMINAR</a> </td>
               </tr>
             ))}
             
@@ -106,7 +114,17 @@ let variable = "probando variable";
 
     </div >
 
-    <Modal/>
+    <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+              insertar
+    </Modal>
+    <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+              editar
+    </Modal>
+    <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
+              eliminar
+    </Modal>
+
+    
     </Fragment>
   );
 };

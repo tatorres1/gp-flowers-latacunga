@@ -7,13 +7,13 @@ export default async function handler(req, res){
 
     if(req.method === "GET"){
 
-        const products = await query(
+        const proveedores = await query(
             {
-                query: "SELECT *FROM products",
+                query: "SELECT * FROM proveedor",
                 values: [],
             }
         );
-        res.status(200).json({products: products});
+        res.status(200).json({proveedores: proveedores});
     }
 
     if(req.method === "POST"){
