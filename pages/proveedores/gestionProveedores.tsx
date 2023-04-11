@@ -3,7 +3,6 @@ import Modal from "../../components/Modal";
 
 const Proveedores: React.FC = () => {
 
-
   const proveedorNombreRef = useRef();
 
   //constantes para actualizar
@@ -166,7 +165,7 @@ const Proveedores: React.FC = () => {
           </thead>
           <tbody>
             
-            {proveedores.map((proveedores, index) => (
+            {proveedores.map((proveedores) => (
               <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
                 <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
                 <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>

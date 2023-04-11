@@ -1,8 +1,6 @@
 import { query } from "@/lib/database";
 
 export default async function handler(req, res){
-
-
     let message;
 
     if(req.method === "GET"){
@@ -38,6 +36,7 @@ export default async function handler(req, res){
         let proveedor = {
             id_proveedor: addProveedor.insertId,
             nombre_proveedor: nombreProveedor, 
+            telefono_proveedor: telefonoProveedor,
         };
         res.status(200).json({response: {message: message, proveedor: proveedor}});
     }
