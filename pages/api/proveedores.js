@@ -50,19 +50,10 @@ export default async function handler(req, res){
         const observacionesProveedor = req.body.observaciones_proveedor;
 
         const updateProveedor = await query({
-            query: "UPDATE proveedor SET (cedula_proveedor, nombre_proveedor, telefono_proveedor, observaciones_proveedor) = (?,?,?,?) WHERE id_proveedor = ? ",              
-            values: ([
-                    idProveedor,
-                    cedulaProveedor,
-                    nombreProveedor,
-                    telefonoProveedor,
-                    observacionesProveedor]),
-            //query: "UPDATE proveedor SET cedula_proveedor = 'Canyon 123' WHERE id_proveedor = '25'",
-            /*query: "INSERT INTO proveedor (cedula_proveedor, nombre_proveedor, telefono_proveedor, observaciones_proveedor) VALUES (?,?,?,?)",              
-            values: ([cedulaProveedor,
-                    nombreProveedor,
-                    telefonoProveedor,
-                    observacionesProveedor]),*/
+
+            query: "UPDATE proveedor SET cedula_proveedor=?, nombre_proveedor=?, telefono_proveedor=?, observaciones_proveedor=? WHERE id_proveedor=@idProveedor",
+            values: ([cedulaProveedor,nombreProveedor,telefonoProveedor, observacionesProveedor,]),
+                         
         });
         
         const result = updateProveedor.affectedRows;
