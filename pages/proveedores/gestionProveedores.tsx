@@ -4,7 +4,7 @@ import Modal from "../../components/Modal";
 const Proveedores: React.FC = () => {
 
 
-  const productNameRef = useRef();
+  const proveedorNombreRef = useRef();
 
   const [proveedores, setProveedores] = useState([]);
 
@@ -29,17 +29,26 @@ const Proveedores: React.FC = () => {
     const response = await res.json();
     setProveedores(response.proveedores);
   }
-let variable = "probando variable";
-  async function addProduct(){
+
+
+  let variable1 = "able1";
+  let variable2 = "able2";
+  let variable3 = "able3";
+  let variable4 = "able4";
+
+  async function addProveedor(){
     //const productName = productNameRef.current.value.trim();
-    const productName = productNameRef.current;
+    const nombreProveedor = proveedorNombreRef.current;
     const postData = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        product_name: variable,
+        cedula_proveedor: variable1,
+        nombre_proveedor: variable2,
+        telefono_proveedor: variable3,
+        observaciones_proveedor: variable4
         //product_name: "productName",
 
       }),
@@ -115,7 +124,34 @@ let variable = "probando variable";
     </div >
 
     <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-              insertar
+              <div>
+                <form className="w-full max-w-lg">
+
+                  <div className="w-full md:w-full px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        CEDULA
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        NOMBRE
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        TELEFONO
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                        OBSERVACIONES
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+
+                      <button onClick={addProveedor}>Guardar</button>
+
+                  </div>
+
+                  
+                </form>
+              </div>
     </Modal>
     <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
               editar

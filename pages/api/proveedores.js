@@ -2,7 +2,7 @@ import { query } from "@/lib/database";
 
 export default async function handler(req, res){
 
-    let products;
+
     let message;
 
     if(req.method === "GET"){
@@ -17,21 +17,29 @@ export default async function handler(req, res){
     }
 
     if(req.method === "POST"){
-        const productName = req.body.product_name;
-        const addProducts = await query({
-            query: "INSERT INTO products (product_name) VALUES (?)",
-            values: [productName],
+        const cedulaProveedor = req.body.cedula_proveedor;
+        const nombreProveedor = req.body.nombre_proveedor;
+        const telefonoProveedor = req.body.telefono_proveedor;
+        const observacionesProveedor = req.body.observaciones_proveedor;
+
+        const addProveedor = await query({
+            query: "INSERT INTO proveedor (cedula_proveedor, nombre_proveedor, telefono_proveedor, observaciones_proveedor) VALUES (?,?,?,?)",              
+            values: ([cedulaProveedor,
+                    nombreProveedor,
+                    telefonoProveedor,
+                    observacionesProveedor]),
         });
-        if(addProducts.insertId){
+
+        if(addProveedor.insertId){
             message = "success";
         } else {
             message = "error";
         }
-        let product = {
-            product_id: addProducts.insertId,
-            product_name: productName, 
+        let proveedor = {
+            id_proveedor: addProveedor.insertId,
+            nombre_proveedor: nombreProveedor, 
         };
-        res.status(200).json({response: {message: message, product: product}});
+        res.status(200).json({response: {message: message, proveedor: proveedor}});
     }
 
 }
