@@ -15,12 +15,13 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         const cedulaPersonal = req.body.cedula_personal;
         const nombrePersonal = req.body.nombre_personal;
+        const cargoPersonal = req.body.cargo_personal;
         const direccionPersonal = req.body.direccion_personal;
         const telefonoPersonal = req.body.telefono_personal;
 
         const addPersonal = await query({
-            query: "INSERT INTO personal (cedula_personal,nombre_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?)",
-            values: ([cedulaPersonal, nombrePersonal, direccionPersonal, telefonoPersonal]),
+            query: "INSERT INTO personal (cedula_personal,nombre_personal,cargo_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?,?)",
+            values: ([cedulaPersonal, nombrePersonal,cargoPersonal, direccionPersonal, telefonoPersonal]),
         });
 
         if (addPersonal.insertId) {
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
             id_personal: addPersonal.insertId,
             cedula_personal: cedulaPersonal,
             nombre_personal: nombrePersonal,
+            cargo_personal:cargoPersonal,
             direccion_personal: direccionPersonal,
             telefono_personal:telefonoPersonal,
         };
@@ -42,11 +44,13 @@ export default async function handler(req, res) {
         const idPersonal = req.body.id_personal;
         const cedulaPersonal = rew.body.cedula_personal;
         const nombrePersonal = req.body.nombre_personal;
+        const cargoPersonal = req.body.cargo_personal;
         const direccionPersonal = req.body.direccion_personal;
         const telefonoPersonal = req.body.telefono_personal;
         const updatePersonal = await query({
             query: "UPDATE personal SET cedula_personal = ? WHERE id_personal = ?",
             query: "UPDATE personal SET nombre_personal = ? WHERE id_personal = ?",
+            query: "UPDATE personal SET cargo_personal = ? WHERE id_personal = ?",
             query: "UPDATE personal SET direccion_personal = ? WHERE id_personal = ?",
             query: "UPDATE personal SET telfono_personal = ? WHERE id_personal = ?",
             values: [idPersonal,cedulaPersonal,nombrePersonal, direccionPersonal,telefonoPersonal],
@@ -61,6 +65,7 @@ export default async function handler(req, res) {
             id_personal: idPersonal,
             cedula_personal: cedulaPersonal,
             nombre_personal:nombrePersonal,
+            cargo_personal:cargoPersonal,
             direccion_personal:direccionPersonal,
             telefono_personal:telefonoPersonal,
         };
@@ -69,10 +74,6 @@ export default async function handler(req, res) {
 
     if (req.method === "DELETE") {
         const idPersonal = req.body.id_personal;
-        const cedulaPersonal = rew.body.cedula_personal;
-        const nombrePersonal = req.body.nombre_personal;
-        const direccionPersonal = req.body.direccion_personal;
-        const telefonoPersonal = req.body.telefono_personal;
         const deletePersonal = await query({
             query: "DELETE FROM personal WHERE id_personal = ?",
             values: [idPersonal],
@@ -81,7 +82,7 @@ export default async function handler(req, res) {
         if (result) {
             message = "success";
         } else {
-            message = "error";
+            message = "error al eliminar";
         }
         res
             .status(200)
