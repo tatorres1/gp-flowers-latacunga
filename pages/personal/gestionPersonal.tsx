@@ -1,18 +1,26 @@
 import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
+import ModalEditar from "../../components/ModalEditar";
 import ModalEliminar from "../../components/ModalEliminar";
 const Personal: React.FC = () => {
 
     const personalNombreRef = useRef();
-
-    const [idPersonal, setIdPersonal] = useState<number|null>(null);
+    const idPersonalToUpdateRef = useRef();
+    const cedulaPersonalToUpdateRef = useRef();
+    const nombrePersonalToUpdateRef = useRef();
+    const cargoPersonalToUpdateRef = useRef();
+    const direccionPersonalToUpdateRef = useRef();
+    const telefonoPersonalToUpdateRef = useRef();
+    const [idPersonal, setIdPersonal] = useState<number | null>(null);
     const [personal, setPersonal] = useState([]);
     const [created, setCreated] = useState(false);
+    const [updated, setUpdated] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [deletedError, setDeletedError] = useState(false);
+    const [editError, setEditError] = useState(false);
     //control de modal, declaracion de const
     const [showModal, setShowModal] = useState(false);
-    const [showModalEditar, setShowModalEditar] = useState(false);
+    const [showModalEditar, setShowModalEdit] = useState(false);
     const [showModalEliminar, setShowModalEliminar] = useState(false);
 
     //control de valores de ingreso
@@ -56,10 +64,50 @@ const Personal: React.FC = () => {
             postData
         );
         const response = await res.json();
-        if (response.response.message != "success") return;
+        if (response.response.message != "Agregado") return;
         setCreated(true);
+        setShowModal(false);
     }
 
+    async function editPersonal() {
+        const idPersonalToUpdate = idPersonalToUpdateRef.current;
+        const cedulaPersonalToUpdate = cedulaPersonalToUpdateRef.current;
+        const nombrePersonalToUpdate = nombrePersonalToUpdateRef.current;
+        const cargoPersonalToUpdate = cargoPersonalToUpdateRef.current;
+        const direccionPersonalToUpdate = direccionPersonalToUpdateRef.current;
+        const telefonoPersonalToUpdate = telefonoPersonalToUpdateRef.current;
+        if (!idPersonal) return;
+        const postData = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id_personal: idPersonal,
+                cedula_personal: valorCedula,
+                nombre_personal: valorNombre,
+                cargo_personal: valorCargo,
+                direccion_personal: valorDireccion,
+                telefono_personal: valorTelefono,
+            }),
+        };
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/personal`,
+            postData
+        );
+        const response = await res.json();
+        console.log("Provemos");
+        if (response.response.message === "error") return setEditError(true);
+        setPersonal(personal.filter((a) => a.id_personal !== idPersonal));
+        setUpdated(true);
+        setIdPersonal(null);
+        setShowModalEdit(false);
+
+    }
+    const handleEdit = (id: number) => {
+        setIdPersonal(id);
+        setShowModalEdit(true);
+    }
     async function deletePersonal() {
         if (!idPersonal) return;
         const postData = {
@@ -76,13 +124,13 @@ const Personal: React.FC = () => {
             postData
         );
         const response = await res.json();
-        if (response.response.message === "error") return setDeletedError(true);
+        if (response.response.message === "error al eliminar") return setDeletedError(true);
         setPersonal(personal.filter((a) => a.id_personal !== idPersonal));
         setDeleted(true);
         setIdPersonal(null);
         setShowModalEliminar(false);
     }
-    const handleDelete=(id:number)=>{
+    const handleDelete = (id: number) => {
         setIdPersonal(id);
         setShowModalEliminar(true);
     }
@@ -151,7 +199,7 @@ const Personal: React.FC = () => {
                                     <td className='border border-lime-900 text-center text-lg '>{personal.telefono_personal}</td>
 
                                     <td className="border border-lime-900 px-6 py-4 text-center">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => { getPersonal(); setShowModalEditar(true) }}>EDITAR</a></td>
+                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleEdit(personal.id_personal)}>EDITAR</a></td>
                                     <td className="border border-lime-900 px-6 py-4 text-center">
                                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleDelete(personal.id_personal)}>ELIMINAR</a> </td>
                                 </tr>
@@ -186,16 +234,39 @@ const Personal: React.FC = () => {
                     </form>
                 </div>
             </Modal>
-            <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
-                editar
-            </Modal>
+            <ModalEditar isVisible={showModalEditar} onClose={() => setShowModalEdit(false)}>
+                <div >
+                    <form className="w-full max-w-lg">
+                        <div className="w-full md:w-full px-3">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">CEDULA</label>
+                            <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">NOMBRE</label>
+                            <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">CARGO</label>
+                            <input value={valorCargo} onChange={asignarCargo} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">DIRECCION</label>
+                            <input value={valorDireccion} onChange={asignarDireccion} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TELEFONO </label>
+                            <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+                            <button onClick={() => { addPersonal(); getPersonal(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </ModalEditar>
             <ModalEliminar isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
-            <label className="font-bold text-2xl m-16">Estas seguro de eliminar a este empleado </label>
-            <br></br>
+                <label className="font-bold text-2xl m-16">Estas seguro de eliminar a este empleado </label>
+                <br></br>
                 <button type="button" className="place-self-end ml-96 text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-m px-5 py-2.5 " onClick={deletePersonal}>
                     Si, eliminar
                 </button>
-               
+
             </ModalEliminar>
 
 

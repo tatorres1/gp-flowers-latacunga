@@ -23,7 +23,7 @@ export default async function handler(req, res) {
             query: "INSERT INTO personal (cedula_personal,nombre_personal,cargo_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?,?)",
             values: ([cedulaPersonal, nombrePersonal,cargoPersonal, direccionPersonal, telefonoPersonal]),
         });
-
+        let message = "";
         if (addPersonal.insertId) {
             message = "success";
         } else {
@@ -56,6 +56,7 @@ export default async function handler(req, res) {
             values: [idPersonal,cedulaPersonal,nombrePersonal, direccionPersonal,telefonoPersonal],
         });
         const result = updatePersonal.affectedRows;
+        let message = "";
         if (result) {
             message = "success";
         } else {
