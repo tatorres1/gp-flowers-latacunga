@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
+import Modal2 from "../../components/Modal2";
+
 
 const Proveedores: React.FC = () => {
 
@@ -31,6 +33,13 @@ const Proveedores: React.FC = () => {
   const [valorNombre, setvalorNombre] = useState();
   const [valorTelefono, setvalorTelefono] = useState();
   const [valorObservaciones, setvalorObservaciones] = useState();
+
+  //valores defecto para cuadro de update
+  const [valorDefectoId, setValorDefectoId] = useState("");
+  const [valorDefectoCedula, setvalorDefectoCedula] = useState("");
+  const [valorDefectoNombre, setvalorDefectoNombre] = useState("");
+  const [valorDefectoTelefono, setvalorDefectoTelefono] = useState("");
+  const [valorDefectoObservaciones, setvalorDefectoObservaciones] = useState("");
 
   
 
@@ -110,15 +119,16 @@ const Proveedores: React.FC = () => {
     setUpdated(true);
   }
 
-  async function deleteProveedor(valorId) {
-    if (!valorId) return;
+  async function deleteProveedor() {
+    //if (!valorId) return;
+    console.log(proveedores.values);
     const postData = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_proveedor: valorId,
+        id_proveedor: proveedores.idproveedor,
       }),
     };
     const res = await fetch(
@@ -126,6 +136,8 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
+    //console.log(response.response.proveedor);
+    console.log("test borrar");
     if(response.response.message != "success") return;
     setDeleted(true);
   }
@@ -154,6 +166,17 @@ const Proveedores: React.FC = () => {
   const asignarObservaciones = event => {
     setvalorObservaciones(event.target.value);
   }
+
+  //funcion para update, mostrar data por defecto
+  async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
+    setValorDefectoId(id);
+    setvalorDefectoCedula(cedula);
+    setvalorDefectoNombre(nombre);
+    setvalorDefectoTelefono(telefono);
+    setvalorDefectoObservaciones(observaciones);
+  }
+
+
 
   return (
     <Fragment>
@@ -201,7 +224,7 @@ const Proveedores: React.FC = () => {
                 <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
 
                 <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>setShowModalEditar(true)}>EDITAR</a></td>
+                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(proveedores.id_proveedor, proveedores.cedula_proveedor, proveedores.nombre_proveedor, proveedores.telefono_proveedor, proveedores.observaciones_proveedor);}}>EDITAR</a></td>
                 <td className="border border-lime-900 px-6 py-4 text-center">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>setShowModalEliminar(true)}>ELIMINAR</a> </td>
               </tr>
@@ -223,19 +246,19 @@ const Proveedores: React.FC = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         CEDULA
                       </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={""} value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         NOMBRE
                       </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={""} value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         TELEFONO
                       </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={""} value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         OBSERVACIONES
                       </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={""} value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
                       <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Guardar</button>
@@ -246,7 +269,7 @@ const Proveedores: React.FC = () => {
                 </form>
               </div>
     </Modal>
-    <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+    <Modal2 isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
               <div>
                 <form className="w-full max-w-lg">
 
@@ -254,35 +277,36 @@ const Proveedores: React.FC = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         ID
                       </label>
-                      <input value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={valorDefectoId} value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         CEDULA
                       </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={valorDefectoCedula} value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         NOMBRE
                       </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={valorDefectoNombre} value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         TELEFONO
                       </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={valorDefectoTelefono} value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         OBSERVACIONES
                       </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input defaultValue={valorDefectoObservaciones} value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
                       <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Actualizar</button>
+                      >Actualizar
+                      </button>
 
                   </div>
                 </form>
               </div>
-    </Modal>
+    </Modal2>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
               ¿Desea eliminar el elemento seleccionado?
 
-              <button onClick={() => {deleteProveedor(valorId); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              <button onClick={() => {deleteProveedor(); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Confirmar</button>
     </Modal>
 

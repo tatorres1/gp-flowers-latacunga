@@ -80,8 +80,8 @@ export default async function handler(req, res){
     if (req.method === "DELETE") {
         const idProveedor = req.body.id_proveedor;
         const deleteProveedor = await query({
-          query: "DELETE FROM proveedor WHERE id_proveedor = '25'",
-          //values: [idProveedor],
+          query: "DELETE FROM proveedor WHERE id_proveedor = ?",
+          values: [idProveedor],
         });
         const result = deleteProveedor.affectedRows;
         if (result) {
@@ -89,6 +89,6 @@ export default async function handler(req, res){
         } else {
           message = "error";
         }
-        res.status(200).json({ response: { message: message, id_proveedor: idProveedor } });
+        res.status(200).json({ response: { message: message, proveedor: proveedor } });
       }
 }
