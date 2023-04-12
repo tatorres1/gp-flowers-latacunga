@@ -43,6 +43,7 @@ export default async function handler(req, res){
     }
 
     if(req.method === "PUT"){
+
         const idProveedor = req.body.id_proveedor;
         const cedulaProveedor = req.body.cedula_proveedor;
         const nombreProveedor = req.body.nombre_proveedor;
@@ -51,8 +52,8 @@ export default async function handler(req, res){
 
         const updateProveedor = await query({
 
-            query: "UPDATE proveedor SET cedula_proveedor=?, nombre_proveedor=?, telefono_proveedor=?, observaciones_proveedor=? WHERE id_proveedor='25'",
-            values: ([cedulaProveedor,nombreProveedor,telefonoProveedor, observacionesProveedor,]),
+            query: "UPDATE proveedor SET cedula_proveedor=?, nombre_proveedor=?, telefono_proveedor=?, observaciones_proveedor=? WHERE id_proveedor=?",
+            values: ([cedulaProveedor,nombreProveedor,telefonoProveedor, observacionesProveedor,idProveedor]),
                          
         });
 

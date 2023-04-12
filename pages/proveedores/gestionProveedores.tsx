@@ -89,6 +89,7 @@ const Proveedores: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        id_proveedor: valorId,
         cedula_proveedor: valorCedula,
         nombre_proveedor: valorNombre,
         telefono_proveedor: valorTelefono,
@@ -103,6 +104,8 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
+    console.log(response.response.proveedor);
+    console.log("test");
     if(response.response.message != "success") return;
     setUpdated(true);
   }
