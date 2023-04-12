@@ -17,6 +17,8 @@ const Proveedores: React.FC = () => {
   //control de mensaje de exito
   const [created, setCreated] = useState(false);
   const [updated, setUpdated] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -105,6 +107,26 @@ const Proveedores: React.FC = () => {
     setUpdated(true);
   }
 
+  async function deleteProveedor(valorId) {
+    if (!valorId) return;
+    const postData = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id_proveedor: valorId,
+      }),
+    };
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+      postData
+    );
+    const response = await res.json();
+    if(response.response.message != "success") return;
+    setDeleted(true);
+  }
+
 
   useEffect(() => {
     getProveedores();
@@ -132,7 +154,7 @@ const Proveedores: React.FC = () => {
 
   return (
     <Fragment>
-    <div className='w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500'>
+    <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
       <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
         <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
           REGRESAR
@@ -147,6 +169,8 @@ const Proveedores: React.FC = () => {
       {created ? <div>Ingresado!</div>:
       null}
       {updated ? <div>Actualizado!</div>:
+      null}
+      {deleted ? <div>Eliminado!</div>:
       null}
 
 
@@ -255,8 +279,8 @@ const Proveedores: React.FC = () => {
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
               ¿Desea eliminar el elemento seleccionado?
 
-              <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Guardar</button>
+              <button onClick={() => {deleteProveedor(valorId); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >Confirmar</button>
     </Modal>
 
     
