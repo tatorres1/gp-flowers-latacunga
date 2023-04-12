@@ -23,7 +23,7 @@ export default async function handler(req, res) {
             query: "INSERT INTO personal (cedula_personal,nombre_personal,cargo_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?,?)",
             values: ([cedulaPersonal, nombrePersonal,cargoPersonal, direccionPersonal, telefonoPersonal]),
         });
-
+        let message = "";
         if (addPersonal.insertId) {
             message = "success";
         } else {
@@ -56,6 +56,7 @@ export default async function handler(req, res) {
             values: [idPersonal,cedulaPersonal,nombrePersonal, direccionPersonal,telefonoPersonal],
         });
         const result = updatePersonal.affectedRows;
+        let message = "";
         if (result) {
             message = "success";
         } else {
@@ -77,13 +78,16 @@ export default async function handler(req, res) {
         const deletePersonal = await query({
             query: "DELETE FROM personal WHERE id_personal = ?",
             values: [idPersonal],
+            
         }); 
+        
         const result = deletePersonal.affectedRows;
+        let message = "";
         if (result) {
             message = "success";
         } else {
             message = "error al eliminar";
-        }
+        } 
         res
             .status(200)
             .json({ response: { message: message, id_personal: idPersonal } });
