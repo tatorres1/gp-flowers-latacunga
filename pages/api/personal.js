@@ -77,13 +77,16 @@ export default async function handler(req, res) {
         const deletePersonal = await query({
             query: "DELETE FROM personal WHERE id_personal = ?",
             values: [idPersonal],
+            
         }); 
+        
         const result = deletePersonal.affectedRows;
+        let message = "";
         if (result) {
             message = "success";
         } else {
             message = "error al eliminar";
-        }
+        } 
         res
             .status(200)
             .json({ response: { message: message, id_personal: idPersonal } });
