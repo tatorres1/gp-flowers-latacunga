@@ -44,6 +44,12 @@ const Proveedores: React.FC = () => {
   //valor id para al dar click que ejecute query de delete
   const [valorBorrar, setValorBorrar] = useState("");
 
+
+  //valor para activar y desactivar el filtro
+
+  const [activaFiltro, setActivaFiltro] =useState(false);
+
+
   
 
   async function getProveedores(){
@@ -161,13 +167,12 @@ const Proveedores: React.FC = () => {
     setDeleted(true);
   }
 
-  const [valor, setValor] =useState(true);
 
   //dentro de useeffect no puede haber comentarios,
   //si el valor de activaFiltro es verdadero, se activa caso contrario no
   useEffect(() => {
     
-    if(valor === true) getFiltroProveedores();
+    if(activaFiltro === true) getFiltroProveedores();
     else
     getProveedores();
   }, []);
