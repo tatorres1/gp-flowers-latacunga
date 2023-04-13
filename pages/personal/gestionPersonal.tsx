@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
 import ModalEditar from "../../components/ModalEditar";
 import ModalEliminar from "../../components/ModalEliminar";
+
 const Personal: React.FC = () => {
 
     const personalNombreRef = useRef();
@@ -91,18 +92,16 @@ const Personal: React.FC = () => {
                 telefono_personal: valorTelefono,
             }),
         };
-        const res = await fetch(
+        const res = await fetch(         
             `${process.env.NEXT_PUBLIC_URL}/api/personal`,
             postData
-        );
+        );  
         const response = await res.json();
-        console.log("Provemos");
         if (response.response.message === "error") return setEditError(true);
         setPersonal(personal.filter((a) => a.id_personal !== idPersonal));
         setUpdated(true);
         setIdPersonal(null);
         setShowModalEdit(false);
-
     }
     const handleEdit = (id: number) => {
         setIdPersonal(id);
@@ -253,7 +252,7 @@ const Personal: React.FC = () => {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TELEFONO </label>
                             <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
-                            <button onClick={() => { addPersonal(); getPersonal(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                            <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editPersonal}>
                                 Guardar
                             </button>
                         </div>
