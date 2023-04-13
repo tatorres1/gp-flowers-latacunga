@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
-import Modal2 from "../../components/Modal2";
-
 
 const Proveedores: React.FC = () => {
 
@@ -20,7 +18,7 @@ const Proveedores: React.FC = () => {
   const [created, setCreated] = useState(false);
   const [updated, setUpdated] = useState(false);
   const [deleted, setDeleted] = useState(false);
-
+  const [buscarProveedor, setbuscarProveedor] = useState();
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -28,25 +26,15 @@ const Proveedores: React.FC = () => {
   const [showModalEliminar, setShowModalEliminar] = useState(false);
 
   //control de valores de ingreso
-  const [valorId, setValorId] = useState("");
-  const [valorCedula, setValorCedula] = useState("");
-  const [valorNombre, setvalorNombre] = useState("");
-  const [valorTelefono, setvalorTelefono] = useState("");
-  const [valorObservaciones, setvalorObservaciones] = useState("");
+  const [valorId, setValorId] = useState();
+  const [valorCedula, setValorCedula] = useState();
+  const [valorNombre, setvalorNombre] = useState();
+  const [valorTelefono, setvalorTelefono] = useState();
+  const [valorObservaciones, setvalorObservaciones] = useState();
 
-  //valores defecto para cuadro de update
-  const [valorDefectoId, setValorDefectoId] = useState("");
-  const [valorDefectoCedula, setvalorDefectoCedula] = useState("");
-  const [valorDefectoNombre, setvalorDefectoNombre] = useState("");
-  const [valorDefectoTelefono, setvalorDefectoTelefono] = useState("");
-  const [valorDefectoObservaciones, setvalorDefectoObservaciones] = useState("");
 
-  //valor id para al dar click que ejecute query de delete
-  const [valorBorrar, setValorBorrar] = useState("");
 
-  
-
-  async function getProveedores(){
+  async function getProveedores() {
     const postData = {
       method: "GET",
       headers: {
@@ -54,12 +42,12 @@ const Proveedores: React.FC = () => {
       },
     };
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
-    postData);
+      postData);
     const response = await res.json();
     setProveedores(response.proveedores);
   }
 
-  async function addProveedor(){
+  async function addProveedor() {
     //const productName = productNameRef.current.value.trim();
     const nombreProveedor = proveedorNombreRef.current;
     const postData = {
@@ -82,12 +70,11 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
-    if(response.response.message != "success") return;
+    if (response.response.message != "success") return;
     setCreated(true);
-    
   }
 
-  async function updateProveedor(){
+  async function updateProveedor() {
     //const productName = productNameRef.current.value.trim();
     const idProveedorToUpdate = proveedorIdToUpdateRef.current;
     const nombreProveedorToUpdate = proveedorNombreToUpdateRef.current;
@@ -111,7 +98,6 @@ const Proveedores: React.FC = () => {
 
       }),
     };
-    
     //if(productName.length <3) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
@@ -120,20 +106,19 @@ const Proveedores: React.FC = () => {
     const response = await res.json();
     console.log(response.response.proveedor);
     console.log("test");
-    if(response.response.message != "success") return;
+    if (response.response.message != "success") return;
     setUpdated(true);
   }
 
-  async function deleteProveedor() {
-    //if (!valorId) return;
-    console.log(proveedores.values);
+  async function deleteProveedor(valorId) {
+    if (!valorId) return;
     const postData = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_proveedor: valorBorrar,
+        id_proveedor: valorId,
       }),
     };
     const res = await fetch(
@@ -141,9 +126,7 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
-    //console.log(response.response.proveedor);
-    console.log("test borrar");
-    if(response.response.message != "success") return;
+    if (response.response.message != "success") return;
     setDeleted(true);
   }
 
@@ -172,167 +155,148 @@ const Proveedores: React.FC = () => {
     setvalorObservaciones(event.target.value);
   }
 
-  //funcion para update, mostrar data por defecto
-  async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
-    setValorDefectoId(id);
-    setvalorDefectoCedula(cedula);
-    setvalorDefectoNombre(nombre);
-    setvalorDefectoTelefono(telefono);
-    setvalorDefectoObservaciones(observaciones);
-  }
-
-  //resetear los valores de las variables
-
-  async function resetearVariables(){
-    //alert("reseteado");
-    setValorId(null);
-    setValorCedula(null);
-    setvalorNombre(null);
-    setvalorTelefono(null);
-    setvalorObservaciones(null);
-  }
-
-    //valor a borrar despues de click borrar
-  async function asignarValorBorrar(id){
-    //alert("borrado");
-    setValorBorrar(id);
-  }
-
-
-
   return (
     <Fragment>
-    <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
-      <button onClick={resetearVariables} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-          REGRESAR
-        </span>
-      </button>
-      <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
-        <img src={'../assets/images/logo.png'} alt="" />
-      </div>
-      <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
+      <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
+        <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+            REGRESAR
+          </span>
+        </button>
+        <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
+          <img src={'../assets/images/logo.png'} alt="" />
+        </div>
 
-      {created ? <div>Ingresado!</div>:
-      null}
-      {updated ? <div>Actualizado!</div>:
-      null}
-      {deleted ? <div>Eliminado!</div>:
-      null}
+        <form>
+          <label className= "text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
+              <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+          </div>
+        </form>
+        <br></br>
+        <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
-
-      <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-        <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
-              <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
-              <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            {proveedores.map((proveedores) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
-                <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
-
-                <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(proveedores.id_proveedor, proveedores.cedula_proveedor, proveedores.nombre_proveedor, proveedores.telefono_proveedor, proveedores.observaciones_proveedor);}}>EDITAR</a></td>
-                <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(proveedores.id_proveedor);}}>ELIMINAR</a> </td>
+        {created ? <div>Ingresado!</div> :
+          null}
+        {updated ? <div>Actualizado!</div> :
+          null}
+        {deleted ? <div>Eliminado!</div> :
+          null}
+        <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+          <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+            <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+              <tr>
+                <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+                <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
+                <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+                <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
+                <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
+                <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
+                <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
               </tr>
-            ))}
-            
-            
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
 
-      </div>
+              {proveedores.map((proveedores) => (
+                <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
+                  <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
+                  <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
+                  <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
+                  <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
+                  <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
 
-    </div >
+                  <td className="border border-lime-900 px-6 py-4 text-center">
+                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => setShowModalEditar(true)}>EDITAR</a></td>
+                  <td className="border border-lime-900 px-6 py-4 text-center">
+                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => setShowModalEliminar(true)}>ELIMINAR</a> </td>
+                </tr>
+              ))}
 
-    <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-              <div>
-                <form className="w-full max-w-lg">
 
-                  <div className="w-full md:w-full px-3">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        CEDULA
-                      </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        NOMBRE
-                      </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        TELEFONO
-                      </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        OBSERVACIONES
-                      </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+            </tbody>
+          </table>
 
-                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables() ;}} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Guardar</button>
+        </div>
 
-                  </div>
+      </div >
 
-                  
-                </form>
-              </div>
-    </Modal>
-    <Modal2 isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
-              <div>
-                <form className="w-full max-w-lg">
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+        <div>
+          <form className="w-full max-w-lg">
 
-                  <div className="w-full md:w-full px-3">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        ID
-                      </label>
-                      <input value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoId}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        CEDULA
-                      </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoCedula}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        NOMBRE
-                      </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoNombre}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        TELEFONO
-                      </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoTelefono}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        OBSERVACIONES
-                      </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
+            <div className="w-full md:w-full px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                CEDULA
+              </label>
+              <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                NOMBRE
+              </label>
+              <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                TELEFONO
+              </label>
+              <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                OBSERVACIONES
+              </label>
+              <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
-                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Actualizar
-                      </button>
+              <button onClick={() => { addProveedor(); getProveedores(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              >Guardar</button>
 
-                  </div>
-                </form>
-              </div>
-    </Modal2>
-    <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
-              ¿Desea eliminar el elemento seleccionado?
+            </div>
 
-              <button onClick={() => {deleteProveedor(); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Confirmar</button>
-    </Modal>
 
-    
+          </form>
+        </div>
+      </Modal>
+      <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+        <div>
+          <form className="w-full max-w-lg">
+
+            <div className="w-full md:w-full px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                ID
+              </label>
+              <input value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                CEDULA
+              </label>
+              <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                NOMBRE
+              </label>
+              <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                TELEFONO
+              </label>
+              <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
+                OBSERVACIONES
+              </label>
+              <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+
+              <button onClick={() => { updateProveedor(); getProveedores(); setShowModalEditar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              >Actualizar</button>
+
+            </div>
+          </form>
+        </div>
+      </Modal>
+      <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
+        ¿Desea eliminar el elemento seleccionado?
+
+        <button onClick={() => { deleteProveedor(valorId); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >Confirmar</button>
+      </Modal>
+
+
     </Fragment>
   );
 };
