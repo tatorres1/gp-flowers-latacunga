@@ -84,6 +84,7 @@ const Proveedores: React.FC = () => {
     const response = await res.json();
     if(response.response.message != "success") return;
     setCreated(true);
+    
   }
 
   async function updateProveedor(){
@@ -169,7 +170,7 @@ const Proveedores: React.FC = () => {
   const asignarObservaciones = event => {
     setvalorObservaciones(event.target.value);
   }
-/*
+
   //funcion para update, mostrar data por defecto
   async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
     setValorDefectoId(id);
@@ -183,13 +184,13 @@ const Proveedores: React.FC = () => {
 
   async function resetearVariables(){
     alert("reseteado");
-    setValorDefectoId(null);
-    setvalorDefectoCedula(null);
-    setvalorDefectoNombre(null);
-    setvalorDefectoTelefono(null);
-    setvalorDefectoObservaciones(null);
+    setValorId(null);
+    setValorCedula(null);
+    setvalorNombre(null);
+    setvalorTelefono(null);
+    setvalorObservaciones(null);
   }
-*/
+
     //valor a borrar despues de click borrar
   async function asignarValorBorrar(id){
     alert("borrado");
@@ -201,7 +202,7 @@ const Proveedores: React.FC = () => {
   return (
     <Fragment>
     <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
-      <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+      <button onClick={resetearVariables} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
         <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
           REGRESAR
         </span>
@@ -280,7 +281,7 @@ const Proveedores: React.FC = () => {
                       </label>
                       <input defaultValue={""} value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
-                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables() ;}} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Guardar</button>
 
                   </div>
