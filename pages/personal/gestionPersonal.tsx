@@ -92,13 +92,14 @@ const Personal: React.FC = () => {
                 telefono_personal: valorTelefono,
             }),
         };
+        
         const res = await fetch(         
             `${process.env.NEXT_PUBLIC_URL}/api/personal`,
             postData
         );  
         const response = await res.json();
         if (response.response.message === "error") return setEditError(true);
-        setPersonal(personal.filter((a) => a.id_personal !== idPersonal));
+     await getPersonal();
         setUpdated(true);
         setIdPersonal(null);
         setShowModalEdit(false);

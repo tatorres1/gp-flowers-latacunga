@@ -42,16 +42,22 @@ export default async function handler(req, res) {
 
     if (req.method === "PUT") {
         const idPersonal = req.body.id_personal;
-        const cedulaPersonal = rew.body.cedula_personal;
+        const cedulaPersonal = req.body.cedula_personal;
         const nombrePersonal = req.body.nombre_personal;
         const cargoPersonal = req.body.cargo_personal;
         const direccionPersonal = req.body.direccion_personal;
         const telefonoPersonal = req.body.telefono_personal;
         const updatePersonal = await query({
-            query: "UPDATE proveedor SET cedula_personal = ?, nombre_personal = ?, cargo_personal = ?, direccion_personal = ?, telefono_personal = ? WHERE id_personal = ? ",
+            query: "UPDATE personal SET cedula_personal = ?, nombre_personal = ?, cargo_personal = ?, direccion_personal = ?, telefono_personal = ? WHERE id_personal = ? ",
             values: [ cedulaPersonal, nombrePersonal, cargoPersonal, direccionPersonal, telefonoPersonal, idPersonal ],
         });
-
+        let message='';
+        const result = updatePersonal.affectedRows;
+        if (result) {
+            message = "success";
+        } else {
+            message = "error al editar";
+        }
         const personal = {
             id_personal: idPersonal,
             cedula_personal: cedulaPersonal,
@@ -60,16 +66,9 @@ export default async function handler(req, res) {
             direccion_personal: direccionPersonal,
             telefono_personal: telefonoPersonal,
         };
-        const result = updatePersonal.affectedRows;
-        let message = "";
-        if (result) {
-            message = "success";
-        } else {
-            message = "error al editar";
-        }
         res
             .status(200)
-            .json({ response: { message: message, personal: personal } });
+             .json({ response: { message: message, personal: personal } });
     }
 
     if (req.method === "DELETE") {
