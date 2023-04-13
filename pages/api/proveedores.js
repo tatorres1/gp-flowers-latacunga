@@ -16,6 +16,8 @@ export default async function handler(req, res){
         res.status(200).json({proveedores: proveedores});
     }
 
+    
+
     if(req.method === "POST"){
         const cedulaProveedor = req.body.cedula_proveedor;
         const nombreProveedor = req.body.nombre_proveedor;
