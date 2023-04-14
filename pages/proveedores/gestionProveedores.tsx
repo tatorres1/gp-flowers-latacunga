@@ -47,7 +47,7 @@ const Proveedores: React.FC = () => {
 
   //valor para activar y desactivar el filtro
 
-  const [activaFiltro, setActivaFiltro] =useState(false);
+  const [activaFiltro, setActivaFiltro] =useState(true);
 
 
   
@@ -67,13 +67,23 @@ const Proveedores: React.FC = () => {
 
   //filtra los datos de consulta
   async function getFiltroProveedores(){
+    
+    const queryParams = new URLSearchParams({
+      id_proveedor: "4444" ,
+      cedula_proveedor: "gato",
+      nombre_proveedor: "pescado",
+      telefono_proveedor: "foca3",
+      observaciones_proveedor: "pescado",
+    });
+    
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores_filtro`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores_filtro?${queryParams.toString()}`,
     postData);
     const response = await res.json();
     setProveedores(response.proveedores);
