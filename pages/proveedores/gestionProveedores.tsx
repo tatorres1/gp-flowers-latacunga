@@ -47,7 +47,10 @@ const Proveedores: React.FC = () => {
 
   //valor para activar y desactivar el filtro
 
-  const [activaFiltro, setActivaFiltro] =useState(true);
+  const [activaFiltro, setActivaFiltro] =useState(false);
+
+  //valor que se usa de filtro
+  const [valorAFiltrar, setValorAFiltrar] = useState("");
 
 
   
@@ -69,11 +72,11 @@ const Proveedores: React.FC = () => {
   async function getFiltroProveedores(){
     
     const queryParams = new URLSearchParams({
-      id_proveedor: "4444" ,
-      cedula_proveedor: "gato",
-      nombre_proveedor: "pescado",
-      telefono_proveedor: "foca3",
-      observaciones_proveedor: "pescado",
+      id_proveedor: valorAFiltrar ,
+      cedula_proveedor: valorAFiltrar,
+      nombre_proveedor: valorAFiltrar,
+      telefono_proveedor: valorAFiltrar,
+      observaciones_proveedor: valorAFiltrar,
     });
     
     const postData = {
@@ -183,10 +186,11 @@ const Proveedores: React.FC = () => {
   useEffect(() => {
     
     if(activaFiltro === true) getFiltroProveedores();
-    else
+    else if(activaFiltro === false)
     getProveedores();
   }, []);
 
+  //asignacion de valores
   const asignarId = event => {
     setValorId(event.target.value);
   }
@@ -205,6 +209,10 @@ const Proveedores: React.FC = () => {
 
   const asignarObservaciones = event => {
     setvalorObservaciones(event.target.value);
+  }
+
+  const asignarValorAFiltrar = event => {
+    setValorAFiltrar(event.target.value);
   }
 
   //funcion para update, mostrar data por defecto
@@ -233,6 +241,17 @@ const Proveedores: React.FC = () => {
     setValorBorrar(id);
   }
 
+  //activar filtro
+  function AccionActivarFiltro(){
+    //alert(valorAFiltrar);
+    getFiltroProveedores();
+  }
+  //desactivar filtro
+  function AccionDesactivarFiltro(){
+    setValorAFiltrar("");
+    getProveedores();
+    //alert(valorAFiltrar);
+  }
 
   return (
     <Fragment>
@@ -252,9 +271,12 @@ const Proveedores: React.FC = () => {
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
-            <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
-              <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+            <input value={valorAFiltrar} onChange={asignarValorAFiltrar} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ingrese aquí su búsqueda"></input>
+              <button onClick={() => AccionActivarFiltro()} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mx-16 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">BUSCAR</button>
+              <button onClick={() => AccionDesactivarFiltro()} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">X</button>
+
           </div>
+          
         </form>
         <br></br>
 
