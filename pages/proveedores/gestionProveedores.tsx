@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
-import Modal2 from "../../components/Modal2";
-
 
 const Proveedores: React.FC = () => {
 
@@ -15,12 +13,6 @@ const Proveedores: React.FC = () => {
   const proveedorObservacionesToUpdateRef = useRef();
 
   const [proveedores, setProveedores] = useState([]);
-
-  //control de mensaje de exito
-  const [created, setCreated] = useState(false);
-  const [updated, setUpdated] = useState(false);
-  const [deleted, setDeleted] = useState(false);
-
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -115,9 +107,7 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
-    if(response.response.message != "success") return;
-    setCreated(true);
-    
+    if(response.response.message != "success") return;    
   }
 
   async function updateProveedor(){
@@ -154,7 +144,6 @@ const Proveedores: React.FC = () => {
     console.log(response.response.proveedor);
     console.log("test");
     if(response.response.message != "success") return;
-    setUpdated(true);
   }
 
   async function deleteProveedor() {
@@ -177,7 +166,6 @@ const Proveedores: React.FC = () => {
     //console.log(response.response.proveedor);
     console.log("test borrar");
     if(response.response.message != "success") return;
-    setDeleted(true);
   }
 
 
@@ -189,6 +177,7 @@ const Proveedores: React.FC = () => {
     else if(activaFiltro === false)
     getProveedores();
   }, []);
+
 
   //asignacion de valores
   const asignarId = event => {
@@ -237,20 +226,19 @@ const Proveedores: React.FC = () => {
 
     //valor a borrar despues de click borrar
   async function asignarValorBorrar(id){
-    //alert("borrado");
     setValorBorrar(id);
   }
 
   //activar filtro
   function AccionActivarFiltro(){
-    //alert(valorAFiltrar);
+    
     getFiltroProveedores();
+
   }
   //desactivar filtro
   function AccionDesactivarFiltro(){
     setValorAFiltrar("");
     getProveedores();
-    //alert(valorAFiltrar);
   }
 
   return (
@@ -344,7 +332,7 @@ const Proveedores: React.FC = () => {
                       </label>
                       <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
-                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables() ;}} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Guardar</button>
 
                   </div>
@@ -353,7 +341,7 @@ const Proveedores: React.FC = () => {
                 </form>
               </div>
     </Modal>
-    <Modal2 isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+    <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
               <div>
                 <form className="w-full max-w-lg">
 
@@ -379,14 +367,14 @@ const Proveedores: React.FC = () => {
                       </label>
                       <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
 
-                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Actualizar
                       </button>
 
                   </div>
                 </form>
               </div>
-    </Modal2>
+    </Modal>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
               ¿Desea eliminar el elemento seleccionado?
 
