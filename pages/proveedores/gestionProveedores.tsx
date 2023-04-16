@@ -36,17 +36,10 @@ const Proveedores: React.FC = () => {
   //valor id para al dar click que ejecute query de delete
   const [valorBorrar, setValorBorrar] = useState("");
 
-
-  //valor para activar y desactivar el filtro
-
-  const [activaFiltro, setActivaFiltro] =useState(false);
-
   //valor que se usa de filtro
   const [valorAFiltrar, setValorAFiltrar] = useState("");
 
-
-  
-
+  //funciones de consulta
   async function getProveedores(){
     const postData = {
       method: "GET",
@@ -85,8 +78,6 @@ const Proveedores: React.FC = () => {
   }
 
   async function addProveedor(){
-    //const productName = productNameRef.current.value.trim();
-    const nombreProveedor = proveedorNombreRef.current;
     const postData = {
       method: "POST",
       headers: {
@@ -97,11 +88,8 @@ const Proveedores: React.FC = () => {
         nombre_proveedor: valorNombre,
         telefono_proveedor: valorTelefono,
         observaciones_proveedor: valorObservaciones
-        //product_name: "productName",
-
       }),
     };
-    //if(productName.length <3) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData
@@ -111,14 +99,6 @@ const Proveedores: React.FC = () => {
   }
 
   async function updateProveedor(){
-    //const productName = productNameRef.current.value.trim();
-    const idProveedorToUpdate = proveedorIdToUpdateRef.current;
-    const nombreProveedorToUpdate = proveedorNombreToUpdateRef.current;
-    const cedulaProveedorToUpdate = proveedorCedulaToUpdateRef.current;
-    const telefonoProveedorToUpdate = proveedorTelefonoToUpdateRef.current;
-    const observacionesProveedorToUpdate = proveedorObservacionesToUpdateRef.current;
-
-    //if(!idProveedorToUpdate.length) return;
     const postData = {
       method: "PUT",
       headers: {
@@ -130,24 +110,18 @@ const Proveedores: React.FC = () => {
         nombre_proveedor: valorNombre,
         telefono_proveedor: valorTelefono,
         observaciones_proveedor: valorObservaciones
-        //product_name: "productName",
-
       }),
     };
-    
-    //if(productName.length <3) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData
     );
     const response = await res.json();
     console.log(response.response.proveedor);
-    console.log("test");
     if(response.response.message != "success") return;
   }
 
   async function deleteProveedor() {
-    //if (!valorId) return;
     console.log(proveedores.values);
     const postData = {
       method: "DELETE",
@@ -163,8 +137,7 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
-    //console.log(response.response.proveedor);
-    console.log("test borrar");
+    console.log(response.response.proveedor);
     if(response.response.message != "success") return;
   }
 
