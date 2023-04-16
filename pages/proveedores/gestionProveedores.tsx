@@ -3,15 +3,6 @@ import Modal from "../../components/Modal";
 
 const Proveedores: React.FC = () => {
 
-  const proveedorNombreRef = useRef();
-
-  //constantes para actualizar
-  const proveedorIdToUpdateRef = useRef();
-  const proveedorCedulaToUpdateRef = useRef();
-  const proveedorNombreToUpdateRef = useRef();
-  const proveedorTelefonoToUpdateRef = useRef();
-  const proveedorObservacionesToUpdateRef = useRef();
-
   const [proveedores, setProveedores] = useState([]);
 
   //control de modal, declaracion de const
