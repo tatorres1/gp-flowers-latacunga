@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
@@ -12,10 +12,20 @@ interface Data {
 
 const Reportes_admin: React.FC = () => {
 
-  
-  const [proveedores, setProveedores] = useState([]);
+  //se ejecuta la toma de datos por defecto
 
-  async function getProveedores(){
+
+  useEffect(() => {
+    getProveedores();
+    getAlmacen();
+  }, []);
+
+  //traida de data de la api
+  const [proveedores, setProveedores] = useState([]);
+  const [almacen, setAlmacen] = useState([]);
+
+
+  async function getProveedores() {
     const postData = {
       method: "GET",
       headers: {
@@ -23,44 +33,76 @@ const Reportes_admin: React.FC = () => {
       },
     };
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
-    postData);
+      postData);
     const response = await res.json();
     setProveedores(response.proveedores);
   }
 
-  function crearReporteProveedores(){
-                  // Crear un nuevo objeto jsPDF
-          const doc = new jsPDF();
+  async function getAlmacen(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/almacen`,
+    postData);
+    const response = await res.json();
+    setAlmacen(response.almacen);
+  }
 
-          // Definir las opciones para la tabla
-          const options = {
-            fontSize: 12,
-            pageOrientation: 'landscape',
-            
-          };
 
-          // Crear el array de objetos que representan las filas de la tabla
-          const data = [
-            {id: 1, name: 'John Doe', age: 35},
-            {id: 2, name: 'Jane Smith', age: 28},
-            {id: 3, name: 'Bob Johnson', age: 42},
-          ];
+  //se crean los reportes como tal
+  function crearReporteProveedores() {
+    
+    // Crear un nuevo objeto jsPDF
+    const doc = new jsPDF();
 
-          // Llamar a la función autoTable para crear la tabla
-          autoTable(doc, {head:[['id', 'name', 'age']],},);
-          autoTable(doc, {body: data},);
+    // Definir las opciones para la tabla
+    const options = {
+      fontSize: 12,
+      pageOrientation: 'landscape',
 
-          // Guardar el documento con la tabla usando la función save
-          doc.save('tabla.pdf');
+    };
+
+    doc.text("GP FLowers reporte", 10, 10);
+    // Llamar a la función autoTable para crear la tabla
+    autoTable(doc, { html: '#tabla1' },);
+
+
+    // Guardar el documento con la tabla usando la función save
+    doc.save('Reporte_Proveedores.pdf');
+
+  }
+
+  function crearReporteAlmacen() {
+    
+    // Crear un nuevo objeto jsPDF
+    const doc = new jsPDF();
+
+    // Definir las opciones para la tabla
+    const options = {
+      fontSize: 12,
+      pageOrientation: 'landscape',
+
+    };
+
+    doc.text("GP FLowers reporte", 10, 10);
+    // Llamar a la función autoTable para crear la tabla
+    autoTable(doc, { html: '#tabla2' },);
+
+
+    // Guardar el documento con la tabla usando la función save
+    doc.save('Reporte_Almacen.pdf');
 
   }
 
 
   const [data, setData] = useState<Data[]>([
-    { tipo_reporte: 'REPORTE VENTAS', fecha_reporte: '25-10-2023' , enlace: crearReporteProveedores},
-    { tipo_reporte: 'REPORTE PERSONAL', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores},
-    { tipo_reporte: 'REPORTE PROVEEDORES', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores},
-    { tipo_reporte: 'REPORTE ALMACEN', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores},
+    { tipo_reporte: 'REPORTE VENTAS', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores },
+    { tipo_reporte: 'REPORTE PERSONAL', fecha_reporte: '25-10-2023', enlace: crearReporteAlmacen },
+    { tipo_reporte: 'REPORTE PROVEEDORES', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores },
+    { tipo_reporte: 'REPORTE ALMACEN', fecha_reporte: '25-10-2023', enlace: crearReporteAlmacen },
   ]);
   const router = useRouter();
 
@@ -70,14 +112,13 @@ const Reportes_admin: React.FC = () => {
 
   return (
     <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
-<button type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={Regresar}>
+      <button type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={Regresar}>
         REGRESAR
       </button>
       <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
         <img src={'../assets/images/logo.png'} alt="" />
       </div><br /><br />
-      <button onClick={getProveedores} type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">AGREGAR NUEVO</button>
-      
+
       <div className='w-full p-4 relative overflow-x-auto sm:rounded-lg'>
         <table className='sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -97,12 +138,68 @@ const Reportes_admin: React.FC = () => {
               </tr>
             ))}
           </tbody>
-            </table>
-        
+        </table>
 
-      </div>
+
+        <table id="tabla1" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
+
+            </tr>
+          </thead>
+          <tbody>
+                    
+          {proveedores.map((proveedores) => (
+            <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
+              <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
+              <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
+              <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
+              <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
+              <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
+            </tr>
+          ))}
+
+
+        </tbody>
+      </table>
+
+
+      <table id="tabla2" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CANTIDAD</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TIPO</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {almacen.map((almacen) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={almacen.id_materialAlmacen}>
+                <td className='border border-lime-900 text-center text-lg'>{almacen.id_materialAlmacen}</td>
+                <td className='border border-lime-900 text-center text-lg'>{almacen.cantidad_materialAlmacen}</td>
+                <td className='border border-lime-900 text-center text-lg '>{almacen.nombre_materialAlmacen}</td>
+                <td className='border border-lime-900 text-center text-lg '>{almacen.tipo_materialAlmacen}</td>
+                <td className='border border-lime-900 text-center text-lg '>{almacen.observaciones_materialAlmacen}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
+
+
 
     </div>
+
+    </div >
 
   );
 
