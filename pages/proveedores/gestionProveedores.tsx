@@ -1,26 +1,9 @@
 import { useEffect, useState, useRef, Fragment } from "react";
 import Modal from "../../components/Modal";
-import Modal2 from "../../components/Modal2";
-
 
 const Proveedores: React.FC = () => {
 
-  const proveedorNombreRef = useRef();
-
-  //constantes para actualizar
-  const proveedorIdToUpdateRef = useRef();
-  const proveedorCedulaToUpdateRef = useRef();
-  const proveedorNombreToUpdateRef = useRef();
-  const proveedorTelefonoToUpdateRef = useRef();
-  const proveedorObservacionesToUpdateRef = useRef();
-
   const [proveedores, setProveedores] = useState([]);
-
-  //control de mensaje de exito
-  const [created, setCreated] = useState(false);
-  const [updated, setUpdated] = useState(false);
-  const [deleted, setDeleted] = useState(false);
-
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -44,14 +27,10 @@ const Proveedores: React.FC = () => {
   //valor id para al dar click que ejecute query de delete
   const [valorBorrar, setValorBorrar] = useState("");
 
+  //valor que se usa de filtro
+  const [valorAFiltrar, setValorAFiltrar] = useState("");
 
-  //valor para activar y desactivar el filtro
-
-  const [activaFiltro, setActivaFiltro] =useState(false);
-
-
-  
-
+  //funciones de consulta
   async function getProveedores(){
     const postData = {
       method: "GET",
@@ -67,21 +46,29 @@ const Proveedores: React.FC = () => {
 
   //filtra los datos de consulta
   async function getFiltroProveedores(){
+    
+    const queryParams = new URLSearchParams({
+      id_proveedor: valorAFiltrar ,
+      cedula_proveedor: valorAFiltrar,
+      nombre_proveedor: valorAFiltrar,
+      telefono_proveedor: valorAFiltrar,
+      observaciones_proveedor: valorAFiltrar,
+    });
+    
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores_filtro`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores_filtro?${queryParams.toString()}`,
     postData);
     const response = await res.json();
     setProveedores(response.proveedores);
   }
 
   async function addProveedor(){
-    //const productName = productNameRef.current.value.trim();
-    const nombreProveedor = proveedorNombreRef.current;
     const postData = {
       method: "POST",
       headers: {
@@ -92,30 +79,17 @@ const Proveedores: React.FC = () => {
         nombre_proveedor: valorNombre,
         telefono_proveedor: valorTelefono,
         observaciones_proveedor: valorObservaciones
-        //product_name: "productName",
-
       }),
     };
-    //if(productName.length <3) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData
     );
     const response = await res.json();
-    if(response.response.message != "success") return;
-    setCreated(true);
-    
+    if(response.response.message != "success") return;    
   }
 
   async function updateProveedor(){
-    //const productName = productNameRef.current.value.trim();
-    const idProveedorToUpdate = proveedorIdToUpdateRef.current;
-    const nombreProveedorToUpdate = proveedorNombreToUpdateRef.current;
-    const cedulaProveedorToUpdate = proveedorCedulaToUpdateRef.current;
-    const telefonoProveedorToUpdate = proveedorTelefonoToUpdateRef.current;
-    const observacionesProveedorToUpdate = proveedorObservacionesToUpdateRef.current;
-
-    //if(!idProveedorToUpdate.length) return;
     const postData = {
       method: "PUT",
       headers: {
@@ -127,25 +101,18 @@ const Proveedores: React.FC = () => {
         nombre_proveedor: valorNombre,
         telefono_proveedor: valorTelefono,
         observaciones_proveedor: valorObservaciones
-        //product_name: "productName",
-
       }),
     };
-    
-    //if(productName.length <3) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData
     );
     const response = await res.json();
     console.log(response.response.proveedor);
-    console.log("test");
     if(response.response.message != "success") return;
-    setUpdated(true);
   }
 
   async function deleteProveedor() {
-    //if (!valorId) return;
     console.log(proveedores.values);
     const postData = {
       method: "DELETE",
@@ -161,22 +128,16 @@ const Proveedores: React.FC = () => {
       postData
     );
     const response = await res.json();
-    //console.log(response.response.proveedor);
-    console.log("test borrar");
+    console.log(response.response.proveedor);
     if(response.response.message != "success") return;
-    setDeleted(true);
   }
 
-
-  //dentro de useeffect no puede haber comentarios,
-  //si el valor de activaFiltro es verdadero, se activa caso contrario no
   useEffect(() => {
-    
-    if(activaFiltro === true) getFiltroProveedores();
-    else
     getProveedores();
   }, []);
 
+
+  //asignacion de valores
   const asignarId = event => {
     setValorId(event.target.value);
   }
@@ -195,6 +156,10 @@ const Proveedores: React.FC = () => {
 
   const asignarObservaciones = event => {
     setvalorObservaciones(event.target.value);
+  }
+
+  const asignarValorAFiltrar = event => {
+    setValorAFiltrar(event.target.value);
   }
 
   //funcion para update, mostrar data por defecto
@@ -219,10 +184,19 @@ const Proveedores: React.FC = () => {
 
     //valor a borrar despues de click borrar
   async function asignarValorBorrar(id){
-    //alert("borrado");
     setValorBorrar(id);
   }
 
+  //activar filtro
+  async function AccionActivarFiltro(){
+    getFiltroProveedores();
+
+  }
+  //desactivar filtro
+  async function AccionDesactivarFiltro(){
+    setValorAFiltrar("");
+    getProveedores();
+  }
 
   return (
     <Fragment>
@@ -242,9 +216,12 @@ const Proveedores: React.FC = () => {
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
-            <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
-              <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+            <input value={valorAFiltrar} onChange={asignarValorAFiltrar} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ingrese aquí su búsqueda"></input>
+              <button onClick={AccionActivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mx-16 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">BUSCAR</button>
+              <button onClick={AccionDesactivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">X</button>
+
           </div>
+          
         </form>
         <br></br>
 
@@ -312,7 +289,7 @@ const Proveedores: React.FC = () => {
                       </label>
                       <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
-                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables() ;}} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Guardar</button>
 
                   </div>
@@ -321,7 +298,7 @@ const Proveedores: React.FC = () => {
                 </form>
               </div>
     </Modal>
-    <Modal2 isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+    <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
               <div>
                 <form className="w-full max-w-lg">
 
@@ -347,14 +324,14 @@ const Proveedores: React.FC = () => {
                       </label>
                       <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
 
-                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Actualizar
                       </button>
 
                   </div>
                 </form>
               </div>
-    </Modal2>
+    </Modal>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
               ¿Desea eliminar el elemento seleccionado?
 
