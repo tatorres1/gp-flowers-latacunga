@@ -18,74 +18,112 @@ export default async function handler(req, res) {
         const tmallasFlor = req.body.tMallas_gestionFlor;
         const tTallosxmallaFlor = req.body.tTallosxMalla_gestionflor;
         const tallosSueltosFlor = req.body.tallosSueltos_gestionFlor;
-        const tTallosFlor = req.body.tTallos_gestionFlor ;
-        const tallos40Flor = req.body.tallos40_gestionFlor ;
+        const tTallosFlor = req.body.tTallos_gestionFlor;
+        const tallos40Flor = req.body.tallos40_gestionFlor;
         const tallos50Flor = req.body.tallos50_gestionFlor;
-        const tallos60Flor = req.body. ;
-        const tallos70Flor = req.body. ;
-        const tallos80Flor = req.body. ;
+        const tallos60Flor = req.body.tallos60_gestionFlor;
+        const tallos70Flor = req.body.tallos70_gestionFlor;
+        const tallos80Flor = req.body.tallos80_gestionFlor;
+        const tallos90Flor = req.body.tallos90_gestionFlor;
+        const tBonchesFlor = req.body.tBonches_gestionFlor;
+        const tallosNacionalFlor = req.body.tNacional_gstionFlor;
+        const tallosSobrantesFlor = req.body.tallosSobrantes_gestionFlor;
+        const tVariedadFlor = req.body.tVariedad_gestionFlor;
 
-        const addPersonal = await query({
-            query: "INSERT INTO personal (cedula_personal,nombre_personal,cargo_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?,?)",
-            values: ([cedulaPersonal, nombrePersonal, cargoPersonal, direccionPersonal, telefonoPersonal]),
+        const addFlor = await query({
+            query: "INSERT INTO flor (PROVEEDOR, VARIEDAD, tMallas_gestionFlor, tTallosxMalla_gestionflor, tallosSueltos_gestionFlor, tTallos_gestionFlor.tallos40_gestionFlor,tallos50_gestionFlor,tallos60_gestionFlor, tallos70_gestionFlor, tallos80_gestionFlor,tallos90_gestionFlor, tBonches_gestionFlor, tNacional_gstionFlor, tallosSobrantes_gestionFlor, tVariedad_gestionFlor ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            values: ([proveedorFlor, variedadFlor, tmallasFlor, tTallosxmallaFlor, tallosSueltosFlor, tTallosFlor, tallos40Flor, tallos50Flor, tallos60Flor, tallos70Flor, tallos80Flor, tallos90Flor, tBonchesFlor, tallosNacionalFlor, tallosSobrantesFlor, tVariedadFlor]),
         });
         let message = "";
-        if (addPersonal.insertId) {
+        if (addFlor.insertId) {
             message = "success";
         } else {
             message = "error";
         }
-        let personal = {
-            id_personal: addPersonal.insertId,
-            cedula_personal: cedulaPersonal,
-            nombre_personal: nombrePersonal,
-            cargo_personal: cargoPersonal,
-            direccion_personal: direccionPersonal,
-            telefono_personal: telefonoPersonal,
+        let flor = {
+            id_gestionFlor: addFlor.insertId,
+            PROVEEDOR: proveedorFlor,
+            VARIEDAD: variedadFlor,
+            tMallas_gestionFlor: tmallasFlor,
+            tTallosxMalla_gestionflor: tTallosxmallaFlor,
+            tallosSueltos_gestionFlor: tallosSueltosFlor,
+            tTallos_gestionFlor: tTallosFlor,
+            tallos40_gestionFlor: tallos40Flor,
+            tallos50_gestionFlor: tallos50Flor,
+            tallos60_gestionFlor: tallos60Flor,
+            tallos70_gestionFlor: tallos70Flor,
+            tallos80_gestionFlor: tallos80Flor,
+            tallos90_gestionFlor: tallos90Flor,
+            tBonches_gestionFlor: tBonchesFlor,
+            tNacional_gstionFlor: tallosNacionalFlor,
+            tallosSobrantes_gestionFlor: tallosSobrantesFlor,
+            tVariedad_gestionFlor: tVariedadFlor,
         };
-        res.status(200).json({ response: { message: message, personal: personal } });
+        res.status(200).json({ response: { message: message, flor: flor } });
     }
 
     if (req.method === "PUT") {
-        const idPersonal = req.body.id_personal;
-        const cedulaPersonal = req.body.cedula_personal;
-        const nombrePersonal = req.body.nombre_personal;
-        const cargoPersonal = req.body.cargo_personal;
-        const direccionPersonal = req.body.direccion_personal;
-        const telefonoPersonal = req.body.telefono_personal;
-        const updatePersonal = await query({
-            query: "UPDATE personal SET cedula_personal = ?, nombre_personal = ?, cargo_personal = ?, direccion_personal = ?, telefono_personal = ? WHERE id_personal = ? ",
-            values: [cedulaPersonal, nombrePersonal, cargoPersonal, direccionPersonal, telefonoPersonal, idPersonal],
+        const idFlor = req.body.id_gestionFlor;
+        const proveedorFlor = req.body.PROVEEDOR;
+        const variedadFlor = req.body.VARIEDAD;
+        const tmallasFlor = req.body.tMallas_gestionFlor;
+        const tTallosxmallaFlor = req.body.tTallosxMalla_gestionflor;
+        const tallosSueltosFlor = req.body.tallosSueltos_gestionFlor;
+        const tTallosFlor = req.body.tTallos_gestionFlor;
+        const tallos40Flor = req.body.tallos40_gestionFlor;
+        const tallos50Flor = req.body.tallos50_gestionFlor;
+        const tallos60Flor = req.body.tallos60_gestionFlor;
+        const tallos70Flor = req.body.tallos70_gestionFlor;
+        const tallos80Flor = req.body.tallos80_gestionFlor;
+        const tallos90Flor = req.body.tallos90_gestionFlor;
+        const tBonchesFlor = req.body.tBonches_gestionFlor;
+        const tallosNacionalFlor = req.body.tNacional_gstionFlor;
+        const tallosSobrantesFlor = req.body.tallosSobrantes_gestionFlor;
+        const tVariedadFlor = req.body.tVariedad_gestionFlor;
+        const updateFlor = await query({
+            query: "UPDATE flor SET PROVEEDOR = ?,VARIEDAD = ?, tMallas_gestionFlor = ?, tTallosxMalla_gestionflor = ?, tallosSueltos_gestionFlor = ? tTallos_gestionFlor = ? tallos40_gestionFlor = ? tallos50_gestionFlor = ? tallos60_gestionFlor = ? tallos70_gestionFlor = ? tallos80_gestionFlor = ? tallos90_gestionFlor = ? tBonches_gestionFlor=? tNacional_gstionFlor=? tallosSobrantes_gestionFlor=? tVariedad_gestionFlor = ? WHERE id_gestionFlor = ? ",
+            values: [proveedorFlor, variedadFlor, tmallasFlor, tTallosxmallaFlor, tallosSueltosFlor, tTallosFlor, tallos40Flor, tallos50Flor, tallos60Flor, tallos70Flor, tallos80Flor, tallos90Flor, tBonchesFlor, tallosNacionalFlor, tallosSobrantesFlor, tVariedadFlor, idFlor],
         });
         let message = '';
-        const result = updatePersonal.affectedRows;
+        const result = updateFlor.affectedRows;
         if (result) {
             message = "success";
         } else {
             message = "error al editar";
         }
-        const personal = {
-            id_personal: idPersonal,
-            cedula_personal: cedulaPersonal,
-            nombre_personal: nombrePersonal,
-            cargo_personal: cargoPersonal,
-            direccion_personal: direccionPersonal,
-            telefono_personal: telefonoPersonal,
+        const flor = {
+            id_gestionFlor: idFlor,
+            PROVEEDOR: proveedorFlor,
+            VARIEDAD: variedadFlor,
+            tMallas_gestionFlor: tmallasFlor,
+            tTallosxMalla_gestionflor: tTallosxmallaFlor,
+            tallosSueltos_gestionFlor: tallosSueltosFlor,
+            tTallos_gestionFlor: tTallosFlor,
+            tallos40_gestionFlor: tallos40Flor,
+            tallos50_gestionFlor: tallos50Flor,
+            tallos60_gestionFlor: tallos60Flor,
+            tallos70_gestionFlor: tallos70Flor,
+            tallos80_gestionFlor: tallos80Flor,
+            tallos90_gestionFlor: tallos90Flor,
+            tBonches_gestionFlor: tBonchesFlor,
+            tNacional_gstionFlor: tallosNacionalFlor,
+            tallosSobrantes_gestionFlor: tallosSobrantesFlor,
+            tVariedad_gestionFlor: tVariedadFlor,
         };
         res
             .status(200)
-            .json({ response: { message: message, personal: personal } });
+            .json({ response: { message: message, flor: flor } });
     }
 
     if (req.method === "DELETE") {
-        const idPersonal = req.body.id_personal;
-        const deletePersonal = await query({
-            query: "DELETE FROM personal WHERE id_personal = ?",
-            values: [idPersonal],
+        const idFlor = req.body.id_gestionFlor;
+        const deleteFlor = await query({
+            query: "DELETE FROM flor WHERE id_gestionFlor = ?",
+            values: [idFlor],
 
         });
 
-        const result = deletePersonal.affectedRows;
+        const result = deleteFlor.affectedRows;
         let message = "";
         if (result) {
             message = "success";
@@ -94,7 +132,7 @@ export default async function handler(req, res) {
         }
         res
             .status(200)
-            .json({ response: { message: message, id_personal: idPersonal } });
+            .json({ response: { message: message, id_gestionFlor: idFlor } });
     }
 
     //metodos para la variedad
@@ -106,5 +144,15 @@ export default async function handler(req, res) {
             }
         );
         res.status(200).json({ variedad: variedad });
+    }
+    //metodos para la proveedor
+    if (req.method === "GET") {
+        const proveedor = await query(
+            {
+                query: "SELECT *FROM proveedor",
+                values: [],
+            }
+        );
+        res.status(200).json({ proveedor: proveedor });
     }
 }

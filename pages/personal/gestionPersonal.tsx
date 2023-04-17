@@ -71,12 +71,6 @@ const Personal: React.FC = () => {
     }
 
     async function editPersonal() {
-        const idPersonalToUpdate = idPersonalToUpdateRef.current;
-        const cedulaPersonalToUpdate = cedulaPersonalToUpdateRef.current;
-        const nombrePersonalToUpdate = nombrePersonalToUpdateRef.current;
-        const cargoPersonalToUpdate = cargoPersonalToUpdateRef.current;
-        const direccionPersonalToUpdate = direccionPersonalToUpdateRef.current;
-        const telefonoPersonalToUpdate = telefonoPersonalToUpdateRef.current;
         if (!idPersonal) return;
         const postData = {
             method: "PUT",
