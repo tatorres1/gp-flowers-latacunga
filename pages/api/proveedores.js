@@ -38,10 +38,14 @@ export default async function handler(req, res){
             message = "error";
         }
         let proveedor = {
+            //id_proveedor: addProveedor.insertId,
             id_proveedor: addProveedor.insertId,
-            nombre_proveedor: nombreProveedor, 
+            cedula_proveedor: cedulaProveedor,
+            nombre_proveedor: nombreProveedor,
+            telefono_proveedor: telefonoProveedor,
+            observaciones_proveedor: observacionesProveedor,  
         };
-        res.status(200).json({response: {message: message, proveedor: proveedor}});
+        res.status(200).json({response: {message: message, proveedor: addProveedor}});
     }
 
     if(req.method === "PUT"){

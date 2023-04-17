@@ -248,6 +248,11 @@ const Almacen: React.FC = () => {
                 </button>
 
             </ModalEliminar>
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> aa2d488226c749afe0b7fe1b59d57f7ce23afc95
     </Fragment>
   );
 };
