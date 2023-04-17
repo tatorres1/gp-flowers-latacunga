@@ -16,8 +16,14 @@ export default async function handler(req, res) {
         const proveedorFlor = req.body.PROVEEDOR;
         const variedadFlor = req.body.VARIEDAD;
         const tmallasFlor = req.body.tMallas_gestionFlor;
-        const direccionPersonal = req.body.direccion_personal;
-        const telefonoPersonal = req.body.telefono_personal;
+        const tTallosxmallaFlor = req.body.tTallosxMalla_gestionflor;
+        const tallosSueltosFlor = req.body.tallosSueltos_gestionFlor;
+        const tTallosFlor = req.body.tTallos_gestionFlor ;
+        const tallos40Flor = req.body.tallos40_gestionFlor ;
+        const tallos50Flor = req.body.tallos50_gestionFlor;
+        const tallos60Flor = req.body. ;
+        const tallos70Flor = req.body. ;
+        const tallos80Flor = req.body. ;
 
         const addPersonal = await query({
             query: "INSERT INTO personal (cedula_personal,nombre_personal,cargo_personal, direccion_personal,telefono_personal ) VALUES (?,?,?,?,?)",
