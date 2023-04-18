@@ -9,7 +9,7 @@ export default async function handler(req, res){
 
         const almacen = await query(
             {
-                query: "SELECT * FROM material_almacen",
+                query: "SELECT * FROM almacen",
                 values: [],
             }
         );
