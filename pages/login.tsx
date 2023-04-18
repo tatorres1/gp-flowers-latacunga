@@ -23,6 +23,7 @@ const Login = () => {
     const queryParams = new URLSearchParams({
       username: valorUsername ,
       password: valorPassword,
+      rol: valorRol
     });
     
     const postData = {
@@ -42,6 +43,8 @@ const Login = () => {
     alert(valorUsername);
     alert(valorPassword);
     alert(valorRol);
+    alert(ingresaAdmin);
+    alert(ingresaUsuario);
   }
 
   useEffect(() => {
@@ -67,44 +70,41 @@ const Login = () => {
   //importante: la declaracion de router tiene que ir fuera de
   //la funcion , solamente en la funcion principal
   const router = useRouter()
+
   function VerificarLogin (){
 
     var direccion_admin = "./indexAdmin"; 
     var direccion_usuario="./indexUser";
 
-  
-        
+    setIngresaAdmin(false);
+    setIngresaAdmin(false);
 
         //busqueda y comparacion de si el valor en input esta en el objeto consultado
-        /*usuarios.forEach(usuario => {
-          if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.password === 'admin') ) {
-            setIngresaAdmin(true);
-          } else if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.password === 'usuario') ){
-            setIngresaUsuario(true);
-          }
-          else {alert('usuario o contraseña incorrectas, o no se encuntra en el sistema')};
-          
-        });*/
+
 
         for (let i = 0; i < usuarios.length; i++) {
           const usuario = usuarios[i];
+          
           if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'admin') ) {
-            setIngresaAdmin(true);
+            setIngresaAdmin(true);alert("estoy");        router.push(direccion_admin);
+
             break;
           } else if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'usuario') ){
-            setIngresaUsuario(true);
+            setIngresaUsuario(true);alert("estoy2");        router.push(direccion_usuario);
+
             break;
-          }
-          
-        }
+          } 
+
+        };
 
       //alert("esto es para controlar true o false");
-    
+    /*
       if(ingresaAdmin == true) {
-        router.push(direccion_admin);
       }else if( ingresaUsuario == true){
-        router.push(direccion_usuario);
-      }else {alert('usuario o contraseña incorrectas, o no se encuntra en el sistema')}
+      }else {alert('usuario o contraseña incorrectas, o no se encuntra en el sistema')};
+*/
+
+
     }
   
 
@@ -164,6 +164,11 @@ const Login = () => {
           </tbody>
         </table>
       </div>
+
+      <div>
+                          
+      </div>
+
     </div>
   );
 };
