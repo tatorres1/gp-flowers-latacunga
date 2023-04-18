@@ -39,14 +39,6 @@ const Login = () => {
     setUsuarios(response.usuarios);
   }
 
-  function verdata(){
-    alert(valorUsername);
-    alert(valorPassword);
-    alert(valorRol);
-    alert(ingresaAdmin);
-    alert(ingresaUsuario);
-  }
-
   useEffect(() => {
     getUsuarios();
   }, []);
@@ -86,25 +78,20 @@ const Login = () => {
           const usuario = usuarios[i];
           
           if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'admin') ) {
-            setIngresaAdmin(true);alert("estoy");        router.push(direccion_admin);
-
+            setIngresaAdmin(true);
+            router.push(direccion_admin);
             break;
           } else if ( (usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'usuario') ){
-            setIngresaUsuario(true);alert("estoy2");        router.push(direccion_usuario);
-
+            setIngresaUsuario(true);
+            router.push(direccion_usuario);
+            break;
+          } else if ( (usuario.username !== valorUsername) && (usuario.password !== valorPassword) && (usuario.rol !== 'usuario') ){
+            alert("datos incorrectos");
             break;
           } 
 
+          
         };
-
-      //alert("esto es para controlar true o false");
-    /*
-      if(ingresaAdmin == true) {
-      }else if( ingresaUsuario == true){
-      }else {alert('usuario o contraseña incorrectas, o no se encuntra en el sistema')};
-*/
-
-
     }
   
 
@@ -117,58 +104,27 @@ const Login = () => {
         <h2 className='text-3xl font-serif font-bold'>GP FLOWERS</h2><br/>
         <form onSubmit={handleSubmit}>
           <label className='text-3xl'> Usuario: </label>
-          <input className='text-2xl rounded-md border-2 border-green-400'
+          <input className='text-2xl rounded-md border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             type="text"
             name="username"
             value={valorUsername} onChange={asignarValorUsername}
           />
           <br/>
           <label className='text-3xl'>Contrasena: </label>
-            <input className='text-2xl rounded-md	border-2 border-green-400'
+            <input className='text-2xl rounded-md	border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               type="password"
               name="password"
               value={valorPassword} onChange={asignarValorPassword}
             /><br/>
           
           <br />
-          <button className='font-bold px-8 text-2xl flex-col items-center text-gray-900 bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded-lg py-2.5 text-center mr-2 mb-2 ' 
-          type="submit" onClick={verdata} >probar</button>
+
           <button className='font-bold px-8 text-2xl flex-col items-center text-gray-900 bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded-lg py-2.5 text-center mr-2 mb-2 ' 
           type="submit" onClick={VerificarLogin} >Ingresar</button>
         </form>
       </div>
-      <div>
-      <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            
-            {usuarios.map((usuarios) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={usuarios.username}>
-                <td className='border border-lime-900 text-center text-lg'>{usuarios.username}</td>
-                <td className='border border-lime-900 text-center text-lg'>{usuarios.password}</td>
-                <td className='border border-lime-900 text-center text-lg '>{usuarios.rol}</td>
-
-
-               
-              </tr>
-            ))}
-            
-            
-          </tbody>
-        </table>
-      </div>
-
-      <div>
-                          
-      </div>
-
+      
     </div>
   );
 };
