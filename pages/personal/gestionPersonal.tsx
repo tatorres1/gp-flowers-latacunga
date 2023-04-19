@@ -176,8 +176,8 @@ const Personal: React.FC = () => {
                 {created ? <div>Success!</div> :
                     null}
 
-                <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-                    <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+                <div className='scroll-smooth md:scroll-auto  w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+                    <table className='scroll-smooth md:scroll-auto  sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                         <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                             <tr>
                                 <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
@@ -230,7 +230,7 @@ const Personal: React.FC = () => {
                             <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
                             <button onClick={() => { addPersonal(); getPersonal(); setShowModal(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                Guardar
+                                Guardar Personal
                             </button>
                         </div>
                     </form>

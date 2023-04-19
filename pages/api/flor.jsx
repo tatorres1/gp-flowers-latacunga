@@ -11,6 +11,16 @@ export default async function handler(req, res) {
         );
         res.status(200).json({ flor: flor });
     }
+     //metodos para la proveedor
+     /*if (req.method === "GET") {
+        const proveedor = await query(
+            {
+                query: "SELECT *FROM proveedor",
+                values: [],
+            }
+        );
+        res.status(200).json({ proveedor: proveedor });
+    }*/
 
     if (req.method === "POST") {
         const proveedorFlor = req.body.PROVEEDOR;
@@ -145,14 +155,5 @@ export default async function handler(req, res) {
         );
         res.status(200).json({ variedad: variedad });
     }
-    //metodos para la proveedor
-    if (req.method === "GET") {
-        const proveedor = await query(
-            {
-                query: "SELECT *FROM proveedor",
-                values: [],
-            }
-        );
-        res.status(200).json({ proveedor: proveedor });
-    }
+   
 }
