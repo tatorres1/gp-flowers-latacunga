@@ -1,18 +1,11 @@
-
 import React from 'react';
 import { useEffect, useState, useRef, Fragment } from "react";
 import ModalEditar from "../components/ModalEditar";
 import ModalEliminar from "../components/ModalEliminar";
-<<<<<<< HEAD
 import ModalFlor from "../components/ModalFlor";
-=======
 import { useRouter } from 'next/router';
-
-
->>>>>>> ec4b0a72a7347046d50ea959e1631a93ea6d553c
 const Flor: React.FC = () => {
     const router = useRouter()
-
     const nombreFlorRef = useRef();
     const idFlorToUpdateRef = useRef();
     const proveedorFlorRef = useRef();
@@ -244,7 +237,6 @@ const Flor: React.FC = () => {
     }
 
     return (
-<<<<<<< HEAD
         <Fragment>
             <div className=" w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500">
                 <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
@@ -252,15 +244,6 @@ const Flor: React.FC = () => {
                         REGRESAR
                     </span>
                 </button>
-=======
-        <div className=" w-full h-screen  bg-gradient-to-r from-lime-500 to-cyan-500">
-            <button onClick={router.back} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-                    REGRESAR
-                </span>
-            </button>
-            <div className='relative h-50 w-full ' >
->>>>>>> ec4b0a72a7347046d50ea959e1631a93ea6d553c
                 <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
                     <img src={'../assets/images/logo.png'} alt="" />
                 </div>
