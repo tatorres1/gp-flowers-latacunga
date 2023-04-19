@@ -18,6 +18,13 @@ const Login = () => {
   const [ ingresaAdmin , setIngresaAdmin] = useState(false);
   const [ ingresaUsuario, setIngresaUsuario] = useState(false);
 
+  //variables para indicar al usuario si los valores insertados estan correctos
+  const [estiloUsername, setEstiloUsername] = useState({});
+
+  //control de mensaje de error
+  const [MostrarError, setMostrarError] = useState(false);
+
+
   async function getUsuarios(){
     
     const queryParams = new URLSearchParams({
@@ -87,6 +94,9 @@ const Login = () => {
             break;
           } else if ( (usuario.username !== valorUsername) && (usuario.password !== valorPassword)){
             //alert("datos incorrectos");
+            setEstiloUsername({border: '2px solid red'});
+            setMostrarError(true);
+
             
           } 
 
@@ -104,20 +114,21 @@ const Login = () => {
         <h2 className='text-3xl font-serif font-bold'>GP FLOWERS</h2><br/>
         <form onSubmit={handleSubmit}>
           <label className='text-3xl'> Usuario: </label>
-          <input className='text-2xl rounded-md border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          <input style={estiloUsername} className='text-2xl rounded-md border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             type="text"
             name="username"
             value={valorUsername} onChange={asignarValorUsername}
           />
           <br/>
           <label className='text-3xl'>Contrasena: </label>
-            <input className='text-2xl rounded-md	border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            <input style={estiloUsername} className='text-2xl rounded-md	border-2 border-green-400 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               type="password"
               name="password"
               value={valorPassword} onChange={asignarValorPassword}
             /><br/>
-          
+                    {MostrarError && <p className="mt-2 text-sm text-red-600 dark:text-red-500">Datos Incorrectos, intente de nuevo</p>}
           <br />
+
 
           <button className='font-bold px-8 text-2xl flex-col items-center text-gray-900 bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded-lg py-2.5 text-center mr-2 mb-2 ' 
           type="submit" onClick={VerificarLogin} >Ingresar</button>
