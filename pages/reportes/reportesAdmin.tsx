@@ -12,6 +12,8 @@ interface Data {
 
 const Reportes_admin: React.FC = () => {
 
+  const router = useRouter()
+
   //se ejecuta la toma de datos por defecto
 
 
@@ -104,15 +106,10 @@ const Reportes_admin: React.FC = () => {
     { tipo_reporte: 'REPORTE PROVEEDORES', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores },
     { tipo_reporte: 'REPORTE ALMACEN', fecha_reporte: '25-10-2023', enlace: crearReporteAlmacen },
   ]);
-  const router = useRouter();
-
-  function Regresar() {
-    router.push('../indexAdmin');
-  }
 
   return (
     <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
-      <button type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={Regresar}>
+      <button onClick={router.back} type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
         REGRESAR
       </button>
       <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
