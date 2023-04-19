@@ -126,7 +126,7 @@ const Login = () => {
                 <input style={estiloUsername} value={valorPassword} onChange={asignarValorPassword} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
             </div>
 
-            {MostrarError && <p className="mt-2 text-sm text-red-600 dark:text-red-500">Datos Incorrectos, intente de nuevo</p>}
+            {MostrarError && <p className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">Datos Incorrectos, intente de nuevo</p>}
 
             <div className="flex items-start">
                 <div className="flex items-start">
