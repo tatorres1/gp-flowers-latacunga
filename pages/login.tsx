@@ -85,9 +85,9 @@ const Login = () => {
             setIngresaUsuario(true);
             router.push(direccion_usuario);
             break;
-          } else if ( (usuario.username !== valorUsername) && (usuario.password !== valorPassword) && (usuario.rol !== 'usuario') ){
-            alert("datos incorrectos");
-            break;
+          } else if ( (usuario.username !== valorUsername) && (usuario.password !== valorPassword)){
+            //alert("datos incorrectos");
+            
           } 
 
           
