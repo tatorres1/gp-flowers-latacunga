@@ -16,8 +16,6 @@ export default async function handler(req, res){
         res.status(200).json({almacen: almacen});
     }
 
-    
-
     if(req.method === "POST"){
         const cantidadAlmacen = req.body.cantidad_materialAlmacen;
         const nombreAlmacen = req.body.nombre_materialAlmacen;
