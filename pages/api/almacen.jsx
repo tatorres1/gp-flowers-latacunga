@@ -1,89 +1,91 @@
 import { query } from "@/lib/database";
 
-export default async function handler(req, res) {
+export default async function handler(req, res){
 
-    if (req.method === "GET") {
+
+    let message = "";
+
+    if(req.method === "GET"){
+
         const almacen = await query(
             {
-                query: "SELECT *FROM almacen",
+                query: "SELECT * FROM almacen",
                 values: [],
             }
         );
-        res.status(200).json({ almacen: almacen });
+        res.status(200).json({almacen: almacen});
     }
 
-    if (req.method === "POST") {
+    if(req.method === "POST"){
         const cantidadAlmacen = req.body.cantidad_materialAlmacen;
         const nombreAlmacen = req.body.nombre_materialAlmacen;
         const tipoAlmacen = req.body.tipo_materialAlmacen;
         const observacionesAlmacen = req.body.observaciones_materialAlmacen;
-       
+
         const addAlmacen = await query({
-            query: "INSERT INTO almacen (cantidad_materialAlmacen, nombre_materialAlmacen, tipo_materialAlmacen, observaciones_materialAlmacen) VALUES (?,?,?,?)",
-            values: ([cantidadAlmacen, nombreAlmacen, tipoAlmacen, observacionesAlmacen]),
+            query: "INSERT INTO almacen (cantidad_materialAlmacen, nombre_materialAlmacen, tipo_materialAlmacen, observaciones_materialAlmacen) VALUES (?,?,?,?)",              
+            values: ([cantidadAlmacen,
+                    nombreAlmacen,
+                    tipoAlmacen,
+                    observacionesAlmacen]),
         });
-        let message = "";
-        if (addAlmacen.insertId) {
+
+        if(addAlmacen.insertId){
             message = "success";
         } else {
             message = "error";
         }
         let almacen = {
             id_materialAlmacen: addAlmacen.insertId,
-            cantidad_materialAlmacen: cantidadAlmacen,
-            nombre_materialAlmacen: nombreAlmacen,
-            tipo_materialAlmacen: tipoAlmacen,
-            observaciones_materialAlmacen: observacionesAlmacen,
+            nombre_materialAlmacen: nombreAlmacen, 
         };
-        res.status(200).json({ response: { message: message, almacen: almacen } });
+        res.status(200).json({response: {message: message, almacen: almacen}});
     }
 
-    if (req.method === "PUT") {
+    if(req.method === "PUT"){
+
         const idAlmacen = req.body.id_materialAlmacen;
         const cantidadAlmacen = req.body.cantidad_materialAlmacen;
         const nombreAlmacen = req.body.nombre_materialAlmacen;
         const tipoAlmacen = req.body.tipo_materialAlmacen;
         const observacionesAlmacen = req.body.observaciones_materialAlmacen;
+
         const updateAlmacen = await query({
-            query: "UPDATE almacen SET cantidad_materialAlmacen = ?, nombre_materialAlmacen = ?, tipo_materialAlmacen = ?, observaciones_materialAlmacen = ? WHERE id_materialAlmacen = ? ",
-            values: [ cantidadAlmacen, nombreAlmacen, tipoAlmacen, observacionesAlmacen, idAlmacen ],
+
+            query: "UPDATE almacen SET cantidad_materialAlmacen=?, nombre_materialAlmacen=?, tipo_materialAlmacen=?, observaciones_materialAlmacen=? WHERE id_materialAlmacen=?",
+            values: ([cantidadAlmacen,nombreAlmacen,tipoAlmacen, observacionesAlmacen,idAlmacen]),
+                         
         });
-        let message='';
+
         const result = updateAlmacen.affectedRows;
-        if (result) {
+        if(result){
             message = "success";
         } else {
-            message = "error al editar";
+            message = "error";
         }
-        const almacen = {
+        let almacen = {
             id_materialAlmacen: idAlmacen,
             cantidad_materialAlmacen: cantidadAlmacen,
             nombre_materialAlmacen: nombreAlmacen,
-            tipo_materialAlmacen : tipoAlmacen,
-            observaciones_materialAlmacen : observacionesAlmacen ,
+            tipo_materialAlmacen: tipoAlmacen,
+            observaciones_materialAlmacen: observacionesAlmacen,  
         };
-        res
-            .status(200)
-             .json({ response: { message: message, almacen: almacen } });
+        res.status(200).json({response: {message: message, almacen: almacen}});
     }
+    
 
     if (req.method === "DELETE") {
         const idAlmacen = req.body.id_materialAlmacen;
         const deleteAlmacen = await query({
-            query: "DELETE FROM almacen WHERE id_materialAlmacen = ?",
-            values: [idAlmacen],
-
+          query: "DELETE FROM almacen WHERE id_materialAlmacen = ?",
+          values: [idAlmacen],
         });
-
         const result = deleteAlmacen.affectedRows;
-        let message = "";
         if (result) {
-            message = "success";
+          message = "success";
         } else {
-            message = "error al eliminar";
+          message = "error";
         }
-        res
-            .status(200)
-            .json({ response: { message: message, id_materialAlmacen: idAlmacen } });
-    }
+        res.status(200).json({ response: { message: message, almacen: almacen } });
+      }
 }
