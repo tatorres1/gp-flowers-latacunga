@@ -12,7 +12,28 @@ const Facturacion: React.FC = () => {
   const [estadoTerceraSeccion, setEstadoTerceraSeccion] = useState(false);
 
   //variables de formulario
-  const [marketingName, setMarketingName] = useState("");
+  const [valorIdFacturacion, setValorIdFacturacion] = useState("");
+  const [valorMarketingName, setValorMarketingName] = useState("");
+  const [valorCliente, setValorCliente] = useState("");
+  const [valorMarcacion, setValorMarcacion] = useState("");
+  const [valorPais, setValorPais] = useState("");
+  const [valorConsignment, setValorConsignment] = useState("");
+  const [valorFarmCode, setValorFarmCode] = useState("");
+  const [valorDate, setValorDate] = useState("");
+  const [valorIncoterm, setValorIncoterm] = useState("");
+  const [valorCountryCode, setValorCountryCode] = useState("");
+  const [valorMawb, setValorMawb] = useState("");
+  const [valorHawb, setValorHawb] = useState("");
+  const [valorAirLine, setValorAirLine] = useState("");
+  const [valorCurrierFreight, setValorCurrierFreight] = useState("");
+  const [valorRuc, setValorRuc] = useState("");
+  const [valorNoEmbarque, setValorNoEmbarque] = useState("");
+  const [valorPersonInvoice, setValorPersonInvoice] = useState("");
+  const [valorInvoice, setValorInvoice] = useState("");
+  const [valorUsdaOnly, setValorUsdaOnly] = useState("");
+  const [valorObservacionesFactura, setValorObservacionesFactura] = useState("");
+
+
 
   const router = useRouter()
 
@@ -181,10 +202,86 @@ const Facturacion: React.FC = () => {
   }
 
   //asignacion variables de formulario
-  const asignarMarketingName = event => {
-    setMarketingName(event.target.value);
+  const asignarIdFacturacion = event => {
+    setValorMarketingName(event.target.value);
   }
 
+  const asignarMarketingName = event => {
+    setValorMarketingName(event.target.value);
+  }
+
+  const asignarCliente = event => {
+    setValorCliente(event.target.value);
+  }
+
+  const asignarMarcacion = event => {
+    setValorMarcacion(event.target.value);
+  }
+
+  const asignarPais = event => {
+    setValorPais(event.target.value);
+  }
+
+  const asignarConsignment = event => {
+    setValorConsignment(event.target.value);
+  }
+
+  const asignarFarmCode = event => {
+    setValorFarmCode(event.target.value);
+  }
+
+  const asignarDate = event => {
+    setValorDate(event.target.value);
+  }
+
+  const asignarIncoterm = event => {
+    setValorIncoterm(event.target.value);
+  }
+  
+  const asignarCountryCode = event => {
+    setValorCountryCode(event.target.value);
+  }
+  
+  const asignarMawb = event => {
+    setValorMawb(event.target.value);
+  }
+  
+  const asignarHawb = event => {
+    setValorHawb(event.target.value);
+  }
+  
+  const asignarAirLine = event => {
+    setValorAirLine(event.target.value);
+  }
+  
+  const asignarCurrierFreight = event => {
+    setValorCurrierFreight(event.target.value);
+  }
+  
+  const asignarRuc = event => {
+    setValorRuc(event.target.value);
+  }
+  
+  const asignarNoEmbarque = event => {
+    setValorNoEmbarque(event.target.value);
+  }
+  
+  const asignarPersonInvoice = event => {
+    setValorPersonInvoice(event.target.value);
+  }
+   
+  const asignarInvoice = event => {
+    setValorInvoice(event.target.value);
+  }
+   
+  const asignarUsdaOnly = event => {
+    setValorUsdaOnly(event.target.value);
+  }
+   
+  const asignarObservacionesFactura = event => {
+    setValorObservacionesFactura(event.target.value);
+  }
+  
   //funcion para update, mostrar data por defecto
   async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
     setValorDefectoId(id);
@@ -327,6 +424,13 @@ const Facturacion: React.FC = () => {
   return (
     <Fragment>
 
+              <button onClick={router.back} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                  REGRESAR
+                </span>
+              </button>
+
+
               <div>
                               <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
                   <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
@@ -382,20 +486,20 @@ const Facturacion: React.FC = () => {
                 <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
             </a>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Marketing Name</label>
-            <input value={marketingName} onChange={asignarMarketingName} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+            <input value={valorMarketingName} onChange={asignarMarketingName} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Consignee Name and Address</label>
             <a class="flex flex-col p-6 bg-white border border-gray-200 shadow md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex flex-row items-center justify-between pb-4 leading-normal">
                     <label for="first_name" class="block text-sm w-1/5 font-medium text-gray-900 dark:text-white">CLIENTE:</label>
-                    <input type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorCliente} onChange={asignarCliente} type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <div class="flex flex-row items-center justify-between pb-4 leading-normal">
                     <label for="first_name" class="block text-sm w-2/5 font-medium text-gray-900 dark:text-white">MARCACION:</label>
-                    <input type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorMarcacion} onChange={asignarMarcacion} type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <div class="flex flex-col justify-between leading-normal">
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">País</label>
-                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select value={valorPais} onChange={asignarPais} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <option selected>Escoja un País</option>
                       <option value="US">United States</option>
                       <option value="CA">Canada</option>
@@ -409,7 +513,7 @@ const Facturacion: React.FC = () => {
                       <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Consignment</label>  
                     </div>
                     <div className='flex flex-col w-2/5 items-center'>
-                      <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                      <input value={valorConsignment} onChange={asignarConsignment} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     </div>
             </div>
           </div>
@@ -417,38 +521,38 @@ const Facturacion: React.FC = () => {
               <div class="grid mb-6 md:grid-cols-2">
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Farm Code</label>
-                    <input type="text" id="first_name" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="GP" required/>
+                    <input value={valorFarmCode} onChange={asignarFarmCode} type="text" id="first_name" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="GP" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="23/02/2022" required/>
+                    <input value={valorDate} onChange={asignarDate} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="23/02/2022" required/>
                 </div>
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">INCOTERM</label>
-                    <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="FCA-UIO" required/>
+                    <input value={valorIncoterm} onChange={asignarIncoterm} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="FCA-UIO" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Country Code</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="EC" required/>
+                    <input value={valorCountryCode} onChange={asignarCountryCode} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="EC" required/>
                 </div>
               </div>
               <div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">MAWB No.</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="14509595784" required/>
+                    <input value={valorMawb} onChange={asignarMawb} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="14509595784" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">HAWB</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="893896" required/>
+                    <input value={valorHawb} onChange={asignarHawb} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="893896" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Air Line</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorAirLine} onChange={asignarAirLine} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Currier & Freight Forwarder</label>
                     <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option selected>Escoja VALUE CARGO</option>
+                      <option value={valorCurrierFreight} onChange={asignarCurrierFreight} selected>Escoja VALUE CARGO</option>
                       <option value="US">VALUE CARGO1</option>
                       <option value="CA">VALUE CARGO2</option>
                       <option value="FR">VALUE CARGO3</option>
@@ -459,11 +563,11 @@ const Facturacion: React.FC = () => {
               <div class="grid md:grid-cols-2">
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">R.U.C. No.</label>
-                    <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0502401011001" required/>
+                    <input value={valorRuc} onChange={asignarRuc} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0502401011001" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">No EMBARQUE</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorNoEmbarque} onChange={asignarNoEmbarque} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">DAE No.005-2023-40-00139723</label>
               </div>    
@@ -479,14 +583,6 @@ const Facturacion: React.FC = () => {
     
     {estadoSegundaSeccion &&
     <div className='w-full p-12  bg-gradient-to-r from-lime-300 to-cyan-300'>
-      <button onClick={router.back} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-            REGRESAR
-          </span>
-        </button>
-        <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
-          <img src={'../assets/images/logo.png'} alt="" />
-        </div>
 
         <form>
           <label className= "text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -557,17 +653,17 @@ const Facturacion: React.FC = () => {
         <div className='flex flex-col-2'>
                 <div className='m-12 w-1/2'>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Name and Title of person Preparing Invoice</label>
-                    <input type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorPersonInvoice} onChange={asignarPersonInvoice} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
         </div>
         <div className='flex flex-col-2'>
                 <div className='ml-12 w-1/2'>
-                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorInvoice} onChange={asignarInvoice} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
                 </div>
                 <div className='ml-12 w-1/2'>
-                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorUsdaOnly} onChange={asignarUsdaOnly} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">USDA, APHIS, P.P.Q. Use Only</label>
                 </div>
         </div>
