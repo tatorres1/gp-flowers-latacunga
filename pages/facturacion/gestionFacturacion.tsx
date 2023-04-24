@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
+import rowFactura from "../../components/rowFactura";
 
 
 
 const Facturacion: React.FC = () => {
+
+
+
+  
+
 
   const [valorTotalPices, setValorTotalPices] = useState(Number);
   const [valorNumeroBunches, setValorNumeroBunches] = useState(Number);
@@ -26,7 +32,85 @@ const Facturacion: React.FC = () => {
     setValorUnitPrice(event.target.value);
   }
 
+
+  const numTimes = 5;
+  const myVariable = valorTotalPices;
+
+  const htmlCode = <tbody>
+  <tr className="bg-white border-b" >
+    <td className='border border-lime-900 text-center text-lg'>
+    <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected></option>
+        <option value="US">FB</option>
+        <option value="CA">HB</option>
+        <option value="FR">QB</option>
+      </select>
+    </td>
+    <td className='border border-lime-900 text-center text-lg'>
+      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <label>{valorTotalPices/2}</label>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected></option>
+        <option value="US">FREEDOM</option>
+        <option value="CA">BLUE</option>
+        <option value="FR">RAINBOW</option>
+      </select>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected></option>
+        <option value="US">40 cm</option>
+        <option value="CA">50 cm</option>
+        <option value="FR">60 cm</option>
+        <option value="CA">70 cm</option>
+        <option value="CA">80 cm</option>
+        <option value="CA">90 cm</option>
+        <option value="CA">100 cm</option>
+      </select>
+    </td>
+    <td className='border border-lime-900 text-center text-lg'>
+      <input value={valorNumeroBunches} onChange={asignarNumeroBunches}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg'>
+      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <label>{valorNumeroBunches*valorStemsPerBunch}</label>
+    </td>
+    <td className='border border-lime-900 text-center text-lg '>
+      <input value={valorStemsPerBunch} onChange={asignarStemsPerBunch}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg'>
+      <input value={valorUnitPrice} onChange={asignarUnitPrice}></input>
+    </td>
+    <td className='border border-lime-900 text-center text-lg'>
+      <label>{valorUnitPrice*valorStemsPerBunch*valorNumeroBunches}</label>
+    </td>
+  </tr>
+
+
+
+</tbody>;
+
+  const renderHtmlCode = () => {
+    return htmlCode;
+  };
+
+  function renderHtmlMultipleTimes(){
+    for (let i = 0; i < 3; i++) {
+      return htmlCode;
+    }
+  };
+
   return (
+    <Fragment>
     <div>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
@@ -157,71 +241,53 @@ const Facturacion: React.FC = () => {
                 <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL VALUE USD.</th>
               </tr>
             </thead>
-            <tbody>
-                <tr className="bg-white border-b" >
-                  <td className='border border-lime-900 text-center text-lg'>
-                  <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option selected></option>
-                      <option value="US">FB</option>
-                      <option value="CA">HB</option>
-                      <option value="FR">QB</option>
-                    </select>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg'>
-                    <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <label>{valorTotalPices/2}</label>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option selected></option>
-                      <option value="US">FREEDOM</option>
-                      <option value="CA">BLUE</option>
-                      <option value="FR">RAINBOW</option>
-                    </select>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option selected></option>
-                      <option value="US">40 cm</option>
-                      <option value="CA">50 cm</option>
-                      <option value="FR">60 cm</option>
-                      <option value="CA">70 cm</option>
-                      <option value="CA">80 cm</option>
-                      <option value="CA">90 cm</option>
-                      <option value="CA">100 cm</option>
-                    </select>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg'>
-                    <input value={valorNumeroBunches} onChange={asignarNumeroBunches}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg'>
-                    <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <label>{valorNumeroBunches*valorStemsPerBunch}</label>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg '>
-                    <input value={valorStemsPerBunch} onChange={asignarStemsPerBunch}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg'>
-                    <input value={valorUnitPrice} onChange={asignarUnitPrice}></input>
-                  </td>
-                  <td className='border border-lime-900 text-center text-lg'>
-                    <label>{valorUnitPrice*valorStemsPerBunch*valorNumeroBunches}</label>
-                  </td>
-                </tr>
-              
-              
-              
-            </tbody>
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
+            {renderHtmlMultipleTimes()}
           </table>
         </div>
+
+        {/*seccion pie*/}
+        <div className='flex flex-col-2'>
+                <div className='m-12 w-1/2'>
+                    <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Name and Title of person Preparing Invoice</label>
+                    <input type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                </div>
+                <div className='m-12'>
+                    <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                      <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                          GUARDAR
+                      </span>
+                    </button>                
+                </div>
+        </div>
+        <div className='flex flex-col-2'>
+                <div className='ml-12 w-1/2'>
+                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
+                    <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
+                </div>
+                <div className='ml-12 w-1/2'>
+                    <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">USDA, APHIS, P.P.Q. Use Only</label>
+                </div>
+        </div>
     </div>
+
+      
+
+
+    
+
+
+    </Fragment>
     
   );
 
