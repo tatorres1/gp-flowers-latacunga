@@ -37,7 +37,7 @@ const Facturacion: React.FC = () => {
 
   const router = useRouter()
 
-  const [proveedores, setProveedores] = useState([]);
+  const [facturaciones, setFacturaciones] = useState([]);
 
   //control de modal, declaracion de const
   const [showModal, setShowModal] = useState(false);
@@ -64,33 +64,93 @@ const Facturacion: React.FC = () => {
   //valor que se usa de filtro
   const [valorAFiltrar, setValorAFiltrar] = useState("");
 
-  //funciones de consulta
-  async function getProveedores(){
+  //valor de paises de database
+  const [paises, setPaises] = useState([]);
+  //valor de value cargo de database
+  const [valueCargo, setValueCargo] = useState([]);
+
+
+  //convirtiendo en array el valor de paises para que se mapee una sola vez
+  //y se muestre solamente un solo componente select
+  const opcionesPaises = paises.map((pais) => ({
+    value: pais.name,
+    label: pais.name
+  }));
+
+  const opcionesValueCargo = valueCargo.map((cargo) => ({
+    valueCargo: cargo.name,
+    labelCargo: cargo.name
+  }));
+
+  //funcion de consulta de paises
+  async function getPaises(){
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/paises`,
     postData);
     const response = await res.json();
-    setProveedores(response.proveedores);
+    setPaises(response.paises);
+  }
+  
+  //funcion de consulta de value cargo
+  async function getValueCargo(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/value_cargo`,
+    postData);
+    const response = await res.json();
+    setValueCargo(response.cargo);
+  }  
+
+
+  //funciones de consulta
+  async function getFacturacion(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+    postData);
+    const response = await res.json();
+    setFacturaciones(response.facturacion);
   }
 
   //filtra los datos de consulta
   async function getFiltroProveedores(){
     
     const queryParams = new URLSearchParams({
-      id_proveedor: valorAFiltrar ,
-      cedula_proveedor: valorAFiltrar,
-      nombre_proveedor: valorAFiltrar,
-      telefono_proveedor: valorAFiltrar,
-      observaciones_proveedor: valorAFiltrar,
+      id_calFacturacion: valorAFiltrar ,
+      cliente_calFacturacion: valorAFiltrar,
+      marcacion_calFacturacion: valorAFiltrar,
+      pais_calFacturacion: valorAFiltrar,
+      consignment_calFacturacion: valorAFiltrar,
+      farmCode_calFacturacion: valorAFiltrar,
+      date_calFacturacion: valorAFiltrar,
+      incoterm_calFacturacion: valorAFiltrar,
+      countryCode_calFacturacion: valorAFiltrar,
+      mawb_calFacturacion: valorAFiltrar,
+      hawb_calFacturacion: valorAFiltrar,
+      airLine_calFacturacion: valorAFiltrar,
+      currierFreight_calFacturacion: valorAFiltrar,
+      ruc_calFacturacion: valorAFiltrar,
+      noEmbarque_calFacturacion: valorAFiltrar,
+      personInvoice_calFacturacion: valorAFiltrar,
+      invoice_calFacturacion: valorAFiltrar,
+      usdaOnly_calFacturacion: valorAFiltrar,
     });
     
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/proveedores_filtro?${queryParams.toString()}`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_form_filtro?${queryParams.toString()}`,
       {
         method: "GET",
         headers: {
@@ -100,103 +160,115 @@ const Facturacion: React.FC = () => {
     );
     const response = await res.json();
     //en caso de no encontrar el elemento
-    if (response.proveedores.length === 0) {
+    if (response.facturacion.length === 0) {
       alert("No se encontraron resultados de la busqueda, vuelve hacerlo");
     } else {
-      setProveedores(response.proveedores);
+      setFacturaciones(response.facturacion);
     }
   }
 
-  async function addProveedor(){
+  async function addFacturacion(){
     const postData = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        cedula_proveedor: valorCedula,
-        nombre_proveedor: valorNombre,
-        telefono_proveedor: valorTelefono,
-        observaciones_proveedor: valorObservaciones
+        marketingName_calFacturacion: valorMarketingName,
+        cliente_calFacturacion:  valorCliente,
+        marcacion_calFacturacion: valorMarcacion,
+        pais_calFacturacion: valorPais,
+        consignment_calFacturacion: valorConsignment,
+        farmCode_calFacturacion: valorFarmCode,
+        date_calFacturacion: valorDate,
+        incoterm_calFacturacion: valorIncoterm,
+        countryCode_calFacturacion: valorCountryCode,
+        mawb_calFacturacion: valorMawb,
+        hawb_calFacturacion: valorHawb,
+        airLine_calFacturacion: valorAirLine,
+        currierFreight_calFacturacion: valorCurrierFreight,
+        ruc_calFacturacion: valorRuc,
+        noEmbarque_calFacturacion: valorNoEmbarque,
+        personInvoice_calFacturacion: valorPersonInvoice,
+        invoice_calFacturacion: valorInvoice,
+        usdaOnly_calFacturacion: valorUsdaOnly,
       }),
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
       postData
     );
     const response = await res.json();
     if(response.response.message != "success") return;    
   }
 
-  async function updateProveedor(){
+  async function updateFacturacion(){
     const postData = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_proveedor: valorId,
-        cedula_proveedor: valorCedula,
-        nombre_proveedor: valorNombre,
-        telefono_proveedor: valorTelefono,
-        observaciones_proveedor: valorObservaciones
+        id_calFacturacion: valorIdFacturacion,
+        marketingName_calFacturacion: valorMarketingName,
+        cliente_calFacturacion:  valorCliente,
+        marcacion_calFacturacion: valorMarcacion,
+        pais_calFacturacion: valorPais,
+        consignment_calFacturacion: valorConsignment,
+        farmCode_calFacturacion: valorFarmCode,
+        date_calFacturacion: valorDate,
+        incoterm_calFacturacion: valorIncoterm,
+        countryCode_calFacturacion: valorCountryCode,
+        mawb_calFacturacion: valorMawb,
+        hawb_calFacturacion: valorHawb,
+        airLine_calFacturacion: valorAirLine,
+        currierFreight_calFacturacion: valorCurrierFreight,
+        ruc_calFacturacion: valorRuc,
+        noEmbarque_calFacturacion: valorNoEmbarque,
+        personInvoice_calFacturacion: valorPersonInvoice,
+        invoice_calFacturacion: valorInvoice,
+        usdaOnly_calFacturacion: valorUsdaOnly,
       }),
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
       postData
     );
     const response = await res.json();
-    console.log(response.response.proveedor);
+    console.log(response.response.facturacion);
     if(response.response.message != "success") return;
   }
 
-  async function deleteProveedor() {
-    console.log(proveedores.values);
+  async function deleteFacturacion() {
+    console.log(facturaciones.values);
     const postData = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_proveedor: valorBorrar,
+        id_calFacturacion: valorBorrar,
       }),
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
       postData
     );
     const response = await res.json();
-    console.log(response.response.proveedor);
+    console.log(response.response.facturacion);
     if(response.response.message != "success") return;
   }
 
   useEffect(() => {
-    getProveedores();
+    getPaises();
+    getValueCargo();
+  
+    getFacturacion();
+    
   }, []);
 
 
-  //asignacion de valores
-  const asignarId = event => {
-    setValorId(event.target.value);
-  }
-
-  const asignarCedula = event => {
-    setValorCedula(event.target.value);
-  }
-
-  const asignarNombre = event => {
-    setvalorNombre(event.target.value);
-  }
-
-  const asignarTelefono = event => {
-    setvalorTelefono(event.target.value);
-  }
-
-  const asignarObservaciones = event => {
-    setvalorObservaciones(event.target.value);
-  }
-
+  //asignacion valor a filtrar
   const asignarValorAFiltrar = event => {
     setValorAFiltrar(event.target.value);
   }
@@ -499,13 +571,14 @@ const Facturacion: React.FC = () => {
                 </div>
                 <div class="flex flex-col justify-between leading-normal">
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">País</label>
-                    <select value={valorPais} onChange={asignarPais} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option selected>Escoja un País</option>
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                      <option value="FR">France</option>
-                      <option value="DE">Germany</option>
-                    </select>
+                    <div>
+                      <select value={valorPais} onChange={asignarPais} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option selected>Escoja un País</option>
+                          {opcionesPaises.map((opcion) => (
+                            <option value={opcion.value}>{opcion.label}</option>
+                          ))}
+                      </select>
+                    </div>
                 </div>
             </a>
             <div className='flex flex-row items-center pt-6'>
@@ -551,13 +624,14 @@ const Facturacion: React.FC = () => {
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Currier & Freight Forwarder</label>
-                    <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option value={valorCurrierFreight} onChange={asignarCurrierFreight} selected>Escoja VALUE CARGO</option>
-                      <option value="US">VALUE CARGO1</option>
-                      <option value="CA">VALUE CARGO2</option>
-                      <option value="FR">VALUE CARGO3</option>
-                      <option value="DE">VALUE CARGO4</option>
-                    </select>
+                    <div className='mb-6'>
+                      <select value={valorCurrierFreight} onChange={asignarCurrierFreight} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option selected>Escoja el Value Cargo</option>
+                          {opcionesValueCargo.map((opcionCargo) => (
+                            <option value={opcionCargo.valueCargo}>{opcionCargo.labelCargo}</option>
+                          ))}
+                      </select>
+                    </div>
                 </div>
               </div>
               <div class="grid md:grid-cols-2">
@@ -618,13 +692,13 @@ const Facturacion: React.FC = () => {
                     </thead>
                     <tbody>
                       
-                      {proveedores.map((proveedores) => (
-                        <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
-                          <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
-                          <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
+                      {facturaciones.map((facturaciones) => (
+                        <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={facturaciones.id_calFacturacion}>
+                          <td className='border border-lime-900 text-center text-lg'>{facturaciones.marketingName_calFacturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg'>{facturaciones.cliente_calFacturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.marcacion_calFacturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.pais_calFacturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.consignment_calFacturacion}</td>
 
                           <td className="border border-lime-900 px-6 py-4 text-center">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(proveedores.id_proveedor, proveedores.cedula_proveedor, proveedores.nombre_proveedor, proveedores.telefono_proveedor, proveedores.observaciones_proveedor);}}>EDITAR</a></td>
@@ -668,7 +742,7 @@ const Facturacion: React.FC = () => {
                 </div>
         </div>
         <div className='m-12'>
-                    <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button onClick={() => {addFacturacion()}}  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                       <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                           GUARDAR
                       </span>
@@ -685,19 +759,19 @@ const Facturacion: React.FC = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         CEDULA
                       </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorCedula}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         NOMBRE
                       </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorNombre}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         TELEFONO
                       </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorTelefono}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         OBSERVACIONES
                       </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
+                      <input value={valorObservaciones}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
 
                       <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Guardar</button>
@@ -716,23 +790,23 @@ const Facturacion: React.FC = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         ID
                       </label>
-                      <input value={valorId} onChange={asignarId} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoId}/>
+                      <input value={valorId}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoId}/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         CEDULA
                       </label>
-                      <input value={valorCedula} onChange={asignarCedula} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoCedula}/>
+                      <input value={valorCedula}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoCedula}/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         NOMBRE
                       </label>
-                      <input value={valorNombre} onChange={asignarNombre} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoNombre}/>
+                      <input value={valorNombre}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoNombre}/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         TELEFONO
                       </label>
-                      <input value={valorTelefono} onChange={asignarTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoTelefono}/>
+                      <input value={valorTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoTelefono}/>
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
                         OBSERVACIONES
                       </label>
-                      <input value={valorObservaciones} onChange={asignarObservaciones} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
+                      <input value={valorObservaciones}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
 
                       <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Actualizar
