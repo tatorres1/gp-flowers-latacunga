@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import rowFactura from "../../components/rowFactura";
-import Modal from "../../components/Modal";
+import Modal from "../../components/ModalFacturacion";
 
 
 const Facturacion: React.FC = () => {
@@ -33,6 +33,22 @@ const Facturacion: React.FC = () => {
   const [valorUsdaOnly, setValorUsdaOnly] = useState("");
   const [valorObservacionesFactura, setValorObservacionesFactura] = useState("");
 
+  //valores de contenido de factura
+  const [valorIdContFacturacion, setValorIdContFacturacion] = useState("");
+  const [valorPicesTypeContFacturacion, setValorPicesTypeContFacturacion] = useState("");
+  const [valorTotalPicesContFacturacion, setValorTotalPicesContFacturacion] = useState("");
+  const [valorEqFullBoxesContFacturacion, setValorEqFullBoxesContFacturacion] = useState("");
+  const [valorProductRosasContFacturacion, setValorProductRosasContFacturacion] = useState("");
+  const [valorLongitudIdContFacturacion, setValorLongitudIdContFacturacion] = useState("");
+  const [valorNoBunchesContFacturacion, setValorNoBunchesContFacturacion] = useState("");
+  const [valorIndicatorContFacturacion, setValorIndicatorContFacturacion] = useState("");
+  const [valorHtsContFacturacion, setValorHtsContFacturacion] = useState("");
+  const [valorNandinaContFacturacion, setValorNandinaContFacturacion] = useState("");
+  const [valorTotalStemsIdContFacturacion, setValorTotalStemsIdContFacturacion] = useState("");
+  const [valorStemsPerBunchContFacturacion, setValorStemsPerBunchContFacturacion] = useState("");
+  const [valorUnitPriceContFacturacion, setValorUnitPriceContFacturacion] = useState("");
+  const [valorTotalContFacturacion, setValorTotalContFacturacion] = useState("");
+  
 
 
   const router = useRouter()
@@ -69,6 +85,13 @@ const Facturacion: React.FC = () => {
   //valor de value cargo de database
   const [valueCargo, setValueCargo] = useState([]);
 
+  //contenido de cuerpo de facturacion
+  const [valueContFacturaciones, setContFacturaciones] = useState([]);
+
+  //variedad de flor
+  const [variedades, setVariedades] = useState([]);
+  const [valorVariedades, setValorVariedades] = useState("");
+
 
   //convirtiendo en array el valor de paises para que se mapee una sola vez
   //y se muestre solamente un solo componente select
@@ -80,6 +103,11 @@ const Facturacion: React.FC = () => {
   const opcionesValueCargo = valueCargo.map((cargo) => ({
     valueCargo: cargo.name,
     labelCargo: cargo.name
+  }));
+  
+  const opcionesVariedad = variedades.map((vard) => ({
+    value: vard.nombre_VariedadFlor,
+    label: vard.nombre_VariedadFlor
   }));
 
   //funcion de consulta de paises
@@ -111,7 +139,7 @@ const Facturacion: React.FC = () => {
   }  
 
 
-  //funciones de consulta
+  //funciones de consulta facturacion
   async function getFacturacion(){
     const postData = {
       method: "GET",
@@ -123,6 +151,34 @@ const Facturacion: React.FC = () => {
     postData);
     const response = await res.json();
     setFacturaciones(response.facturacion);
+  }
+
+    //funciones de consulta de contenido de cuerpo facturacion
+  async function getContFacturacion(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido`,
+    postData);
+    const response = await res.json();
+    setContFacturaciones(response.contFacturacion);
+  }
+
+  //funcion de consulta para variedad
+  async function getVariedad(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/variedad`,
+    postData);
+    const response = await res.json();
+    setVariedades(response.variedad);
   }
 
   //filtra los datos de consulta
@@ -264,6 +320,8 @@ const Facturacion: React.FC = () => {
     getValueCargo();
   
     getFacturacion();
+    getContFacturacion();
+    getVariedad();
     
   }, []);
 
@@ -353,6 +411,12 @@ const Facturacion: React.FC = () => {
   const asignarObservacionesFactura = event => {
     setValorObservacionesFactura(event.target.value);
   }
+
+  //asignacion cuerpo factura
+  const asignarVariedad = event => {
+    setValorVariedades(event.target.value);
+  }
+
   
   //funcion para update, mostrar data por defecto
   async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
@@ -420,68 +484,99 @@ const Facturacion: React.FC = () => {
   const numTimes = 5;
   const myVariable = valorTotalPices;
 
-  const htmlCode = <tbody>
-  <tr className="bg-white border-b" >
-    <td className='border border-lime-900 text-center text-lg'>
-    <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected></option>
-        <option value="US">FB</option>
-        <option value="CA">HB</option>
-        <option value="FR">QB</option>
-      </select>
-    </td>
-    <td className='border border-lime-900 text-center text-lg'>
-      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <label>{valorTotalPices/2}</label>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected></option>
-        <option value="US">FREEDOM</option>
-        <option value="CA">BLUE</option>
-        <option value="FR">RAINBOW</option>
-      </select>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected></option>
-        <option value="US">40 cm</option>
-        <option value="CA">50 cm</option>
-        <option value="FR">60 cm</option>
-        <option value="CA">70 cm</option>
-        <option value="CA">80 cm</option>
-        <option value="CA">90 cm</option>
-        <option value="CA">100 cm</option>
-      </select>
-    </td>
-    <td className='border border-lime-900 text-center text-lg'>
-      <input value={valorNumeroBunches} onChange={asignarNumeroBunches}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg'>
-      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <input value={valorTotalPices} onChange={asignarTotalPices}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <label>{valorNumeroBunches*valorStemsPerBunch}</label>
-    </td>
-    <td className='border border-lime-900 text-center text-lg '>
-      <input value={valorStemsPerBunch} onChange={asignarStemsPerBunch}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg'>
-      <input value={valorUnitPrice} onChange={asignarUnitPrice}></input>
-    </td>
-    <td className='border border-lime-900 text-center text-lg'>
-      <label>{valorUnitPrice*valorStemsPerBunch*valorNumeroBunches}</label>
-    </td>
-  </tr>
+  const htmlCode = 
+  <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+
+    <table className='sm:rounded-lg w-full text-sm text-left dark:text-gray-400'>
+      <thead className='text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400'>
+                      <tr>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">ID</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">PICES TYPE</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL PICES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">EQ. FULL BOXES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">PRODUCT ROSAS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">LONGITUD</th>
+                        <th scope="col" className="text-center px-15 py-3 text-xl"># BUNCHES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">INDICATOR</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">HTS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">NANDINA</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL STEMS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">STEMS/BUNCH</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">UNIT PRICE</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL VALUE USD.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="bg-white" >
+                          <td className='text-center text-lg'>
+                            <label className='w-20 h-20 text-center'>{valorNumeroBunches*valorStemsPerBunch}</label>
+                          </td>
+                          <td className='text-center text-lg'>
+                          <select class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected></option>
+                              <option value="FB">FB</option>
+                              <option value="HB">HB</option>
+                              <option value="QB">QB</option>
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <label>{valorTotalPices/2}</label>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <select value={valorVariedades} onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected>Escoja la Variedad</option>
+                              {opcionesVariedad.map((opcion) => (
+                                <option value={opcion.value}>{opcion.label}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <select class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected>Escoja la longitud</option>
+                              <option value="40 cm">40 cm</option>
+                              <option value="50 cm">50 cm</option>
+                              <option value="60 cm">60 cm</option>
+                              <option value="70 cm">70 cm</option>
+                              <option value="80 cm">80 cm</option>
+                              <option value="90 cm">90 cm</option>
+                              <option value="100 cm">100 cm</option>
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={asignarNumeroBunches}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <label className='w-20 h-20 text-center'>{valorNumeroBunches*valorStemsPerBunch}</label>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={asignarStemsPerBunch}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={asignarUnitPrice}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <label className='w-20 h-20 text-center text-3xl font-bold'>{valorUnitPrice*valorStemsPerBunch*valorNumeroBunches}</label>
+                          </td>
+                        </tr>
 
 
 
-</tbody>;
+                      </tbody>
+    </table>
+  </div>
+  ;
 
   const renderHtmlCode = () => {
     return htmlCode;
@@ -692,16 +787,23 @@ const Facturacion: React.FC = () => {
                     </thead>
                     <tbody>
                       
-                      {facturaciones.map((facturaciones) => (
-                        <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={facturaciones.id_calFacturacion}>
-                          <td className='border border-lime-900 text-center text-lg'>{facturaciones.marketingName_calFacturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg'>{facturaciones.cliente_calFacturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.marcacion_calFacturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.pais_calFacturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{facturaciones.consignment_calFacturacion}</td>
+                      {valueContFacturaciones.map((contFacturaciones) => (
+                        <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={contFacturaciones.id_cont_facturacion}>
+                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.picesType_cont_facturacion}
+                            <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected></option>
+                              <option value="FB">FB</option>
+                              <option value="HB">HB</option>
+                              <option value="QB">QB</option>
+                            </select>
+                          </td>
+                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.totalPices_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.eqFullBoxes_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.productRosas_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.longitud_cont_facturacion}</td>
 
                           <td className="border border-lime-900 px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(proveedores.id_proveedor, proveedores.cedula_proveedor, proveedores.nombre_proveedor, proveedores.telefono_proveedor, proveedores.observaciones_proveedor);}}>EDITAR</a></td>
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);}}>EDITAR</a></td>
                           <td className="border border-lime-900 px-6 py-4 text-center">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(proveedores.id_proveedor);}}>ELIMINAR</a> </td>
                         </tr>
@@ -753,33 +855,10 @@ const Facturacion: React.FC = () => {
 
     <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
               <div>
-                <form className="w-full max-w-lg">
-
-                  <div className="w-full md:w-full px-3">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        CEDULA
-                      </label>
-                      <input value={valorCedula}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        NOMBRE
-                      </label>
-                      <input value={valorNombre}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        TELEFONO
-                      </label>
-                      <input value={valorTelefono}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        OBSERVACIONES
-                      </label>
-                      <input value={valorObservaciones}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder=""/>
-
-                      <button onClick={() => {addProveedor(); getProveedores(); setShowModal(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Guardar</button>
-
-                  </div>
-
-                  
-                </form>
+                <div>
+                  <p>{htmlCode}</p>
+                </div>
+                
               </div>
     </Modal>
     <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>

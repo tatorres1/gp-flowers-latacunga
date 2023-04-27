@@ -7,13 +7,13 @@ export default async function handler(req, res){
 
     if(req.method === "GET"){
 
-        const contenido_facturacion = await query(
+        const contFacturacion = await query(
             {
-                query: "SELECT * FROM contenido_facturacion",
+                query: "SELECT * FROM cont_facturacion",
                 values: [],
             }
         );
-        res.status(200).json({contenido_facturacion: contenido_facturacion});
+        res.status(200).json({contFacturacion: contFacturacion});
     }
 
     
