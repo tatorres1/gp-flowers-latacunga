@@ -462,12 +462,12 @@ const Facturacion: React.FC = () => {
     setValorEqFullBoxesContFacturacion(calculo);
   }
 
-  const asignarStemsPerBunch = event => {
-    setValorStemsPerBunch(event.target.value);
-  }
-
   const asignarNumeroBunches = event => {
     setValorNumeroBunches(event.target.value);
+  }
+
+  const asignarStemsPerBunch = event => {
+    setValorStemsPerBunch(event.target.value);
   }
 
   const asignarUnitPrice = event => {
@@ -500,8 +500,17 @@ const Facturacion: React.FC = () => {
     setValorNandinaContFacturacion(event.target.value);
   }
 
-  const asignarTotalStems = event => {
-    setValorPicesTypeContFacturacion(event.target.value);
+  const asignarTotalStems = (event, opcionOperacion) => {
+    //el valor por el que se multiplica el evento debe ser el otro valor, cambia ese valor
+    //controlar id para hacer una u otra operacion con variables distintas
+    let calculo;
+    if(opcionOperacion == 1){
+      calculo = event.target.value*valorStemsPerBunch
+    }else if (opcionOperacion == 2){
+      calculo = event.target.value*valorNumeroBunches;
+    }
+    
+    setValorTotalStemsIdContFacturacion(calculo);
   }
 
   const asignarValorTotal = event => {
@@ -544,7 +553,7 @@ const Facturacion: React.FC = () => {
                             <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center rounded-lg'></input>
                           </td>
                           <td className='text-center text-lg'>
                             <select value={valorVariedades} onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -567,22 +576,22 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={asignarNumeroBunches}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1)}}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorIndicatorContFacturacion} onChange={asignarIndicador}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorHtsContFacturacion} onChange={asignarHts}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNandinaContFacturacion} onChange={asignarNandina}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <label className='w-20 h-20 text-center'>{valorNumeroBunches*valorStemsPerBunch}</label>
+                            <input className='w-20 h-20 text-center rounded-lg' value={valorTotalStemsIdContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={asignarStemsPerBunch}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2)}}></input>
                           </td>
                           <td className='text-center text-lg'>
                             <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={asignarUnitPrice}></input>
@@ -872,7 +881,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlCode}</p>
                 </div>
                 <div>
-                  <button onClick={() => {alert(valorEqFullBoxesContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {alert(valorNandinaContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >GUARDAR
                   </button>
                 </div>
