@@ -36,17 +36,17 @@ const Facturacion: React.FC = () => {
   //valores de contenido de factura
   const [valorIdContFacturacion, setValorIdContFacturacion] = useState("");
   const [valorPicesTypeContFacturacion, setValorPicesTypeContFacturacion] = useState("");
-  const [valorTotalPices, setValorTotalPices] = useState(Number);
+  const [valorTotalPices, setValorTotalPices] = useState("");
   const [valorEqFullBoxesContFacturacion, setValorEqFullBoxesContFacturacion] = useState("");
   const [valorVariedades, setValorVariedades] = useState("");
   const [valorLongitudIdContFacturacion, setValorLongitudIdContFacturacion] = useState("");
-  const [valorNumeroBunches, setValorNumeroBunches] = useState(Number);
+  const [valorNumeroBunches, setValorNumeroBunches] = useState("");
   const [valorIndicatorContFacturacion, setValorIndicatorContFacturacion] = useState("");
   const [valorHtsContFacturacion, setValorHtsContFacturacion] = useState("");
   const [valorNandinaContFacturacion, setValorNandinaContFacturacion] = useState("");
   const [valorTotalStemsIdContFacturacion, setValorTotalStemsIdContFacturacion] = useState("");
-  const [valorStemsPerBunch, setValorStemsPerBunch] = useState(Number);
-  const [valorUnitPrice, setValorUnitPrice] = useState(Number);
+  const [valorStemsPerBunch, setValorStemsPerBunch] = useState("");
+  const [valorUnitPrice, setValorUnitPrice] = useState("");
   const [valorTotalContFacturacion, setValorTotalContFacturacion] = useState("");
 
 
@@ -222,6 +222,43 @@ const Facturacion: React.FC = () => {
   }
 
   async function addFacturacion(){
+    const postData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        marketingName_calFacturacion: valorMarketingName,
+        cliente_calFacturacion:  valorCliente,
+        marcacion_calFacturacion: valorMarcacion,
+        pais_calFacturacion: valorPais,
+        consignment_calFacturacion: valorConsignment,
+        farmCode_calFacturacion: valorFarmCode,
+        date_calFacturacion: valorDate,
+        incoterm_calFacturacion: valorIncoterm,
+        countryCode_calFacturacion: valorCountryCode,
+        mawb_calFacturacion: valorMawb,
+        hawb_calFacturacion: valorHawb,
+        airLine_calFacturacion: valorAirLine,
+        currierFreight_calFacturacion: valorCurrierFreight,
+        ruc_calFacturacion: valorRuc,
+        noEmbarque_calFacturacion: valorNoEmbarque,
+        personInvoice_calFacturacion: valorPersonInvoice,
+        invoice_calFacturacion: valorInvoice,
+        usdaOnly_calFacturacion: valorUsdaOnly,
+      }),
+    };
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+      postData
+    );
+    const response = await res.json();
+    if(response.response.message != "success") return;    
+  }
+
+
+  
+  async function addContFacturacion(){
     const postData = {
       method: "POST",
       headers: {
@@ -514,7 +551,33 @@ const Facturacion: React.FC = () => {
   }
 
   const asignarValorTotal = event => {
-    setValorTotalContFacturacion(event.target.value);
+    let calculo = event.target.value * valorTotalStemsIdContFacturacion;
+    setValorTotalContFacturacion(calculo);
+  }
+
+  /*const reAsignarValorTotal = event => {
+    let calculo = valorUnitPrice*valorTotalStemsIdContFacturacion;
+    setValorTotalContFacturacion(calculo);
+  }*/
+
+
+  //se debe crear una constante por cada input porque se necesita siempre de 
+  //un valor event para poder realizar operaciones
+  //cuando un input depende solo de un evento se manda directamente el valor y se realizar operaciones
+  //pero cuando se tienen varios eventos, se realizar una operacion completa en otra constante
+  //y se vuelve a asignar, se pasa desde donde se quiere realizar la accion un valor tipo opcion
+  //que indica que operacion realizar, es decir que valor ira a usar
+  //ignorando del que se esta tomando el valor event
+  //no existe una tercera operacion porque el total ya esta enlazado con el precio unitario
+  const reAsignarValorTotal = (event, opcionOperacion) => {
+    let calculo;
+    if(opcionOperacion == 1){
+      calculo = event.target.value*valorStemsPerBunch*valorUnitPrice
+    }else if (opcionOperacion == 2){
+      calculo = event.target.value*valorNumeroBunches*valorUnitPrice;
+    }
+
+    setValorTotalContFacturacion(calculo);
   }
 
   //seccion codigo de modal insertar
@@ -564,7 +627,7 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <select class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select value={valorLongitudIdContFacturacion} onChange={asignarLongitud} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                               <option selected>Escoja la longitud</option>
                               <option value="40 cm">40 cm</option>
                               <option value="50 cm">50 cm</option>
@@ -576,7 +639,7 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1)}}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1); reAsignarValorTotal(event, 1)}}></input>
                           </td>
                           <td className='text-center text-lg'>
                             <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorIndicatorContFacturacion} onChange={asignarIndicador}></input>
@@ -591,13 +654,13 @@ const Facturacion: React.FC = () => {
                             <input className='w-20 h-20 text-center rounded-lg' value={valorTotalStemsIdContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2)}}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2); reAsignarValorTotal(event, 2)}}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={asignarUnitPrice}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={ (event) => {asignarUnitPrice(event); asignarValorTotal(event)}}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <label className='w-20 h-20 text-center text-3xl font-bold'>{valorUnitPrice*valorStemsPerBunch*valorNumeroBunches}</label>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalContFacturacion} ></input>
                           </td>
                         </tr>
 
@@ -881,7 +944,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlCode}</p>
                 </div>
                 <div>
-                  <button onClick={() => {alert(valorNandinaContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {alert(valorTotalContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >GUARDAR
                   </button>
                 </div>
