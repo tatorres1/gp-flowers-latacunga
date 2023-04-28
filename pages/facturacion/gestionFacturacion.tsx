@@ -36,19 +36,18 @@ const Facturacion: React.FC = () => {
   //valores de contenido de factura
   const [valorIdContFacturacion, setValorIdContFacturacion] = useState("");
   const [valorPicesTypeContFacturacion, setValorPicesTypeContFacturacion] = useState("");
-  const [valorTotalPicesContFacturacion, setValorTotalPicesContFacturacion] = useState("");
+  const [valorTotalPices, setValorTotalPices] = useState(Number);
   const [valorEqFullBoxesContFacturacion, setValorEqFullBoxesContFacturacion] = useState("");
-  const [valorProductRosasContFacturacion, setValorProductRosasContFacturacion] = useState("");
+  const [valorVariedades, setValorVariedades] = useState("");
   const [valorLongitudIdContFacturacion, setValorLongitudIdContFacturacion] = useState("");
-  const [valorNoBunchesContFacturacion, setValorNoBunchesContFacturacion] = useState("");
+  const [valorNumeroBunches, setValorNumeroBunches] = useState(Number);
   const [valorIndicatorContFacturacion, setValorIndicatorContFacturacion] = useState("");
   const [valorHtsContFacturacion, setValorHtsContFacturacion] = useState("");
   const [valorNandinaContFacturacion, setValorNandinaContFacturacion] = useState("");
   const [valorTotalStemsIdContFacturacion, setValorTotalStemsIdContFacturacion] = useState("");
-  const [valorStemsPerBunchContFacturacion, setValorStemsPerBunchContFacturacion] = useState("");
-  const [valorUnitPriceContFacturacion, setValorUnitPriceContFacturacion] = useState("");
+  const [valorStemsPerBunch, setValorStemsPerBunch] = useState(Number);
+  const [valorUnitPrice, setValorUnitPrice] = useState(Number);
   const [valorTotalContFacturacion, setValorTotalContFacturacion] = useState("");
-  
 
 
   const router = useRouter()
@@ -90,7 +89,6 @@ const Facturacion: React.FC = () => {
 
   //variedad de flor
   const [variedades, setVariedades] = useState([]);
-  const [valorVariedades, setValorVariedades] = useState("");
 
 
   //convirtiendo en array el valor de paises para que se mapee una sola vez
@@ -321,8 +319,7 @@ const Facturacion: React.FC = () => {
   
     getFacturacion();
     getContFacturacion();
-    getVariedad();
-    
+    getVariedad();    
   }, []);
 
 
@@ -412,11 +409,6 @@ const Facturacion: React.FC = () => {
     setValorObservacionesFactura(event.target.value);
   }
 
-  //asignacion cuerpo factura
-  const asignarVariedad = event => {
-    setValorVariedades(event.target.value);
-  }
-
   
   //funcion para update, mostrar data por defecto
   async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
@@ -458,14 +450,16 @@ const Facturacion: React.FC = () => {
   ////////////////////////////////////////////
   
 
-
-  const [valorTotalPices, setValorTotalPices] = useState(Number);
-  const [valorNumeroBunches, setValorNumeroBunches] = useState(Number);
-  const [valorStemsPerBunch, setValorStemsPerBunch] = useState(Number);
-  const [valorUnitPrice, setValorUnitPrice] = useState(Number);
+  //asignacion de contenido de factura
   
+    //valores de calculo
   const asignarTotalPices = event => {
     setValorTotalPices(event.target.value);
+  }
+
+  const asignarEqFullBoxes = event => {
+    let calculo = event.target.value/2;
+    setValorEqFullBoxesContFacturacion(calculo);
   }
 
   const asignarStemsPerBunch = event => {
@@ -480,17 +474,47 @@ const Facturacion: React.FC = () => {
     setValorUnitPrice(event.target.value);
   }
 
+    //valores de lectura
 
-  const numTimes = 5;
-  const myVariable = valorTotalPices;
+  const asignarPicesType = event => {
+    setValorPicesTypeContFacturacion(event.target.value);
+  }
 
+  const asignarVariedad = event => {
+    setValorVariedades(event.target.value);
+  }
+
+  const asignarLongitud = event => {
+    setValorLongitudIdContFacturacion(event.target.value);
+  }
+
+  const asignarIndicador = event => {
+    setValorIndicatorContFacturacion(event.target.value);
+  }
+
+  const asignarHts = event => {
+    setValorHtsContFacturacion(event.target.value);
+  }
+
+  const asignarNandina = event => {
+    setValorNandinaContFacturacion(event.target.value);
+  }
+
+  const asignarTotalStems = event => {
+    setValorPicesTypeContFacturacion(event.target.value);
+  }
+
+  const asignarValorTotal = event => {
+    setValorTotalContFacturacion(event.target.value);
+  }
+
+  //seccion codigo de modal insertar
   const htmlCode = 
   <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
 
     <table className='sm:rounded-lg w-full text-sm text-left dark:text-gray-400'>
       <thead className='text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400'>
                       <tr>
-                        <th scope="col" className="text-center px-5 py-3 text-xl">ID</th>
                         <th scope="col" className="text-center px-5 py-3 text-xl">PICES TYPE</th>
                         <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL PICES</th>
                         <th scope="col" className="text-center px-5 py-3 text-xl">EQ. FULL BOXES</th>
@@ -509,10 +533,7 @@ const Facturacion: React.FC = () => {
                     <tbody>
                         <tr className="bg-white" >
                           <td className='text-center text-lg'>
-                            <label className='w-20 h-20 text-center'>{valorNumeroBunches*valorStemsPerBunch}</label>
-                          </td>
-                          <td className='text-center text-lg'>
-                          <select class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <select value={valorPicesTypeContFacturacion} onChange={asignarPicesType} class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                               <option selected></option>
                               <option value="FB">FB</option>
                               <option value="HB">HB</option>
@@ -520,10 +541,10 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalPices} onChange={asignarTotalPices}></input>
+                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <label>{valorTotalPices/2}</label>
+                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
                           </td>
                           <td className='text-center text-lg'>
                             <select value={valorVariedades} onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -578,15 +599,7 @@ const Facturacion: React.FC = () => {
   </div>
   ;
 
-  const renderHtmlCode = () => {
-    return htmlCode;
-  };
 
-  function renderHtmlMultipleTimes(){
-    for (let i = 0; i < 3; i++) {
-      return htmlCode;
-    }
-  };
 
   return (
     <Fragment>
@@ -770,7 +783,7 @@ const Facturacion: React.FC = () => {
 
 
         <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
+              onClick={() => {setShowModal(true)}}>AGREGAR NUEVO</button>
 
                 <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
                   <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
@@ -858,7 +871,11 @@ const Facturacion: React.FC = () => {
                 <div>
                   <p>{htmlCode}</p>
                 </div>
-                
+                <div>
+                  <button onClick={() => {alert(valorEqFullBoxesContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >GUARDAR
+                  </button>
+                </div>
               </div>
     </Modal>
     <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
