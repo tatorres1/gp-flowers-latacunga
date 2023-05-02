@@ -265,28 +265,23 @@ const Facturacion: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        marketingName_calFacturacion: valorMarketingName,
-        cliente_calFacturacion:  valorCliente,
-        marcacion_calFacturacion: valorMarcacion,
-        pais_calFacturacion: valorPais,
-        consignment_calFacturacion: valorConsignment,
-        farmCode_calFacturacion: valorFarmCode,
-        date_calFacturacion: valorDate,
-        incoterm_calFacturacion: valorIncoterm,
-        countryCode_calFacturacion: valorCountryCode,
-        mawb_calFacturacion: valorMawb,
-        hawb_calFacturacion: valorHawb,
-        airLine_calFacturacion: valorAirLine,
-        currierFreight_calFacturacion: valorCurrierFreight,
-        ruc_calFacturacion: valorRuc,
-        noEmbarque_calFacturacion: valorNoEmbarque,
-        personInvoice_calFacturacion: valorPersonInvoice,
-        invoice_calFacturacion: valorInvoice,
-        usdaOnly_calFacturacion: valorUsdaOnly,
+        picesType_cont_facturacion: valorPicesTypeContFacturacion,
+        totalPices_cont_facturacion: valorTotalPices,
+        eqFullBoxes_cont_facturacion: valorEqFullBoxesContFacturacion,
+        productRosas_cont_facturacion: valorVariedades,
+        longitud_cont_facturacion: valorLongitudIdContFacturacion,
+        noBunches_cont_facturacion: valorNumeroBunches,
+        Indicator_cont_facturacion: valorIndicatorContFacturacion,
+        hts_cont_facturacion: valorHtsContFacturacion,
+        nandina_cont_facturacion: valorNandinaContFacturacion,
+        totalStems_cont_facturacion: valorTotalStemsIdContFacturacion,
+        stemsPerBunch_cont_facturacion: valorStemsPerBunch,
+        unitPrice_cont_facturacion: valorUnitPrice,
+        totalValue_cont_facturacion: valorTotalContFacturacion
       }),
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido`,
       postData
     );
     const response = await res.json();
@@ -495,7 +490,9 @@ const Facturacion: React.FC = () => {
   }
 
   const asignarEqFullBoxes = event => {
-    let calculo = event.target.value/2;
+    let calculo = (event.target.value/2).toString();
+    //hacer la conversion de number a string para evitar conflicto con database
+
     setValorEqFullBoxesContFacturacion(calculo);
   }
 
@@ -542,16 +539,16 @@ const Facturacion: React.FC = () => {
     //controlar id para hacer una u otra operacion con variables distintas
     let calculo;
     if(opcionOperacion == 1){
-      calculo = event.target.value*valorStemsPerBunch
+      calculo = (event.target.value*valorStemsPerBunch).toString();
     }else if (opcionOperacion == 2){
-      calculo = event.target.value*valorNumeroBunches;
+      calculo = (event.target.value*valorNumeroBunches).toString();
     }
     
     setValorTotalStemsIdContFacturacion(calculo);
   }
 
   const asignarValorTotal = event => {
-    let calculo = event.target.value * valorTotalStemsIdContFacturacion;
+    let calculo = (event.target.value * valorTotalStemsIdContFacturacion).toString();
     setValorTotalContFacturacion(calculo);
   }
 
@@ -944,7 +941,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlCode}</p>
                 </div>
                 <div>
-                  <button onClick={() => {alert(valorTotalContFacturacion) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {addContFacturacion(); setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >GUARDAR
                   </button>
                 </div>

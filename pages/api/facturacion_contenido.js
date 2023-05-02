@@ -17,47 +17,42 @@ export default async function handler(req, res){
     }
 
     
-
+    /*
     if(req.method === "POST"){
-        const PicesTypeContFacturacion = req.body.picesType_contFacturacion;
-        const TotalPicesContFacturacion = req.body.totalPices_contFacturacion;
-        const EqFullBoxesContFacturacion = req.body.eqFullBoxes_contFacturacion;
-        const ProductRosasContFacturacion = req.body.productRosas_contFacturacion;
-        const LongitudContFacturacion = req.body.longitud_contFacturacion;
-        const NoBunchesContFacturacion = req.body.noBunches_contFacturacion;
-        const IndicatorContFacturacion = req.body.indicator_contFacturacion;
-        const HtsContFacturacion = req.body.hts_contFacturacion;
-        const NandinaContFacturacion = req.body.nandina_contFacturacion;
-        const TotalStemsContFacturacion = req.body.totalStems_contFacturacion;
-        const StemsPerBunchContFacturacion = req.body.stemsPerBunch_contFacturacion;
-        const UnitPriceContFacturacion = req.body.unitPrice_calFacturacion;
-        const TotalValueContFacturacion = req.body.totalValue_calFacturacion;
+        const PicesTypeContFacturacion = req.body.picesType_cont_facturacion;
+        const TotalPicesContFacturacion = req.body.totalPices_cont_facturacion;
+        const EqFullBoxesContFacturacion = req.body.eqFullBoxes_cont_facturacion;
+        const ProductRosasContFacturacion = req.body.productRosas_cont_facturacion;
+        const LongitudContFacturacion = req.body.longitud_cont_facturacion;
+        const NoBunchesContFacturacion = req.body.noBunches_cont_facturacion;
+        const IndicatorContFacturacion = req.body.indicator_cont_facturacion;
+        const HtsContFacturacion = req.body.hts_cont_facturacion;
+        const NandinaContFacturacion = req.body.nandina_cont_facturacion;
+        const TotalStemsContFacturacion = req.body.totalStems_cont_facturacion;
+        const StemsPerBunchContFacturacion = req.body.stemsPerBunch_cont_facturacion;
+        const UnitPriceContFacturacion = req.body.unitPrice_cont_facturacion;
+        const TotalValueContFacturacion = req.body.totalValue_cont_facturacion;
         
 
-        const addFacturacion = await query({
-            query: "INSERT INTO datos_facturacion (marketingName_calFacturacion, cliente_calFacturacion, marcacion_calFacturacion, pais_calFacturacion, consignment_calFacturacion, farmCode_calFacturacion, date_calFacturacion , incoterm_calFacturacion, countryCode_calFacturacion, mawb_calFacturacion, hawb_calFacturacion , airLine_calFacturacion, currierFreight_calFacturacion, ruc_calFacturacion , noEmbarque_calFacturacion, personInvoice_calFacturacion , invoice_calFacturacion, usdaOnly_calFacturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",              
-            values: ([MarketingNameFacturacion,
-                ClienteFacturacion,
-                MarcacionFacturacion,
-                PaisFacturacion,
-                ConsignmentFacturacion,
-                FarmCodeFacturacion,
-                DateFacturacion,
-                IncotermFacturacion,
-                CountryCodeFacturacion,
-                MawbFacturacion,
-                HawbFacturacion,
-                AirLineFacturacion,
-                CurrierFreightFacturacion,
-                RucFacturacion,
-                NoEmbarqueFacturacion,
-                PersonInvoiceFacturacion,
-                InvoiceFacturacion,
-                UsdaOnlyFacturacion
+        const addContFacturacion = await query({
+            query: "INSERT INTO cont_facturacion (picesType_cont_facturacion, totalPices_cont_facturacion, eqFullBoxes_cont_facturacion, productRosas_cont_facturacion, longitud_cont_facturacion, noBunches_cont_facturacion, indicator_cont_facturacion , hts_cont_facturacion, nandina_cont_facturacion, totalStems_cont_facturacion, stemsPerBunch_cont_facturacion, unitPrice_cont_facturacion, totalValue_cont_facturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",              
+            values: ([PicesTypeContFacturacion,
+                TotalPicesContFacturacion,
+                EqFullBoxesContFacturacion,
+                ProductRosasContFacturacion,
+                LongitudContFacturacion,
+                NoBunchesContFacturacion,
+                IndicatorContFacturacion,
+                HtsContFacturacion,
+                NandinaContFacturacion,
+                TotalStemsContFacturacion,
+                StemsPerBunchContFacturacion,
+                UnitPriceContFacturacion,
+                TotalValueContFacturacion
             ]),
         });
 
-        if(addFacturacion.insertId){
+        if(addContFacturacion.insertId){
             message = "success";
         } else {
             message = "error";
@@ -70,7 +65,51 @@ export default async function handler(req, res){
             telefono_proveedor: telefonoProveedor,
             observaciones_proveedor: observacionesProveedor,  
         };
-        res.status(200).json({response: {message: message, proveedor: addProveedor}});
+        res.status(200).json({response: {message: message, proveedor: addContFacturacion}});
+    }
+    */
+
+    if(req.method === "POST"){
+
+        const PicesTypeContFacturacion = req.body.picesType_cont_facturacion;
+        const TotalPicesContFacturacion = req.body.totalPices_cont_facturacion;
+        const EqFullBoxesContFacturacion = req.body.eqFullBoxes_cont_facturacion;
+        const ProductRosasContFacturacion = req.body.productRosas_cont_facturacion;
+        const LongitudContFacturacion = req.body.longitud_cont_facturacion;
+        const NoBunchesContFacturacion = req.body.noBunches_cont_facturacion;
+        const IndicatorContFacturacion = req.body.Indicator_cont_facturacion;
+        const HtsContFacturacion = req.body.hts_cont_facturacion;
+        const NandinaContFacturacion = req.body.nandina_cont_facturacion;
+        const TotalStemsContFacturacion = req.body.totalStems_cont_facturacion;
+        const StemsPerBunchContFacturacion = req.body.stemsPerBunch_cont_facturacion;
+        const UnitPriceContFacturacion = req.body.unitPrice_cont_facturacion;
+        const TotalValueContFacturacion = req.body.totalValue_cont_facturacion;
+
+        
+        const addContFacturacion = await query({
+            query: "INSERT INTO cont_facturacion (picesType_cont_facturacion, totalPices_cont_facturacion, eqFullBoxes_cont_facturacion, productRosas_cont_facturacion, longitud_cont_facturacion, noBunches_cont_facturacion, Indicator_cont_facturacion, hts_cont_facturacion, nandina_cont_facturacion, totalStems_cont_facturacion, stemsPerBunch_cont_facturacion, unitPrice_cont_facturacion, totalValue_cont_facturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",              
+            values: ([PicesTypeContFacturacion,
+                TotalPicesContFacturacion,
+                EqFullBoxesContFacturacion,
+                ProductRosasContFacturacion,
+                LongitudContFacturacion,
+                NoBunchesContFacturacion,
+                IndicatorContFacturacion,
+                HtsContFacturacion,
+                NandinaContFacturacion,
+                TotalStemsContFacturacion,
+                StemsPerBunchContFacturacion,
+                UnitPriceContFacturacion,
+                TotalValueContFacturacion
+            ]),
+        });
+
+        if(addContFacturacion.insertId){
+            message = "success";
+        } else {
+            message = "error";
+        }
+        res.status(200).json({response: {message: message, factu: addContFacturacion}});
     }
 
     if(req.method === "PUT"){
