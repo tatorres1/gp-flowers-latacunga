@@ -177,17 +177,17 @@ export default async function handler(req, res){
     
 
     if (req.method === "DELETE") {
-        const idFacturacion = req.body.id_calFacturacion;
-        const deleteFacturacion = await query({
-          query: "DELETE FROM datos_facturacion WHERE id_calFacturacion = ?",
-          values: [idFacturacion],
+        const idContFacturacion = req.body.id_cont_Facturacion;
+        const deleteContFacturacion = await query({
+          query: "DELETE FROM cont_facturacion WHERE id_cont_Facturacion = ?",
+          values: [idContFacturacion],
         });
-        const result = deleteFacturacion.affectedRows;
+        const result = deleteContFacturacion.affectedRows;
         if (result) {
           message = "success";
         } else {
           message = "error";
         }
-        res.status(200).json({ response: { message: message, facturacion: facturacion } });
+        res.status(200).json({ response: { message: message, facturacion: deleteContFacturacion } });
       }
 }

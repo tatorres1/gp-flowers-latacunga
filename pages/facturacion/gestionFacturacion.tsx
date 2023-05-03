@@ -325,19 +325,18 @@ const Facturacion: React.FC = () => {
     if(response.response.message != "success") return;
   }
 
-  async function deleteFacturacion() {
-    console.log(facturaciones.values);
+  async function deleteContFacturacion() {
     const postData = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_calFacturacion: valorBorrar,
+        id_cont_Facturacion: valorBorrar,
       }),
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido`,
       postData
     );
     const response = await res.json();
@@ -854,15 +853,24 @@ const Facturacion: React.FC = () => {
         <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
               onClick={() => {setShowModal(true)}}>AGREGAR NUEVO</button>
 
-                <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+                <div className='w-full p-1 relative overflow-x-auto sm:rounded-lg '>
                   <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                     <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                       <tr>
                         <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
-                        <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
-                        <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
-                        <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
-                        <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">PICES TYPE</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL PICES</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">EQ. FULL BOXES</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">PRODUCT ROSAS</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">LONGITUD</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">No. BUNCHES</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">INDICATOR</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">HTS</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">NANDINA</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL STEMS</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">STEMS / BUNCH</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">UNIT PRICE</th>
+                        <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL VALUE</th>
                         <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
                         <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
                       </tr>
@@ -871,23 +879,29 @@ const Facturacion: React.FC = () => {
                       
                       {valueContFacturaciones.map((contFacturaciones) => (
                         <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={contFacturaciones.id_cont_facturacion}>
+                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.id_cont_facturacion}
+                          </td>
                           <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.picesType_cont_facturacion}
-                            <select id="countries" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option selected></option>
-                              <option value="FB">FB</option>
-                              <option value="HB">HB</option>
-                              <option value="QB">QB</option>
-                            </select>
                           </td>
                           <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.totalPices_cont_facturacion}</td>
                           <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.eqFullBoxes_cont_facturacion}</td>
                           <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.productRosas_cont_facturacion}</td>
                           <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.longitud_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.noBunches_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.Indicator_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.hts_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.nandina_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.totalStems_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.stemsPerBunch_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.unitPrice_cont_facturacion}</td>
+                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.totalValue_cont_facturacion}</td>
+
+
 
                           <td className="border border-lime-900 px-6 py-4 text-center">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);}}>EDITAR</a></td>
                           <td className="border border-lime-900 px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(proveedores.id_proveedor);}}>ELIMINAR</a> </td>
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(contFacturaciones.id_cont_facturacion);}}>ELIMINAR</a> </td>
                         </tr>
                       ))}
                       
@@ -897,7 +911,7 @@ const Facturacion: React.FC = () => {
 
                 </div>
                       
-            
+                <div className='mb-12'></div>
 
 
                     
@@ -984,7 +998,7 @@ const Facturacion: React.FC = () => {
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
               ¿Desea eliminar el elemento seleccionado?
 
-              <button onClick={() => {deleteProveedor(); getProveedores(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              <button onClick={() => {deleteContFacturacion(); getContFacturacion(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >Confirmar</button>
     </Modal>
     
