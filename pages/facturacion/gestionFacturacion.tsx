@@ -288,6 +288,38 @@ const Facturacion: React.FC = () => {
     if(response.response.message != "success") return;    
   }
 
+  async function updateContFacturacion(){
+    const postData = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+            id_cont_Facturacion: "18",
+            picesType_cont_facturacion: valorPicesTypeContFacturacion,
+            totalPices_cont_facturacion:  valorTotalPices,
+            eqFullBoxes_cont_facturacion: valorEqFullBoxesContFacturacion,
+            productRosas_cont_facturacion: valorVariedades,
+            longitud_cont_facturacion: valorLongitudIdContFacturacion,
+            noBunches_cont_facturacion: valorNumeroBunches,
+            Indicator_cont_facturacion: valorIndicatorContFacturacion,
+            hts_cont_facturacion: valorHtsContFacturacion,
+            nandina_cont_facturacion: valorNandinaContFacturacion,
+            totalStems_cont_facturacion: valorTotalStemsIdContFacturacion,
+            stemsPerBunch_cont_facturacion: valorStemsPerBunch,
+            unitPrice_cont_facturacion: valorUnitPrice,
+            totalValue_cont_facturacion: valorTotalContFacturacion
+      }),
+    };
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido`,
+      postData
+    );
+    const response = await res.json();
+    console.log(response.response.facturacion);
+    if(response.response.message != "success") return;
+  }
+
   async function updateFacturacion(){
     const postData = {
       method: "PUT",
@@ -509,6 +541,10 @@ const Facturacion: React.FC = () => {
 
     //valores de lectura
 
+  const asignarId = event => {
+    setValorIdContFacturacion(event.target.value);
+  } 
+
   const asignarPicesType = event => {
     setValorPicesTypeContFacturacion(event.target.value);
   }
@@ -577,7 +613,7 @@ const Facturacion: React.FC = () => {
   }
 
   //seccion codigo de modal insertar
-  const htmlCode = 
+  const htmlInsertar = 
   <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
 
     <table className='sm:rounded-lg w-full text-sm text-left dark:text-gray-400'>
@@ -600,6 +636,102 @@ const Facturacion: React.FC = () => {
                     </thead>
                     <tbody>
                         <tr className="bg-white" >
+                          <td className='text-center text-lg'>
+                          <select value={valorPicesTypeContFacturacion} onChange={asignarPicesType} class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected></option>
+                              <option value="FB">FB</option>
+                              <option value="HB">HB</option>
+                              <option value="QB">QB</option>
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center rounded-lg'></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <select value={valorVariedades} onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected>Escoja la Variedad</option>
+                              {opcionesVariedad.map((opcion) => (
+                                <option value={opcion.value}>{opcion.label}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <select value={valorLongitudIdContFacturacion} onChange={asignarLongitud} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected>Escoja la longitud</option>
+                              <option value="40 cm">40 cm</option>
+                              <option value="50 cm">50 cm</option>
+                              <option value="60 cm">60 cm</option>
+                              <option value="70 cm">70 cm</option>
+                              <option value="80 cm">80 cm</option>
+                              <option value="90 cm">90 cm</option>
+                              <option value="100 cm">100 cm</option>
+                            </select>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1); reAsignarValorTotal(event, 1)}}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorIndicatorContFacturacion} onChange={asignarIndicador}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorHtsContFacturacion} onChange={asignarHts}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNandinaContFacturacion} onChange={asignarNandina}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center rounded-lg' value={valorTotalStemsIdContFacturacion}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2); reAsignarValorTotal(event, 2)}}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={ (event) => {asignarUnitPrice(event); asignarValorTotal(event)}}></input>
+                          </td>
+                          <td className='text-center text-lg'>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalContFacturacion} ></input>
+                          </td>
+                        </tr>
+
+
+
+                      </tbody>
+    </table>
+  </div>
+  ;
+
+
+  //seccion codigo de modal insertar
+  const htmlActualizar = 
+  <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
+
+    <table className='sm:rounded-lg w-full text-sm text-left dark:text-gray-400'>
+      <thead className='text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400'>
+                      <tr>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">ID</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">PICES TYPE</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL PICES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">EQ. FULL BOXES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">PRODUCT ROSAS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">LONGITUD</th>
+                        <th scope="col" className="text-center px-15 py-3 text-xl"># BUNCHES</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">INDICATOR</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">HTS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">NANDINA</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL STEMS</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">STEMS/BUNCH</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">UNIT PRICE</th>
+                        <th scope="col" className="text-center px-5 py-3 text-xl">TOTAL VALUE USD.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="bg-white" >
+                          <td className='text-center text-lg'>
+                            <input value={valorIdContFacturacion} onChange ={(event) => { asignarId(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                          </td>
                           <td className='text-center text-lg'>
                           <select value={valorPicesTypeContFacturacion} onChange={asignarPicesType} class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                               <option selected></option>
@@ -952,47 +1084,25 @@ const Facturacion: React.FC = () => {
     <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
               <div>
                 <div>
-                  <p>{htmlCode}</p>
+                  <p>{htmlInsertar}</p>
                 </div>
                 <div>
-                  <button onClick={() => {addContFacturacion(); setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {addContFacturacion(); getContFacturacion() ; setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >GUARDAR
                   </button>
                 </div>
               </div>
     </Modal>
     <Modal isVisible={showModalEditar} onClose={() => setShowModalEditar(false)}>
+    <div>
               <div>
-                <form className="w-full max-w-lg">
-
-                  <div className="w-full md:w-full px-3">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        ID
-                      </label>
-                      <input value={valorId}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoId}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        CEDULA
-                      </label>
-                      <input value={valorCedula}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoCedula}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        NOMBRE
-                      </label>
-                      <input value={valorNombre}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoNombre}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        TELEFONO
-                      </label>
-                      <input value={valorTelefono} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoTelefono}/>
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">
-                        OBSERVACIONES
-                      </label>
-                      <input value={valorObservaciones}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder={valorDefectoObservaciones}/>
-
-                      <button onClick={() => {updateProveedor(); getProveedores(); setShowModalEditar(false); resetearVariables(); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Actualizar
-                      </button>
-
-                  </div>
-                </form>
+                  <p>{htmlActualizar}</p>
+                </div>
+                <div>
+                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >ACTUALIZAR
+                  </button>
+                </div>
               </div>
     </Modal>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
