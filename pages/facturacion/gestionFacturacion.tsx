@@ -59,19 +59,21 @@ const Facturacion: React.FC = () => {
   const [showModalEditar, setShowModalEditar] = useState(false);
   const [showModalEliminar, setShowModalEliminar] = useState(false);
 
-  //control de valores de ingreso
-  const [valorId, setValorId] = useState("");
-  const [valorCedula, setValorCedula] = useState("");
-  const [valorNombre, setvalorNombre] = useState("");
-  const [valorTelefono, setvalorTelefono] = useState("");
-  const [valorObservaciones, setvalorObservaciones] = useState("");
-
   //valores defecto para cuadro de update
-  const [valorDefectoId, setValorDefectoId] = useState("");
-  const [valorDefectoCedula, setvalorDefectoCedula] = useState("");
-  const [valorDefectoNombre, setvalorDefectoNombre] = useState("");
-  const [valorDefectoTelefono, setvalorDefectoTelefono] = useState("");
-  const [valorDefectoObservaciones, setvalorDefectoObservaciones] = useState("");
+  const [valorDefectoIdContFacturacion, setValorDefectoIdContFacturacion] = useState("");
+  const [valorDefectoPicesTypeContFacturacion, setValorDefectoPicesTypeContFacturacion] = useState("");
+  const [valorDefectoTotalPices, setValorDefectoTotalPices] = useState("");
+  const [valorDefectoEqFullBoxesContFacturacion, setValorDefectoEqFullBoxesContFacturacion] = useState("");
+  const [valorDefectoVariedades, setValorDefectoVariedades] = useState("");
+  const [valorDefectoLongitudIdContFacturacion, setValorDefectoLongitudIdContFacturacion] = useState("");
+  const [valorDefectoNumeroBunches, setValorDefectoNumeroBunches] = useState("");
+  const [valorDefectoIndicatorContFacturacion, setValorDefectoIndicatorContFacturacion] = useState("");
+  const [valorDefectoHtsContFacturacion, setValorDefectoHtsContFacturacion] = useState("");
+  const [valorDefectoNandinaContFacturacion, setValorDefectoNandinaContFacturacion] = useState("");
+  const [valorDefectoTotalStemsIdContFacturacion, setValorDefectoTotalStemsIdContFacturacion] = useState("");
+  const [valorDefectoStemsPerBunch, setValorDefectoStemsPerBunch] = useState("");
+  const [valorDefectoUnitPrice, setValorDefectoUnitPrice] = useState("");
+  const [valorDefectoTotalContFacturacion, setValorDefectoTotalContFacturacion] = useState("");
 
   //valor id para al dar click que ejecute query de delete
   const [valorBorrar, setValorBorrar] = useState("");
@@ -295,7 +297,7 @@ const Facturacion: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-            id_cont_Facturacion: "18",
+            id_cont_Facturacion: valorIdContFacturacion,
             picesType_cont_facturacion: valorPicesTypeContFacturacion,
             totalPices_cont_facturacion:  valorTotalPices,
             eqFullBoxes_cont_facturacion: valorEqFullBoxesContFacturacion,
@@ -474,23 +476,41 @@ const Facturacion: React.FC = () => {
 
   
   //funcion para update, mostrar data por defecto
-  async function asignarDataPorDefecto (id, cedula, nombre, telefono, observaciones){
-    setValorDefectoId(id);
-    setvalorDefectoCedula(cedula);
-    setvalorDefectoNombre(nombre);
-    setvalorDefectoTelefono(telefono);
-    setvalorDefectoObservaciones(observaciones);
+  async function asignarDataPorDefecto (id, picestype, totalpices, eqfull, productrosas, longitud, nobunches, indicator, hts, nandina, totalstems, stemsperbunch, unitprice, totalvalue,){
+    setValorDefectoIdContFacturacion(id);
+    setValorDefectoPicesTypeContFacturacion(picestype);
+    setValorDefectoTotalPices(totalpices);
+    setValorDefectoEqFullBoxesContFacturacion(eqfull);
+    setValorDefectoVariedades(productrosas);
+    setValorDefectoLongitudIdContFacturacion(longitud);
+    setValorDefectoNumeroBunches(nobunches);
+    setValorDefectoIndicatorContFacturacion(indicator);
+    setValorDefectoHtsContFacturacion(hts);
+    setValorDefectoNandinaContFacturacion(nandina);
+    setValorDefectoTotalStemsIdContFacturacion(totalstems);
+    setValorDefectoStemsPerBunch(stemsperbunch);
+    setValorDefectoUnitPrice(unitprice);
+    setValorDefectoTotalContFacturacion(totalvalue);
+
   }
 
   //resetear los valores de las variables
 
   async function resetearVariables(){
-    //alert("reseteado");
-    setValorId(null);
-    setValorCedula(null);
-    setvalorNombre(null);
-    setvalorTelefono(null);
-    setvalorObservaciones(null);
+    setValorIdContFacturacion("");
+    setValorPicesTypeContFacturacion("");
+    setValorTotalPices("");
+    setValorEqFullBoxesContFacturacion("");
+    setValorVariedades("");
+    setValorLongitudIdContFacturacion("");
+    setValorNumeroBunches("");
+    setValorIndicatorContFacturacion("");
+    setValorHtsContFacturacion("");
+    setValorNandinaContFacturacion("");
+    setValorTotalStemsIdContFacturacion("");
+    setValorStemsPerBunch("");
+    setValorUnitPrice("");
+    setValorTotalContFacturacion("");
   }
 
     //valor a borrar despues de click borrar
@@ -514,6 +534,10 @@ const Facturacion: React.FC = () => {
   
 
   //asignacion de contenido de factura
+
+  //asignacion de valores por defecto para mostrar en placeholder
+
+
   
     //valores de calculo
   const asignarTotalPices = event => {
@@ -645,7 +669,7 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg' ></input>
                           </td>
                           <td className='text-center text-lg'>
                             <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center rounded-lg'></input>
@@ -730,25 +754,25 @@ const Facturacion: React.FC = () => {
                     <tbody>
                         <tr className="bg-white" >
                           <td className='text-center text-lg'>
-                            <input value={valorIdContFacturacion} onChange ={(event) => { asignarId(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                            <input value={valorIdContFacturacion} onChange ={(event) => { asignarId(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg' placeholder = {valorDefectoIdContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                          <select value={valorPicesTypeContFacturacion} onChange={asignarPicesType} class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option selected></option>
+                          <select value={valorPicesTypeContFacturacion} onChange={asignarPicesType} class="w-20 h-20 bg-emerald-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                              <option selected>**{valorDefectoPicesTypeContFacturacion}**</option>
                               <option value="FB">FB</option>
                               <option value="HB">HB</option>
                               <option value="QB">QB</option>
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg'></input>
+                            <input value={valorTotalPices} onChange ={(event) => { asignarTotalPices(event); asignarEqFullBoxes(event)}} className='w-20 h-20 text-center bg-emerald-200 rounded-lg' placeholder = {valorDefectoTotalPices} ></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center rounded-lg'></input>
+                            <input value={valorEqFullBoxesContFacturacion} className='w-20 h-20 text-center rounded-lg' placeholder={valorDefectoEqFullBoxesContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
                             <select value={valorVariedades} onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option selected>Escoja la Variedad</option>
+                              <option selected>**{valorDefectoVariedades}**</option>
                               {opcionesVariedad.map((opcion) => (
                                 <option value={opcion.value}>{opcion.label}</option>
                               ))}
@@ -756,7 +780,7 @@ const Facturacion: React.FC = () => {
                           </td>
                           <td className='text-center text-lg'>
                             <select value={valorLongitudIdContFacturacion} onChange={asignarLongitud} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option selected>Escoja la longitud</option>
+                              <option selected>**{valorDefectoLongitudIdContFacturacion}**</option>
                               <option value="40 cm">40 cm</option>
                               <option value="50 cm">50 cm</option>
                               <option value="60 cm">60 cm</option>
@@ -767,28 +791,28 @@ const Facturacion: React.FC = () => {
                             </select>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1); reAsignarValorTotal(event, 1)}}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNumeroBunches} onChange={(event) => {asignarNumeroBunches(event); asignarTotalStems(event, 1); reAsignarValorTotal(event, 1)}} placeholder={valorDefectoNumeroBunches}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorIndicatorContFacturacion} onChange={asignarIndicador}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorIndicatorContFacturacion} onChange={asignarIndicador} placeholder={valorDefectoIndicatorContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorHtsContFacturacion} onChange={asignarHts}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorHtsContFacturacion} onChange={asignarHts} placeholder={valorDefectoHtsContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNandinaContFacturacion} onChange={asignarNandina}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorNandinaContFacturacion} onChange={asignarNandina} placeholder={valorDefectoNandinaContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center rounded-lg' value={valorTotalStemsIdContFacturacion}></input>
+                            <input className='w-20 h-20 text-center rounded-lg' value={valorTotalStemsIdContFacturacion} placeholder={valorDefectoTotalStemsIdContFacturacion}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2); reAsignarValorTotal(event, 2)}}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorStemsPerBunch} onChange={(event) => {asignarStemsPerBunch(event); asignarTotalStems(event, 2); reAsignarValorTotal(event, 2)}} placeholder={valorDefectoStemsPerBunch}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={ (event) => {asignarUnitPrice(event); asignarValorTotal(event)}}></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorUnitPrice} onChange={ (event) => {asignarUnitPrice(event); asignarValorTotal(event)}} placeholder={valorDefectoUnitPrice}></input>
                           </td>
                           <td className='text-center text-lg'>
-                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalContFacturacion} ></input>
+                            <input className='w-20 h-20 text-center bg-emerald-200 rounded-lg' value={valorTotalContFacturacion} placeholder={valorDefectoTotalContFacturacion} ></input>
                           </td>
                         </tr>
 
@@ -966,24 +990,9 @@ const Facturacion: React.FC = () => {
     {estadoSegundaSeccion &&
     <div className='w-full p-12  bg-gradient-to-r from-lime-300 to-cyan-300'>
 
-        <form>
-          <label className= "text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-          <div className="m-10 relative w-1/3">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
-            <input value={valorAFiltrar} onChange={asignarValorAFiltrar} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ingrese aquí su búsqueda"></input>
-              <button onClick={AccionActivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mx-16 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">BUSCAR</button>
-              <button onClick={AccionDesactivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">X</button>
-
-          </div>
-          
-        </form>
-        <br></br>
-
 
         <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              onClick={() => {setShowModal(true)}}>AGREGAR NUEVO</button>
+              onClick={() => {setShowModal(true); resetearVariables()}}>AGREGAR NUEVO</button>
 
                 <div className='w-full p-1 relative overflow-x-auto sm:rounded-lg '>
                   <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
@@ -1031,12 +1040,32 @@ const Facturacion: React.FC = () => {
 
 
                           <td className="border border-lime-900 px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);}}>EDITAR</a></td>
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+                              onClick={() =>{
+                                setShowModalEditar(true);
+                                asignarDataPorDefecto(
+                                  contFacturaciones.id_cont_facturacion, 
+                                  contFacturaciones.picesType_cont_facturacion,
+                                  contFacturaciones.totalPices_cont_facturacion,
+                                  contFacturaciones.eqFullBoxes_cont_facturacion,
+                                  contFacturaciones.productRosas_cont_facturacion,
+                                  contFacturaciones.longitud_cont_facturacion,
+                                  contFacturaciones.noBunches_cont_facturacion,
+                                  contFacturaciones.Indicator_cont_facturacion,
+                                  contFacturaciones.hts_cont_facturacion,
+                                  contFacturaciones.nandina_cont_facturacion,
+                                  contFacturaciones.totalStems_cont_facturacion,
+                                  contFacturaciones.stemsPerBunch_cont_facturacion,
+                                  contFacturaciones.unitPrice_cont_facturacion,
+                                  contFacturaciones.totalValue_cont_facturacion
+                                  );
+                                  resetearVariables();
+                                  }}
+                                  >EDITAR</a></td>
                           <td className="border border-lime-900 px-6 py-4 text-center">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(contFacturaciones.id_cont_facturacion);}}>ELIMINAR</a> </td>
                         </tr>
                       ))}
-                      
                       
                     </tbody>
                   </table>
