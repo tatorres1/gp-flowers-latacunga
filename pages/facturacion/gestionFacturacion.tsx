@@ -92,6 +92,13 @@ const Facturacion: React.FC = () => {
   //variedad de flor
   const [variedades, setVariedades] = useState([]);
 
+  //valor total de "total pices"
+  const [totalTotalPices, setTotalTotalPices] = useState("");
+  //valor total de "eq full boxes"
+  const [totalEqFull, setTotalEqFull] = useState();
+  //valor total de "total value"
+  const [totalTotalValue,setTotalTotalValue] = useState();
+
 
   //convirtiendo en array el valor de paises para que se mapee una sola vez
   //y se muestre solamente un solo componente select
@@ -180,6 +187,52 @@ const Facturacion: React.FC = () => {
     const response = await res.json();
     setVariedades(response.variedad);
   }
+
+  //funcion consulta para "total pices"
+  async function getTotalPices(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas`,
+    postData);
+    const response = await res.json();
+    const temporal = response.totalPices[0]["SUM(totalPices_cont_facturacion)"];
+    setTotalTotalPices(temporal);
+  }
+
+    //funcion consulta para "total eq full boxes"
+    async function getTotalEqFull(){
+      const postData = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas2`,
+      postData);
+      const response = await res.json();
+      const temporal = response.totalEqFull[0]["SUM(eqFullBoxes_cont_facturacion)"];
+      setTotalEqFull(temporal);
+    }
+
+    //funcion consulta para "total del valor total"
+    async function getTotalTotalValue(){
+      const postData = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas3`,
+      postData);
+      const response = await res.json();
+      const temporal = response.totalTotalValue[0]["SUM(totalValue_cont_facturacion)"];
+      setTotalTotalValue(temporal);
+    }
+
 
   //filtra los datos de consulta
   async function getFiltroProveedores(){
@@ -384,7 +437,9 @@ const Facturacion: React.FC = () => {
   
     getFacturacion();
     getContFacturacion();
-    getVariedad();    
+    getVariedad(); 
+    
+    actualizarTotales();
   }, []);
 
 
@@ -636,6 +691,13 @@ const Facturacion: React.FC = () => {
     setValorTotalContFacturacion(calculo);
   }
 
+  //actualizar los totales
+  function actualizarTotales () {
+    getTotalPices();
+    getTotalEqFull();
+    getTotalTotalValue();
+  }
+
   //seccion codigo de modal insertar
   const htmlInsertar = 
   <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
@@ -840,28 +902,21 @@ const Facturacion: React.FC = () => {
                   <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
                       <button onClick={()=> {setEstadoPrimeraSeccion(true);setEstadoSegundaSeccion(false);setEstadoTerceraSeccion(false)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                           <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                          </svg>
-                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Home</span>
-                      </button>
-                      <button onClick={()=> {setEstadoPrimeraSeccion(false);setEstadoSegundaSeccion(true);setEstadoTerceraSeccion(false)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                          <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
-                              <path clip-rule="evenodd" fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
-                          </svg>
-                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Wallet</span>
-                      </button>
-                      <button onClick={()=> {setEstadoPrimeraSeccion(false);setEstadoSegundaSeccion(false);setEstadoTerceraSeccion(true)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                          <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path>
-                          </svg>
-                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Settings</span>
-                      </button>
-                      <button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                          <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                               <path clip-rule="evenodd" fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"></path>
                           </svg>
-                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Profile</span>
+                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Paso 1</span>
+                      </button>
+                      <button onClick={()=> {setEstadoPrimeraSeccion(false);setEstadoSegundaSeccion(true);setEstadoTerceraSeccion(false)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                          <svg className='w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500' fill="none" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"></path>
+                          </svg>
+                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Paso 2</span>
+                      </button>
+                      <button onClick={()=> {setEstadoPrimeraSeccion(false);setEstadoSegundaSeccion(false);setEstadoTerceraSeccion(true)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                          <svg className='w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500' fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                          </svg>
+                          <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Paso 3</span>
                       </button>
                   </div>
                 </div>
@@ -1066,8 +1121,32 @@ const Facturacion: React.FC = () => {
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(contFacturaciones.id_cont_facturacion);}}>ELIMINAR</a> </td>
                         </tr>
                       ))}
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <input className='text-gray-500 text-center text-lg rounded py-2 bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600' value={totalTotalPices}></input>
+                        </td>
+                        <td>
+                          <input className='text-gray-500 text-center text-lg rounded py-2 bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600' value={totalEqFull}></input>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td>
+                          <input className='text-gray-500 text-center text-lg rounded py-2 bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600' value={totalTotalValue}></input>
+                        </td>
+                      </tr>
                       
                     </tbody>
+
                   </table>
 
                 </div>
@@ -1116,7 +1195,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlInsertar}</p>
                 </div>
                 <div>
-                  <button onClick={() => {addContFacturacion(); getContFacturacion() ; setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {addContFacturacion(); getContFacturacion() ; setShowModal(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >GUARDAR
                   </button>
                 </div>
@@ -1128,17 +1207,19 @@ const Facturacion: React.FC = () => {
                   <p>{htmlActualizar}</p>
                 </div>
                 <div>
-                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModal(false) }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModal(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >ACTUALIZAR
                   </button>
                 </div>
               </div>
     </Modal>
     <Modal isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
-              ¿Desea eliminar el elemento seleccionado?
+      <div className='flex items-center flex-col'>
+        ¿Desea eliminar el elemento seleccionado?
 
-              <button onClick={() => {deleteContFacturacion(); getContFacturacion(); setShowModalEliminar(false); }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                      >Confirmar</button>
+        <button onClick={() => {deleteContFacturacion(); getContFacturacion(); setShowModalEliminar(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >Confirmar</button>
+      </div>
     </Modal>
     
     
