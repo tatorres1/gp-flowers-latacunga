@@ -1,6 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
-import rowFactura from "../../components/rowFactura";
 import Modal from "../../components/ModalFacturacion";
 
 

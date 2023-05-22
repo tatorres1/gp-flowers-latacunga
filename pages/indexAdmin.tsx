@@ -10,7 +10,7 @@ function App() {
     var direccion_personal = "./personal/gestionPersonal";
     var direccion_proveedores = "./proveedores/gestionProveedores";
     var direccion_reportes = "./reportes/reportesAdmin";
-    var direccion_facturacion = "./facturacion/gestionFacturacion";
+    var direccion_facturacion = "./facturacion/indexFacturacion";
 
     const router = useRouter();
     function SalirSesion() {
