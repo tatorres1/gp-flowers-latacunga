@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 
@@ -11,6 +11,8 @@ function App() {
     const [seleccionMes, setSeleccionMes] = useState(false);
     const [seleccionDia, setSeleccionDia] = useState(false);
     const [estadoSeleccion, setEstadoSeleccion] = useState(true);
+
+    const [comprador, setComprador] = useState([]);
 
     var direccion_salida = "./login";
 
@@ -25,11 +27,33 @@ function App() {
         else if (estado == false) setEstadoSeleccion(false);
     }
 
-   
+    //conseguir data sobre comprador 
+    async function getComprador(){
+        const postData = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+        postData);
+        const response = await res.json();
+        setComprador(response.comprador);
+      }
+
+      const opcionesComprador = comprador.map((vard) => ({
+        value: vard.nombre_comp,
+        label: vard.nombre_comp
+      }));
+
+      useEffect(() => {
+        getComprador();
+      },[]);
 
 
    
-        const items = ['Elemento 1', 'Elemento 2', 'Elemento 3'];
+        //const items = ['Elemento 1', 'Elemento 2', 'Elemento 3'];
+        //const items = [comprador];
 
     return (
         <div className='w-full bg-gradient-to-r from-lime-300 to-cyan-300'>
@@ -47,8 +71,8 @@ function App() {
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el comprador</label>
                 <select id="years" size="20" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {items.map((item, index) => (
-                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index}>{item}</option>
+                        {opcionesComprador.map((opcion, index) => (
+                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={opcion.value}>{opcion.label}</option>
                         ))}
                 </select>
                 <div className='flex flex-col'>
