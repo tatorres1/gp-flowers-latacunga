@@ -15,6 +15,7 @@ export default async function handler(req, res){
                 values: ([compradorNombre]),
             }
         );
-        res.status(200).json({ numeroFactura: numeroFactura });
+
+            res.status(200).json({ numeroFactura: numeroFactura });            
     }
 }

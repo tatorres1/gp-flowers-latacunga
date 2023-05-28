@@ -741,7 +741,7 @@ const Facturacion: React.FC = () => {
       async function getNumeroUltimaFactura(){
 
         const queryParams = new URLSearchParams({
-          compradorNombre : "Jose MM",
+          compradorNombre : valorNombreFactura,
         }
         );
 
@@ -952,12 +952,6 @@ const Facturacion: React.FC = () => {
   ;
 
 
-  function probando()
-  {
-
-    //alert(valorNombreFactura);
-  }
-
   return (
     <Fragment>
 
@@ -1014,13 +1008,14 @@ const Facturacion: React.FC = () => {
         {/*seccion titulo*/}
         <div className='p-6 flex flex-row'>
           <h5 className='text-4xl font-bold'>COMERCIAL</h5>
-            <select value={valorNombreFactura} onChange={() => {asignarNombreComprador; probando(); getNumeroUltimaFactura()}} id="years" size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select onChange={(event) => {asignarNombreComprador(event); getNumeroUltimaFactura()}} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected></option>
-                        {opcionesComprador.map((opcion, index) => (
-                        <option key={index} value={opcion.value}>{opcion.label}</option>
+                        {opcionesComprador.map((opcion) => (
+                        <option value={opcion.value}>{opcion.label}</option>
                         ))}
             </select>
             <input value={JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}></input>
+
         </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
