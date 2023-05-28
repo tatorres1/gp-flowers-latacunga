@@ -99,6 +99,24 @@ const Facturacion: React.FC = () => {
   const [totalTotalValue,setTotalTotalValue] = useState();
 
 
+  //variables de fecha y hora para su uso en consulta de facturacion
+  const [anio, setAnio] = useState();
+  const [mes, setMes] = useState();
+  const [dia, setDia] = useState();
+  const [fecha, setFecha] = useState();
+
+  const [valorHoraFechaSistema, setValorFechaSistema] = useState(new Date());
+
+
+  //variables para data de comprador
+  const [comprador, setComprador] = useState([]);
+
+  //variables para numero de factura se debe enviar el nombre de comprador
+  const [valorNombreFactura, setValorNombreFactura] = useState("");
+  const [valorNumeroFactura, setValorNumeroFactura] = useState([]);
+
+
+
   //convirtiendo en array el valor de paises para que se mapee una sola vez
   //y se muestre solamente un solo componente select
   const opcionesPaises = paises.map((pais) => ({
@@ -439,6 +457,9 @@ const Facturacion: React.FC = () => {
     getVariedad(); 
     
     actualizarTotales();
+
+    getComprador();
+
   }, []);
 
 
@@ -697,6 +718,52 @@ const Facturacion: React.FC = () => {
     getTotalTotalValue();
   }
 
+      //conseguir data sobre comprador 
+      async function getComprador(){
+        const postData = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+        postData);
+        const response = await res.json();
+        setComprador(response.comprador);
+      }
+
+      const opcionesComprador = comprador.map((vard) => ({
+        value: vard.nombre_comp,
+        label: vard.nombre_comp
+      }));
+
+      //conseguir data sobre el id actual de la ultima factura de comprador 
+      async function getNumeroUltimaFactura(){
+
+        const queryParams = new URLSearchParams({
+          compradorNombre : "Jose MM",
+        }
+        );
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/numero_factura?${queryParams.toString()}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const response = await res.json();
+        setValorNumeroFactura(response.numeroFactura);
+      }
+
+      const asignarNombreComprador = event => {
+        setValorNombreFactura(event.target.value);
+      }
+
+
+
   //seccion codigo de modal insertar
   const htmlInsertar = 
   <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
@@ -885,6 +952,11 @@ const Facturacion: React.FC = () => {
   ;
 
 
+  function probando()
+  {
+
+    //alert(valorNombreFactura);
+  }
 
   return (
     <Fragment>
@@ -921,12 +993,34 @@ const Facturacion: React.FC = () => {
                 </div>
               </div>
 
+        <div suppressHydrationWarning className='flex flex-row'>
+          <div suppressHydrationWarning className='p-12'>
+            <span className='p-2'>
+            FECHA:
+              </span>
+            {valorHoraFechaSistema.toLocaleDateString()}
+          </div>
+          <div suppressHydrationWarning className='p-12'>
+            <span className='p-2'>
+            HORA:
+              </span> 
+            {valorHoraFechaSistema.toLocaleTimeString()}
+          </div>
+        </div>
+
     {estadoPrimeraSeccion && 
     <div>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
-        <div className='p-6'>
-          <h5 className='text-4xl font-bold'>COMERCIAL INVOICE 1099</h5>
+        <div className='p-6 flex flex-row'>
+          <h5 className='text-4xl font-bold'>COMERCIAL</h5>
+            <select value={valorNombreFactura} onChange={() => {asignarNombreComprador; probando(); getNumeroUltimaFactura()}} id="years" size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected></option>
+                        {opcionesComprador.map((opcion, index) => (
+                        <option key={index} value={opcion.value}>{opcion.label}</option>
+                        ))}
+            </select>
+            <input value={JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}></input>
         </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
@@ -1183,8 +1277,10 @@ const Facturacion: React.FC = () => {
                       <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                           GUARDAR
                       </span>
-                    </button>                
+                    </button>            
                 </div>
+        
+        
       </div>
     }
 

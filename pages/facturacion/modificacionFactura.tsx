@@ -51,10 +51,6 @@ function App() {
       },[]);
 
 
-   
-        //const items = ['Elemento 1', 'Elemento 2', 'Elemento 3'];
-        //const items = [comprador];
-
     return (
         <div className='w-full bg-gradient-to-r from-lime-300 to-cyan-300'>
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
@@ -100,7 +96,7 @@ function App() {
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el año</label>
                 <select id="years" size="20" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {items.map((item, index) => (
+                        {años.map((item, index) => (
                         <option onClick={() => {asignarEstadoSeleccion(false)}} key={index}>{item}</option>
                         ))}
                 </select>
