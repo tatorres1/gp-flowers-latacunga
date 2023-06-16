@@ -12,7 +12,28 @@ function App() {
     const [seleccionDia, setSeleccionDia] = useState(false);
     const [estadoSeleccion, setEstadoSeleccion] = useState(true);
 
+
+    //estas constantes sirven para guardar los objetos de las consultas 
+    //de manera que se puedan usar en la pantalla de modificar
     const [comprador, setComprador] = useState([]);
+    const [compradorAnios, setCompradorAnios] = useState([]);
+    const [compradorMeses, setCompradorMeses] = useState([]);
+    const [compradorDias, setCompradorDias] = useState([]);
+    const [compradorHoras, setCompradorHoras] = useState([]);
+
+    //estas variables sirven para enviar los datos de consulta
+    //como query
+    const [seleccionConsultaComprador, setSeleccionConsultaComprador] = useState("");
+    const [seleccionConsultaAnio, setSeleccionConsultaAnio] = useState("");
+    const [seleccionConsultaMes, setSeleccionConsultaMes] = useState("");
+    const [seleccionConsultaDia, setSeleccionConsultaDia] = useState("");
+    const [seleccionConsultaHora, setSeleccionConsultaHora] = useState("");
+
+    //variables para juntar todas las variables de consulta 
+    //y realizar una consulta donde muestre una factura especifica
+    const [fechaFactura, setFechaFactura] = useState("");
+    const [horaFactura, setHoraFactura] = useState("");
+
 
     var direccion_salida = "./login";
 
@@ -44,6 +65,32 @@ function App() {
       const opcionesComprador = comprador.map((vard) => ({
         value: vard.nombre_comp,
         label: vard.nombre_comp
+      }));
+
+    //conseguir data de años
+    async function getAniosComprador(){
+
+        const queryParams = new URLSearchParams({
+          compradorNombre : seleccionConsultaComprador,
+        }
+        );
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/anios_comprador?${queryParams.toString()}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const response = await res.json();
+        setCompradorAnios(response.aniosComprador);
+      }
+
+      const opcionesAnios = compradorAnios.map((vard) => ({
+        value: vard.anios_comp,
+        label: vard.anios_comp
       }));
 
       useEffect(() => {
@@ -96,7 +143,7 @@ function App() {
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el año</label>
                 <select id="years" size="20" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {años.map((item, index) => (
+                        {opcionesAnios.map((item, index) => (
                         <option onClick={() => {asignarEstadoSeleccion(false)}} key={index}>{item}</option>
                         ))}
                 </select>

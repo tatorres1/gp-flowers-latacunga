@@ -100,13 +100,9 @@ const Facturacion: React.FC = () => {
 
 
   //variables de fecha y hora para su uso en consulta de facturacion
-  const [anio, setAnio] = useState();
-  const [mes, setMes] = useState();
-  const [dia, setDia] = useState();
-  const [fecha, setFecha] = useState();
-
   const [valorHoraFechaSistema, setValorFechaSistema] = useState(new Date());
-
+  const [fecha] = useState(new Date().toLocaleDateString());
+  const [hora] = useState(new Date().toLocaleTimeString());
 
   //variables para data de comprador
   const [comprador, setComprador] = useState([]);
@@ -460,6 +456,9 @@ const Facturacion: React.FC = () => {
 
     getComprador();
 
+
+
+
   }, []);
 
 
@@ -739,30 +738,42 @@ const Facturacion: React.FC = () => {
 
       //conseguir data sobre el id actual de la ultima factura de comprador 
       async function getNumeroUltimaFactura(){
-
-        const queryParams = new URLSearchParams({
-          compradorNombre : valorNombreFactura,
-        }
-        );
-
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_URL}/api/numero_factura?${queryParams.toString()}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+        if (valorNombreFactura == "") {
+          // Mostrar mensaje de alerta
+          alert("Debe proporcionar un valor para compradorNombre");
+          return;
+        }else{
+          const queryParams = new URLSearchParams({
+            compradorNombre : valorNombreFactura,
           }
-        );
-        const response = await res.json();
-        setValorNumeroFactura(response.numeroFactura);
+          );
+  
+          const res =await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/numero_factura?${queryParams.toString()}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const response =await res.json();
+          setValorNumeroFactura(response.numeroFactura);  
+        }
+          
+                     
       }
 
-      const asignarNombreComprador = event => {
-        setValorNombreFactura(event.target.value);
-      }
+    const asignarNombreComprador = async event => {
+      setValorNombreFactura(event.target.value);
+    }
 
+    function asignarHoraYFecha(){
 
+      
+      alert(hora);
+      alert(fecha);
+    }
 
   //seccion codigo de modal insertar
   const htmlInsertar = 
@@ -955,7 +966,7 @@ const Facturacion: React.FC = () => {
   return (
     <Fragment>
 
-              <button onClick={router.back} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+              <button onClick={asignarHoraYFecha} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
                   REGRESAR
                 </span>
@@ -1008,10 +1019,9 @@ const Facturacion: React.FC = () => {
         {/*seccion titulo*/}
         <div className='p-6 flex flex-row'>
           <h5 className='text-4xl font-bold'>COMERCIAL</h5>
-            <select onChange={(event) => {asignarNombreComprador(event); getNumeroUltimaFactura()}} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected></option>
+            <select onClick={() => {}} onChange={(event) => {asignarNombreComprador(event); getNumeroUltimaFactura() }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {opcionesComprador.map((opcion) => (
-                        <option value={opcion.value}>{opcion.label}</option>
+                        <option selected value={opcion.value}>{opcion.label}</option>
                         ))}
             </select>
             <input value={JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}></input>
