@@ -31,6 +31,12 @@ function App() {
                     SALIR
                 </span>
             </button>
+            <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
+                onClick={router.back}>
+                <span className="font-black">
+                    REGRESAR
+                </span>
+            </button>
             <div className='relative h-50 w-full ' >
                 <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
                     <img src={'../assets/images/logo.png'} alt="" />
