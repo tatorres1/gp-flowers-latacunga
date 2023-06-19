@@ -111,6 +111,9 @@ const Facturacion: React.FC = () => {
   const [valorNombreFactura, setValorNombreFactura] = useState("");
   const [valorNumeroFactura, setValorNumeroFactura] = useState([]);
 
+  //variable para guardar numero de factura
+  const [valorNumeroFacturaGuardar, setValorNumeroFacturaGuardar] = useState("");
+
 
 
   //convirtiendo en array el valor de paises para que se mapee una sola vez
@@ -314,6 +317,8 @@ const Facturacion: React.FC = () => {
         personInvoice_calFacturacion: valorPersonInvoice,
         invoice_calFacturacion: valorInvoice,
         usdaOnly_calFacturacion: valorUsdaOnly,
+        comprador_calFacturacion: valorNombreFactura,
+        numeroFactura_calFacturacion: valorNumeroFacturaGuardar,
       }),
     };
     const res = await fetch(
@@ -758,7 +763,8 @@ const Facturacion: React.FC = () => {
             }
           );
           const response =await res.json();
-          setValorNumeroFactura(response.numeroFactura);  
+          setValorNumeroFactura(response.numeroFactura);
+          setValorNumeroFacturaGuardar(JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion));
         }
           
                      
@@ -1024,7 +1030,9 @@ const Facturacion: React.FC = () => {
                         <option selected value={opcion.value}>{opcion.label}</option>
                         ))}
             </select>
-            <input value={JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}></input>
+            <label>{valorNombreFactura}</label>
+            <label>{JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}</label>
+
 
         </div>
         {/*seccion cabecera*/}
