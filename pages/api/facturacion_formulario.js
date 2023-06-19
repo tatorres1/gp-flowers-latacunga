@@ -39,9 +39,11 @@ export default async function handler(req, res){
         const UsdaOnlyFacturacion = req.body.usdaOnly_calFacturacion;
         const compradorFacturacion = req.body.comprador_calFacturacion;
         const numeroFacturacion = req.body.numeroFactura_calFacturacion;
+        const fechaFacturacion = req.body.fecha_calFacturacion;
+        const horaFacturacion = req.body.hora_calFacturacion;
 
         const addFacturacion = await query({
-            query: "INSERT INTO datos_facturacion (marketingName_calFacturacion, cliente_calFacturacion, marcacion_calFacturacion, pais_calFacturacion, consignment_calFacturacion, farmCode_calFacturacion, date_calFacturacion , incoterm_calFacturacion, countryCode_calFacturacion, mawb_calFacturacion, hawb_calFacturacion , airLine_calFacturacion, currierFreight_calFacturacion, ruc_calFacturacion , noEmbarque_calFacturacion, personInvoice_calFacturacion , invoice_calFacturacion, usdaOnly_calFacturacion, comprador_calFacturacion, numeroFactura_calFacturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",              
+            query: "INSERT INTO datos_facturacion (marketingName_calFacturacion, cliente_calFacturacion, marcacion_calFacturacion, pais_calFacturacion, consignment_calFacturacion, farmCode_calFacturacion, date_calFacturacion , incoterm_calFacturacion, countryCode_calFacturacion, mawb_calFacturacion, hawb_calFacturacion , airLine_calFacturacion, currierFreight_calFacturacion, ruc_calFacturacion , noEmbarque_calFacturacion, personInvoice_calFacturacion , invoice_calFacturacion, usdaOnly_calFacturacion, comprador_calFacturacion, numeroFactura_calFacturacion, fecha_calFacturacion, hora_calFacturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",              
             values: ([MarketingNameFacturacion,
                 ClienteFacturacion,
                 MarcacionFacturacion,
@@ -61,7 +63,9 @@ export default async function handler(req, res){
                 InvoiceFacturacion,
                 UsdaOnlyFacturacion,
                 compradorFacturacion,
-                numeroFacturacion
+                numeroFacturacion,
+                fechaFacturacion,
+                horaFacturacion,
             ]),
         });
 

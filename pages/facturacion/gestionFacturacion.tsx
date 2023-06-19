@@ -319,6 +319,9 @@ const Facturacion: React.FC = () => {
         usdaOnly_calFacturacion: valorUsdaOnly,
         comprador_calFacturacion: valorNombreFactura,
         numeroFactura_calFacturacion: valorNumeroFacturaGuardar,
+        fecha_calFacturacion: fecha,
+        hora_calFacturacion: hora,
+
       }),
     };
     const res = await fetch(
