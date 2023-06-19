@@ -84,10 +84,12 @@ export default async function handler(req, res){
         const StemsPerBunchContFacturacion = req.body.stemsPerBunch_cont_facturacion;
         const UnitPriceContFacturacion = req.body.unitPrice_cont_facturacion;
         const TotalValueContFacturacion = req.body.totalValue_cont_facturacion;
+        const fechaContFacturacion = req.body.fecha_cont_facturacion;
+        const horaContFacturacion = req.body.hora_cont_facturacion;
 
         
         const addContFacturacion = await query({
-            query: "INSERT INTO cont_facturacion (picesType_cont_facturacion, totalPices_cont_facturacion, eqFullBoxes_cont_facturacion, productRosas_cont_facturacion, longitud_cont_facturacion, noBunches_cont_facturacion, Indicator_cont_facturacion, hts_cont_facturacion, nandina_cont_facturacion, totalStems_cont_facturacion, stemsPerBunch_cont_facturacion, unitPrice_cont_facturacion, totalValue_cont_facturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",              
+            query: "INSERT INTO cont_facturacion (picesType_cont_facturacion, totalPices_cont_facturacion, eqFullBoxes_cont_facturacion, productRosas_cont_facturacion, longitud_cont_facturacion, noBunches_cont_facturacion, Indicator_cont_facturacion, hts_cont_facturacion, nandina_cont_facturacion, totalStems_cont_facturacion, stemsPerBunch_cont_facturacion, unitPrice_cont_facturacion, totalValue_cont_facturacion, fecha_cont_facturacion, hora_cont_facturacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",              
             values: ([PicesTypeContFacturacion,
                 TotalPicesContFacturacion,
                 EqFullBoxesContFacturacion,
@@ -100,7 +102,9 @@ export default async function handler(req, res){
                 TotalStemsContFacturacion,
                 StemsPerBunchContFacturacion,
                 UnitPriceContFacturacion,
-                TotalValueContFacturacion
+                TotalValueContFacturacion,
+                fechaContFacturacion,
+                horaContFacturacion
             ]),
         });
 

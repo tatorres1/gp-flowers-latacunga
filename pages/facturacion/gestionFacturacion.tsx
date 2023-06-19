@@ -353,7 +353,9 @@ const Facturacion: React.FC = () => {
         totalStems_cont_facturacion: valorTotalStemsIdContFacturacion,
         stemsPerBunch_cont_facturacion: valorStemsPerBunch,
         unitPrice_cont_facturacion: valorUnitPrice,
-        totalValue_cont_facturacion: valorTotalContFacturacion
+        totalValue_cont_facturacion: valorTotalContFacturacion,
+        fecha_cont_facturacion: fecha,
+        hora_cont_facturacion: hora
       }),
     };
     const res = await fetch(
