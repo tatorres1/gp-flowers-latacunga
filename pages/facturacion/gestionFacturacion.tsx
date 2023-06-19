@@ -226,13 +226,19 @@ const Facturacion: React.FC = () => {
 
   //funcion consulta para "total pices"
   async function getTotalPices(){
+    const queryParams = new URLSearchParams(
+      {
+        fecha_cont_facturacion: fecha,
+        hora_cont_facturacion: hora
+      }
+    )
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas?${queryParams.toString()}`,
     postData);
     const response = await res.json();
     const temporal = response.totalPices[0]["SUM(totalPices_cont_facturacion)"];
@@ -241,13 +247,19 @@ const Facturacion: React.FC = () => {
 
     //funcion consulta para "total eq full boxes"
     async function getTotalEqFull(){
+      const queryParams = new URLSearchParams(
+        {
+          fecha_cont_facturacion: fecha,
+          hora_cont_facturacion: hora
+        }
+      )
       const postData = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas2`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas2?${queryParams.toString()}`,
       postData);
       const response = await res.json();
       const temporal = response.totalEqFull[0]["SUM(eqFullBoxes_cont_facturacion)"];
@@ -256,13 +268,19 @@ const Facturacion: React.FC = () => {
 
     //funcion consulta para "total del valor total"
     async function getTotalTotalValue(){
+      const queryParams = new URLSearchParams(
+        {
+          fecha_cont_facturacion: fecha,
+          hora_cont_facturacion: hora
+        }
+      )
       const postData = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas3`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_cont_sumas3?${queryParams.toString()}`,
       postData);
       const response = await res.json();
       const temporal = response.totalTotalValue[0]["SUM(totalValue_cont_facturacion)"];
@@ -1017,7 +1035,7 @@ const Facturacion: React.FC = () => {
   return (
     <Fragment>
 
-              <button onClick={() => {router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+              <button onClick={() => {deleteContFacturacionTodo(); router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
                   REGRESAR
                 </span>
