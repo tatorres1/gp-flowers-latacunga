@@ -177,7 +177,8 @@ const Facturacion: React.FC = () => {
   }
 
     //funciones de consulta de contenido de cuerpo facturacion
-  async function getContFacturacion(){
+    /*`
+    async function getContFacturacion(){
     const postData = {
       method: "GET",
       headers: {
@@ -185,6 +186,25 @@ const Facturacion: React.FC = () => {
       },
     };
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido`,
+    postData);
+    const response = await res.json();
+    setContFacturaciones(response.contFacturacion);
+  }*/
+  async function getContFacturacion(){
+
+    const queryParams = new URLSearchParams(
+      {
+        fecha_cont_facturacion: fecha,
+        hora_cont_facturacion: hora
+      }
+    )
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido?${queryParams.toString()}`,
     postData);
     const response = await res.json();
     setContFacturaciones(response.contFacturacion);

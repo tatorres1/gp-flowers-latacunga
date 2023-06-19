@@ -5,12 +5,14 @@ export default async function handler(req, res){
 
     let message;
 
+    const {fecha_cont_facturacion, hora_cont_facturacion} = req.query;
+
     if(req.method === "GET"){
 
         const contFacturacion = await query(
             {
-                query: "SELECT * FROM cont_facturacion",
-                values: [],
+                query: "SELECT * FROM cont_facturacion WHERE fecha_cont_facturacion=? AND hora_cont_facturacion=? ",
+                values: ([fecha_cont_facturacion, hora_cont_facturacion]),
             }
         );
         res.status(200).json({contFacturacion: contFacturacion});
