@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { stringify } from 'querystring';
 
 
 
@@ -16,6 +17,7 @@ function App() {
     //estas constantes sirven para guardar los objetos de las consultas 
     //de manera que se puedan usar en la pantalla de modificar
     const [comprador, setComprador] = useState([]);
+    const [facturasComprador, setFacturasComprador] = useState([]);
     const [compradorAnios, setCompradorAnios] = useState([]);
     const [compradorMeses, setCompradorMeses] = useState([]);
     const [compradorDias, setCompradorDias] = useState([]);
@@ -56,7 +58,7 @@ function App() {
             "Content-Type": "application/json",
           },
         };
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador_en_factura`,
         postData);
         const response = await res.json();
         setComprador(response.comprador);
@@ -66,6 +68,27 @@ function App() {
         value: vard.nombre_comp,
         label: vard.nombre_comp
       }));
+
+    //conseguir data sobre facturas, se envia nombre de comprador 
+    async function getFacturasComprador(){
+        const queryParams = new URLSearchParams({
+            nombre_comp : "Jose MM",
+          }
+          );
+  
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/fechas_facturas_registradas?${queryParams.toString()}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const response = await res.json();
+          setFacturasComprador(response.facturas_comprador);
+      }
+
 
     //conseguir data de años
     async function getAniosComprador(){
@@ -113,13 +136,17 @@ function App() {
                 &&
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el comprador</label>
-                <select id="years" size="20" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {opcionesComprador.map((opcion, index) => (
-                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={opcion.value}>{opcion.label}</option>
+                <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {comprador.map((item, index) => (
+                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={JSON.stringify(item.comprador_calFacturacion)}>
+                            {JSON.stringify(item.comprador_calFacturacion)}
+                        </option>
                         ))}
                 </select>
+
+                
                 <div className='flex flex-col'>
-                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(true); setSeleccionComprador(false); asignarEstadoSeleccion(true)}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(true); setSeleccionComprador(false); asignarEstadoSeleccion(true); getFacturasComprador()}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                         <span class="flex items-center h-20 transition-all ease-in duration-75 dark:bg-gray-900 w-1/3 group-hover:bg-opacity-0">
                             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -142,9 +169,11 @@ function App() {
                 &&
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el año</label>
-                <select id="years" size="20" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {opcionesAnios.map((item, index) => (
-                        <option onClick={() => {asignarEstadoSeleccion(false)}} key={index}>{item}</option>
+                <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {facturasComprador.map((item, index) => (
+                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={JSON.stringify(item.comprador_calFacturacion)}>
+                            {JSON.stringify(item.fecha_calFacturacion)} + {JSON.stringify(item.hora_calFacturacion)}
+                        </option>
                         ))}
                 </select>
                 <div className='flex flex-col'>
