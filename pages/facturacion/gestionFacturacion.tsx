@@ -805,14 +805,18 @@ const Facturacion: React.FC = () => {
       }));
 
       //conseguir data sobre el id actual de la ultima factura de comprador 
-      async function getNumeroUltimaFactura(){
-        if (valorNombreFactura == "") {
+      async function getNumeroUltimaFactura(event){
+
+        setValorNombreFactura(event.target.value);
+
+
+        if (event.target.value == "") {
           // Mostrar mensaje de alerta
-          alert("Debe proporcionar un valor para compradorNombre");
+          alert("Seleccione un comprador");
           return;
         }else{
           const queryParams = new URLSearchParams({
-            compradorNombre : valorNombreFactura,
+            compradorNombre : event.target.value,
           }
           );
   
@@ -828,6 +832,8 @@ const Facturacion: React.FC = () => {
           const response =await res.json();
           setValorNumeroFactura(response.numeroFactura);
           setValorNumeroFacturaGuardar(JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion));
+
+          alert(valorNumeroFacturaGuardar)
         }
           
                      
@@ -1088,9 +1094,10 @@ const Facturacion: React.FC = () => {
         {/*seccion titulo*/}
         <div className='p-6 flex flex-row'>
           <h5 className='text-4xl font-bold'>COMERCIAL</h5>
-            <select onClick={() => {}} onChange={(event) => {asignarNombreComprador(event); getNumeroUltimaFactura() }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select onClick={() => {}} onChange={(event) => { getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected></option>
                         {opcionesComprador.map((opcion) => (
-                        <option selected value={opcion.value}>{opcion.label}</option>
+                        <option value={opcion.value}>{opcion.label}</option>
                         ))}
             </select>
             <label>{valorNombreFactura}</label>

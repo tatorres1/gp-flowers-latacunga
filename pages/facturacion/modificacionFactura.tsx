@@ -36,8 +36,13 @@ function App() {
     const [fechaFactura, setFechaFactura] = useState("");
     const [horaFactura, setHoraFactura] = useState("");
 
+    //variable para busqueda de factura
+    const [compradorBusquedaFactura, setCompradorBusquedaFactura] = useState("");
+    const [compradorBusquedaFacturaCorregido, setCompradorBusquedaFacturaCorregido] = useState("");
 
-    var direccion_salida = "./login";
+
+
+    var direccion_salida = "../login";
 
 
     const router = useRouter();
@@ -72,7 +77,7 @@ function App() {
     //conseguir data sobre facturas, se envia nombre de comprador 
     async function getFacturasComprador(){
         const queryParams = new URLSearchParams({
-            nombre_comp : "Jose MM",
+            nombre_comp : compradorBusquedaFactura,
           }
           );
   
@@ -116,13 +121,19 @@ function App() {
         label: vard.anios_comp
       }));
 
+    const asignarBuscarComprador = event => {
+        setCompradorBusquedaFactura(event.target.value);
+    }
+
+    
+
       useEffect(() => {
         getComprador();
       },[]);
 
 
     return (
-        <div className='w-full bg-gradient-to-r from-lime-300 to-cyan-300'>
+        <div className='w-full h-full bg-gradient-to-r from-lime-300 to-cyan-300'>
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={SalirSesion}>
                 <span className="font-black">
@@ -138,15 +149,14 @@ function App() {
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el comprador</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {comprador.map((item, index) => (
-                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={JSON.stringify(item.comprador_calFacturacion)}>
-                            {JSON.stringify(item.comprador_calFacturacion)}
+                        <option onClickCapture={(event) => {asignarEstadoSeleccion(false); asignarBuscarComprador(event)}} key={index} value={item.comprador_calFacturacion}>
+                            {item.comprador_calFacturacion}
                         </option>
                         ))}
                 </select>
-
                 
                 <div className='flex flex-col'>
-                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(true); setSeleccionComprador(false); asignarEstadoSeleccion(true); getFacturasComprador()}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(true); setSeleccionComprador(false); asignarEstadoSeleccion(true); getFacturasComprador(); alert(compradorBusquedaFactura)}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                         <span class="flex items-center h-20 transition-all ease-in duration-75 dark:bg-gray-900 w-1/3 group-hover:bg-opacity-0">
                             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
