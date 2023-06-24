@@ -1092,17 +1092,20 @@ const Facturacion: React.FC = () => {
     <div>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
-        <div className='p-6 flex flex-row'>
-          <h5 className='text-4xl font-bold'>COMERCIAL</h5>
-            <select onClick={() => {}} onChange={(event) => { getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div className='p-6 flex flex-row space-x-7'>
+            <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
+            <select className='text-center' onClick={() => {}} onChange={(event) => {  setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected></option>
                         {opcionesComprador.map((opcion) => (
                         <option value={opcion.value}>{opcion.label}</option>
                         ))}
             </select>
-            <label>{valorNombreFactura}</label>
-            <label>{JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion)}</label>
 
+            <input className='text-center' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion))}></input>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+            </svg>
+            <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion)+1)}></input>
 
         </div>
         {/*seccion cabecera*/}
