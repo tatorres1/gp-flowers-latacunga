@@ -17,6 +17,9 @@ function App() {
     //estas constantes sirven para guardar los objetos de las consultas 
     //de manera que se puedan usar en la pantalla de modificar
     const [comprador, setComprador] = useState([]);
+    const [fecha, setFecha] = useState([]);
+    const [hora, setHora] = useState([]);
+
     const [facturasComprador, setFacturasComprador] = useState([]);
     const [compradorAnios, setCompradorAnios] = useState([]);
     const [compradorMeses, setCompradorMeses] = useState([]);
@@ -40,14 +43,25 @@ function App() {
     const [compradorBusquedaFactura, setCompradorBusquedaFactura] = useState("");
     const [compradorBusquedaFacturaCorregido, setCompradorBusquedaFacturaCorregido] = useState("");
 
-
-
+    //direcciones
     var direccion_salida = "../login";
+    var direccion_gestionModificacionFactura = "./gestionModificacionFacturacion";
 
+    //variables para guardar datos para enviar a gestionModificacionFactura
+    const [fechaEnvioConsulta, setFechaEnvioConsulta] = useState("");
+    const [HoraEnvioConsulta, setHoraEnvioConsulta] = useState("");
+
+    //valor para guardar el valor de item
+
+    const [valorFechaHoraGuardar, setValorFechaHoraGuardar] = useState(null);
 
     const router = useRouter();
     function SalirSesion() {
         router.push(direccion_salida);
+    }
+
+    function IrModificacionFactura(comprador, fecha, hora){
+        router.push(direccion_gestionModificacionFactura);//aqui toca mandar los datos en gpt, y aqui mismo asignar los valores, falta
     }
 
     function asignarEstadoSeleccion(estado) {
@@ -67,6 +81,34 @@ function App() {
         postData);
         const response = await res.json();
         setComprador(response.comprador);
+      }
+
+          //conseguir data sobre comprador 
+    async function getFecha(){
+        const postData = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/fecha_en_factura`,
+        postData);
+        const response = await res.json();
+        setFecha(response.fecha);
+      }
+
+          //conseguir data sobre comprador 
+    async function getHora(){
+        const postData = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/hora_en_factura`,
+        postData);
+        const response = await res.json();
+        setHora(response.hora);
       }
 
       const opcionesComprador = comprador.map((vard) => ({
@@ -124,12 +166,24 @@ function App() {
     const asignarBuscarComprador = event => {
         setCompradorBusquedaFactura(event.target.value);
     }
+    const asignarFechaHoraComprador = (item) => {
+        setFechaEnvioConsulta(item.fecha_calFacturacion);
+        setHoraEnvioConsulta(item.hora_calFacturacion);
+    }
 
-    
 
       useEffect(() => {
         getComprador();
+        getFecha();
       },[]);
+
+      useEffect(() => {
+
+        if(valorFechaHoraGuardar){
+            asignarFechaHoraComprador(valorFechaHoraGuardar);
+        }
+      },[valorFechaHoraGuardar]);
+
 
 
     return (
@@ -178,16 +232,30 @@ function App() {
                 seleccionAño 
                 &&
                 <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
-                <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el año</label>
+                <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione fecha y hora</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {facturasComprador.map((item, index) => (
-                        <option onClickCapture={() => {asignarEstadoSeleccion(false)}} key={index} value={JSON.stringify(item.comprador_calFacturacion)}>
+                        <option onClickCapture={() => {asignarEstadoSeleccion(false); setValorFechaHoraGuardar(item); alert("datos:" + compradorBusquedaFactura + fechaEnvioConsulta + HoraEnvioConsulta) }} key={index} value={JSON.stringify(item.comprador_calFacturacion)}>
                             {JSON.stringify(item.fecha_calFacturacion)} + {JSON.stringify(item.hora_calFacturacion)}
                         </option>
                         ))}
                 </select>
+                <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {fecha.map((item, index) => (
+                        <option onClickCapture={(event) => {asignarEstadoSeleccion(false); asignarBuscarComprador(event);getHora()}} key={index} value={item.fecha_calFacturacion}>
+                            {item.fecha_calFacturacion}
+                        </option>
+                        ))}
+                </select>
+                <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {hora.map((item, index) => (
+                        <option onClickCapture={(event) => {asignarEstadoSeleccion(false); asignarBuscarComprador(event)}} key={index} value={item.hora_calFacturacion}>
+                            {item.hora_calFacturacion}
+                        </option>
+                        ))}
+                </select>
                 <div className='flex flex-col'>
-                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionMes(true); setSeleccionAño(false); asignarEstadoSeleccion(true)}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(false); asignarEstadoSeleccion(true); IrModificacionFactura()}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                         <span class="flex items-center h-20 transition-all ease-in duration-75 dark:bg-gray-900 w-1/3 group-hover:bg-opacity-0">
                             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
