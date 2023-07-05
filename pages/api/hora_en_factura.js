@@ -7,13 +7,13 @@ export default async function handler(req, res){
 
     if(req.method === "GET"){
 
-        const comprador = await query(
+        const hora = await query(
             {
                 query: "SELECT DISTINCT hora_calFacturacion FROM datos_facturacion",
                 values: [],
             }
         );
-        res.status(200).json({hora: comprador});
+        res.status(200).json({hora: hora});
     }
 
     
