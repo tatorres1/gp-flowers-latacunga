@@ -63,7 +63,7 @@ function App() {
     }
 
     function IrModificacionFactura(comprador, fecha, hora){
-        router.push(direccion_gestionModificacionFactura);//aqui toca mandar los datos en gpt, y aqui mismo asignar los valores, falta
+        router.push(direccion_gestionModificacionFactura);
     }
 
     function asignarEstadoSeleccion(estado) {
