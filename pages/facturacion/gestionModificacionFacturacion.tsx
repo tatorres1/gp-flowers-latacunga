@@ -5,8 +5,7 @@ import Modal from "../../components/ModalFacturacion";
 
 const Facturacion: React.FC = () => {
 
-  const a = JSON.stringify(uno);
-  const b=  JSON.stringify(dos);
+
   
   //control de secciones de pantalla
   const [estadoPrimeraSeccion, setEstadoPrimeraSeccion] = useState(true);
@@ -527,9 +526,8 @@ const Facturacion: React.FC = () => {
 
     getComprador();
 
-
-    alert(uno)
-    alert (dos)
+    const {compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura} = router.query;
+    alert("datos:" + compradorBusquedaFactura + fechaBusquedaFactura + horaBusquedaFactura);
 
 
   }, []);

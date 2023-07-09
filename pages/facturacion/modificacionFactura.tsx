@@ -62,8 +62,12 @@ function App() {
         router.push(direccion_salida);
     }
 
-    function IrModificacionFactura(comprador, fecha, hora){
-        router.push(direccion_gestionModificacionFactura);
+    function IrModificacionFactura(){
+        router.push({
+            pathname: direccion_gestionModificacionFactura,
+            query: {compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura}
+        }
+        )    
     }
 
     function asignarEstadoSeleccion(estado) {
@@ -257,7 +261,7 @@ function App() {
                         ))}
                 </select>
                 <div className='flex flex-col'>
-                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(false); asignarEstadoSeleccion(true); alert("datos:" + compradorBusquedaFactura + fechaBusquedaFactura + horaBusquedaFactura);IrModificacionFactura(compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura)}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button disabled={estadoSeleccion} onClick={() => {setSeleccionAño(false); asignarEstadoSeleccion(true); alert("datos:" + compradorBusquedaFactura + fechaBusquedaFactura + horaBusquedaFactura);IrModificacionFactura()}}  class="rounded flex flex-row m-6 text-2xl font-medium text-gray-900 h-20 w-56 group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                         <span class="flex items-center h-20 transition-all ease-in duration-75 dark:bg-gray-900 w-1/3 group-hover:bg-opacity-0">
                             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
