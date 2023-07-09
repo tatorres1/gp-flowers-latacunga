@@ -5,6 +5,20 @@ import Modal from "../../components/ModalFacturacion";
 
 const Facturacion: React.FC = () => {
 
+  //definicion de variables de entrada para modificacion de factura
+
+  const router = useRouter()
+
+  //const compradorBusquedaFactura = router.query;
+  //const fechaBusquedaFactura = "";
+  //const horaBusquedaFactura = "";
+  const {compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura} = router.query;
+
+  const queryComprador = decodeURIComponent(compradorBusquedaFactura);
+  const queryFecha = decodeURIComponent(fechaBusquedaFactura);
+  const queryHora = decodeURIComponent(horaBusquedaFactura);
+
+
 
   
   //control de secciones de pantalla
@@ -51,7 +65,6 @@ const Facturacion: React.FC = () => {
   const [valorTotalContFacturacion, setValorTotalContFacturacion] = useState("");
 
 
-  const router = useRouter()
 
   const [facturaciones, setFacturaciones] = useState([]);
 
@@ -166,13 +179,22 @@ const Facturacion: React.FC = () => {
 
   //funciones de consulta facturacion
   async function getFacturacion(){
+
+    const queryParams = new URLSearchParams(
+      {
+        comprador : queryComprador,
+        fecha : queryFecha,
+        hora : queryHora
+      }
+    )
+
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/modificacion_facturacion_formulario?${queryParams}`,
     postData);
     const response = await res.json();
     setFacturaciones(response.facturacion);
@@ -526,7 +548,6 @@ const Facturacion: React.FC = () => {
 
     getComprador();
 
-    const {compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura} = router.query;
     alert("datos:" + compradorBusquedaFactura + fechaBusquedaFactura + horaBusquedaFactura);
 
 
@@ -853,6 +874,8 @@ const Facturacion: React.FC = () => {
       alert(fecha);
     }
 
+  
+
   //seccion codigo de modal insertar
   const htmlInsertar = 
   <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
@@ -1097,17 +1120,7 @@ const Facturacion: React.FC = () => {
         {/*seccion titulo*/}
         <div className='p-6 flex flex-row space-x-7'>
             <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
-            <select className='text-center' onClick={() => {}} onChange={(event) => {  setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected></option>
-                        {opcionesComprador.map((opcion) => (
-                        <option value={opcion.value}>{opcion.label}</option>
-                        ))}
-            </select>
-
-            <input className='text-center' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion))}></input>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-            </svg>
+            <input className='text-center' value={compradorBusquedaFactura}></input>
             <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion)+1)}></input>
 
         </div>
