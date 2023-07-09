@@ -558,12 +558,12 @@ const Facturacion: React.FC = () => {
     setValorCliente(JSON.stringify(facturaciones[0]?.cliente_calFacturacion).replace(/"/g, ''));
     setValorMarcacion(JSON.stringify(facturaciones[0]?.marcacion_calFacturacion).replace(/"/g, ''));
     setValorPais(JSON.stringify(facturaciones[0]?.pais_calFacturacion).replace(/"/g, ''));
-    setValorConsignment(JSON.stringify(facturaciones[0]?.marcacion_calFacturacion).replace(/"/g, ''));
+    setValorConsignment(JSON.stringify(facturaciones[0]?.consignment_calFacturacion).replace(/"/g, ''));
     setValorFarmCode(JSON.stringify(facturaciones[0]?.farmCode_calFacturacion).replace(/"/g, ''));
     setValorDate(JSON.stringify(facturaciones[0]?.date_calFacturacion).replace(/"/g, ''));
     setValorIncoterm(JSON.stringify(facturaciones[0]?.incoterm_calFacturacion).replace(/"/g, ''));
     setValorCountryCode(JSON.stringify(facturaciones[0]?.countryCode_calFacturacion).replace(/"/g, ''));
-    setValorMawb(JSON.stringify(facturaciones[0]?.numeroFactura_calFacturacion).replace(/"/g, ''));
+    setValorMawb(JSON.stringify(facturaciones[0]?.mawb_calFacturacion).replace(/"/g, ''));
     setValorHawb(JSON.stringify(facturaciones[0]?.hawb_calFacturacion).replace(/"/g, ''));
     setValorAirLine(JSON.stringify(facturaciones[0]?.airLine_calFacturacion).replace(/"/g, ''));
     setValorCurrierFreight(JSON.stringify(facturaciones[0]?.currierFreight_calFacturacion).replace(/"/g, ''));
@@ -1131,13 +1131,13 @@ const Facturacion: React.FC = () => {
             <span className='p-2'>
             FECHA:
               </span>
-            {valorHoraFechaSistema.toLocaleDateString()}
+            {queryFecha}
           </div>
           <div suppressHydrationWarning className='p-12'>
             <span className='p-2'>
             HORA:
               </span> 
-            {valorHoraFechaSistema.toLocaleTimeString()}
+            {queryHora}
           </div>
         </div>
 
@@ -1235,7 +1235,7 @@ const Facturacion: React.FC = () => {
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Currier & Freight Forwarder</label>
                     <div className='mb-6'>
                       <select value={valorCurrierFreight} onChange={(event) => {asignarCurrierFreight(event)}} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option selected>Escoja el Value Cargo</option>
+                          <option selected>{valorCurrierFreight}</option>
                           {opcionesValueCargo.map((opcionCargo) => (
                             <option value={opcionCargo.valueCargo}>{opcionCargo.labelCargo}</option>
                           ))}
