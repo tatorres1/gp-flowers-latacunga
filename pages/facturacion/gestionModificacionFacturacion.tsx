@@ -218,8 +218,8 @@ const Facturacion: React.FC = () => {
 
     const queryParams = new URLSearchParams(
       {
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }
     )
     const postData = {
@@ -252,8 +252,8 @@ const Facturacion: React.FC = () => {
   async function getTotalPices(){
     const queryParams = new URLSearchParams(
       {
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }
     )
     const postData = {
@@ -273,8 +273,8 @@ const Facturacion: React.FC = () => {
     async function getTotalEqFull(){
       const queryParams = new URLSearchParams(
         {
-          fecha_cont_facturacion: fecha,
-          hora_cont_facturacion: hora
+          fecha_cont_facturacion: queryFecha,
+          hora_cont_facturacion: queryHora
         }
       )
       const postData = {
@@ -294,8 +294,8 @@ const Facturacion: React.FC = () => {
     async function getTotalTotalValue(){
       const queryParams = new URLSearchParams(
         {
-          fecha_cont_facturacion: fecha,
-          hora_cont_facturacion: hora
+          fecha_cont_facturacion: queryFecha,
+          hora_cont_facturacion: queryHora
         }
       )
       const postData = {
@@ -381,8 +381,8 @@ const Facturacion: React.FC = () => {
         usdaOnly_calFacturacion: valorUsdaOnly,
         comprador_calFacturacion: valorNombreFactura,
         numeroFactura_calFacturacion: valorNumeroFacturaGuardar,
-        fecha_calFacturacion: fecha,
-        hora_calFacturacion: hora,
+        fecha_calFacturacion: queryFecha,
+        hora_calFacturacion: queryHora,
 
       }),
     };
@@ -416,8 +416,8 @@ const Facturacion: React.FC = () => {
         stemsPerBunch_cont_facturacion: valorStemsPerBunch,
         unitPrice_cont_facturacion: valorUnitPrice,
         totalValue_cont_facturacion: valorTotalContFacturacion,
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }),
     };
     const res = await fetch(
@@ -523,8 +523,8 @@ const Facturacion: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }),
     };
     const res = await fetch(
@@ -884,18 +884,6 @@ const Facturacion: React.FC = () => {
                      
       }
 
-    const asignarNombreComprador = async event => {
-      setValorNombreFactura(event.target.value);
-    }
-
-    function asignarHoraYFecha(){
-
-      
-      alert(hora);
-      alert(fecha);
-    }
-
-  
 
   //seccion codigo de modal insertar
   const htmlInsertar = 
@@ -1088,7 +1076,7 @@ const Facturacion: React.FC = () => {
   return (
     <Fragment>
 
-              <button onClick={() => {deleteContFacturacionTodo(); router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+              <button onClick={() => {router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
                   REGRESAR
                 </span>
@@ -1096,7 +1084,7 @@ const Facturacion: React.FC = () => {
 
               <button onClick={() => {inicializarVariables()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-                  REGRESAR
+                  CARGAR DATOS
                 </span>
               </button>
 
@@ -1267,11 +1255,15 @@ const Facturacion: React.FC = () => {
     {estadoSegundaSeccion &&
     <div className='w-full p-12  bg-gradient-to-r from-lime-300 to-cyan-300'>
 
-
-
-        <button type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              onClick={() => {setShowModal(true); resetearVariables()}}>AGREGAR NUEVO</button>
-
+<div className=''>
+            <button type="button" className="ml-8 py-2.5 px-5 mr-12 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  onClick={() => {setShowModal(true); resetearVariables()}}>AGREGAR NUEVO</button>
+            <button className='bg-blue-400 ml-12 py-1 px-4 mr-2 mb-2' onClick={getContFacturacion}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
+            </button>
+        </div>
                 <div className='w-full p-1 relative overflow-x-auto sm:rounded-lg '>
                   <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                     <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -1438,7 +1430,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlActualizar}</p>
                 </div>
                 <div>
-                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModal(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModalEditar(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >ACTUALIZAR
                   </button>
                 </div>
