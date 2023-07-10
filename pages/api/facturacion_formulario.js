@@ -127,9 +127,6 @@ export default async function handler(req, res){
             values: ([MarketingNameFacturacion,ClienteFacturacion,MarcacionFacturacion, PaisFacturacion, ConsignmentFacturacion, FarmCodeFacturacion, DateFacturacion, IncotermFacturacion, CountryCodeFacturacion, MawbFacturacion, HawbFacturacion, AirLineFacturacion, CurrierFreightFacturacion, RucFacturacion, NoEmbarqueFacturacion, PersonInvoiceFacturacion, InvoiceFacturacion, UsdaOnlyFacturacion, idFacturacion ]),
                          
         });
-
-        //indicar varias constantes para la actualizacion de variables mediante query,
-        //primero revisar el tutorial para ver si realmente funciona
         
         const result = updateFacturacion.affectedRows;
         if(result){

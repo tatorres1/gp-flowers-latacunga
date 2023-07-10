@@ -467,7 +467,7 @@ const Facturacion: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_calFacturacion: valorIdFacturacion,
+        id_calFacturacion: JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion)),
         marketingName_calFacturacion: valorMarketingName,
         cliente_calFacturacion:  valorCliente,
         marcacion_calFacturacion: valorMarcacion,
@@ -1082,13 +1082,6 @@ const Facturacion: React.FC = () => {
                 </span>
               </button>
 
-              <button onClick={() => {inicializarVariables()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-                  CARGAR DATOS
-                </span>
-              </button>
-
-
               <div>
                               <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
                   <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
@@ -1137,7 +1130,11 @@ const Facturacion: React.FC = () => {
             <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
             <input className='text-center' value={compradorBusquedaFactura}></input>
             <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion))}></input>
-
+            <button onClick={() => {inicializarVariables()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                  CARGAR DATOS
+                </span>
+              </button>
         </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
@@ -1401,9 +1398,9 @@ const Facturacion: React.FC = () => {
                 </div>
         </div>
         <div className='m-12'>
-                    <button onClick={() => {addFacturacion()}}  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <button onClick={() => {updateFacturacion()}}  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                       <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                          GUARDAR
+                          ACTUALIZAR
                       </span>
                     </button>            
                 </div>
