@@ -356,7 +356,6 @@ const Facturacion: React.FC = () => {
         invoice_calFacturacion: valorInvoice,
         usdaOnly_calFacturacion: valorUsdaOnly,
         comprador_calFacturacion: valorNombreFactura,
-        numeroFactura_calFacturacion: valorNumeroFacturaGuardar,
         fecha_calFacturacion: fecha,
         hora_calFacturacion: hora,
 
@@ -1088,10 +1087,7 @@ const Facturacion: React.FC = () => {
           </div>
         </div>
 
-    {estadoPrimeraSeccion && 
-    <div>
-      <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
-        {/*seccion titulo*/}
+
         <div className='p-6 flex flex-row space-x-7'>
             <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
             <select className='text-center' onClick={() => {}} onChange={(event) => {  setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -1108,6 +1104,12 @@ const Facturacion: React.FC = () => {
             <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion)+1)}></input>
 
         </div>
+
+    {estadoPrimeraSeccion && 
+    <div>
+      <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
+        {/*seccion titulo*/}
+
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
           <div className='pr-12'>
@@ -1401,7 +1403,7 @@ const Facturacion: React.FC = () => {
                   <p>{htmlActualizar}</p>
                 </div>
                 <div>
-                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModal(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  <button onClick={() => {updateContFacturacion(); getContFacturacion(); setShowModalEditar(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       >ACTUALIZAR
                   </button>
                 </div>
