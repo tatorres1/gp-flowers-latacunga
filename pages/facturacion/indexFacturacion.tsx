@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 function App() {
 
-    var direccion_salida = "./login";
+    var direccion_salida = "../login";
     var direccion_agregarFactura = "./gestionFacturacion";
     var direccion_modificarFactura = "./modificacionFactura";
     var direccion_eliminarFactura = "./eliminacionFactura";

@@ -5,6 +5,22 @@ import Modal from "../../components/ModalFacturacion";
 
 const Facturacion: React.FC = () => {
 
+  //definicion de variables de entrada para modificacion de factura
+
+  const router = useRouter()
+
+  //const compradorBusquedaFactura = router.query;
+  //const fechaBusquedaFactura = "";
+  //const horaBusquedaFactura = "";
+  const {compradorBusquedaFactura, fechaBusquedaFactura, horaBusquedaFactura} = router.query;
+
+  const queryComprador = decodeURIComponent(compradorBusquedaFactura);
+  const queryFecha = decodeURIComponent(fechaBusquedaFactura);
+  const queryHora = decodeURIComponent(horaBusquedaFactura);
+
+
+
+  
   //control de secciones de pantalla
   const [estadoPrimeraSeccion, setEstadoPrimeraSeccion] = useState(true);
   const [estadoSegundaSeccion, setEstadoSegundaSeccion] = useState(false);
@@ -49,7 +65,6 @@ const Facturacion: React.FC = () => {
   const [valorTotalContFacturacion, setValorTotalContFacturacion] = useState("");
 
 
-  const router = useRouter()
 
   const [facturaciones, setFacturaciones] = useState([]);
 
@@ -57,6 +72,7 @@ const Facturacion: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEditar, setShowModalEditar] = useState(false);
   const [showModalEliminar, setShowModalEliminar] = useState(false);
+  const [showModalBorrarFactura, setShowModalBorrarFactura] = useState(false);
 
   //valores defecto para cuadro de update
   const [valorDefectoIdContFacturacion, setValorDefectoIdContFacturacion] = useState("");
@@ -164,13 +180,22 @@ const Facturacion: React.FC = () => {
 
   //funciones de consulta facturacion
   async function getFacturacion(){
+
+    const queryParams = new URLSearchParams(
+      {
+        comprador : queryComprador,
+        fecha : queryFecha,
+        hora : queryHora
+      }
+    )
+
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/modificacion_facturacion_formulario?${queryParams.toString()}`,
     postData);
     const response = await res.json();
     setFacturaciones(response.facturacion);
@@ -194,8 +219,8 @@ const Facturacion: React.FC = () => {
 
     const queryParams = new URLSearchParams(
       {
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }
     )
     const postData = {
@@ -228,8 +253,8 @@ const Facturacion: React.FC = () => {
   async function getTotalPices(){
     const queryParams = new URLSearchParams(
       {
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }
     )
     const postData = {
@@ -249,8 +274,8 @@ const Facturacion: React.FC = () => {
     async function getTotalEqFull(){
       const queryParams = new URLSearchParams(
         {
-          fecha_cont_facturacion: fecha,
-          hora_cont_facturacion: hora
+          fecha_cont_facturacion: queryFecha,
+          hora_cont_facturacion: queryHora
         }
       )
       const postData = {
@@ -270,8 +295,8 @@ const Facturacion: React.FC = () => {
     async function getTotalTotalValue(){
       const queryParams = new URLSearchParams(
         {
-          fecha_cont_facturacion: fecha,
-          hora_cont_facturacion: hora
+          fecha_cont_facturacion: queryFecha,
+          hora_cont_facturacion: queryHora
         }
       )
       const postData = {
@@ -356,8 +381,9 @@ const Facturacion: React.FC = () => {
         invoice_calFacturacion: valorInvoice,
         usdaOnly_calFacturacion: valorUsdaOnly,
         comprador_calFacturacion: valorNombreFactura,
-        fecha_calFacturacion: fecha,
-        hora_calFacturacion: hora,
+        numeroFactura_calFacturacion: valorNumeroFacturaGuardar,
+        fecha_calFacturacion: queryFecha,
+        hora_calFacturacion: queryHora,
 
       }),
     };
@@ -391,8 +417,8 @@ const Facturacion: React.FC = () => {
         stemsPerBunch_cont_facturacion: valorStemsPerBunch,
         unitPrice_cont_facturacion: valorUnitPrice,
         totalValue_cont_facturacion: valorTotalContFacturacion,
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
+        fecha_cont_facturacion: queryFecha,
+        hora_cont_facturacion: queryHora
       }),
     };
     const res = await fetch(
@@ -442,7 +468,7 @@ const Facturacion: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id_calFacturacion: valorIdFacturacion,
+        id_calFacturacion: JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion)),
         marketingName_calFacturacion: valorMarketingName,
         cliente_calFacturacion:  valorCliente,
         marcacion_calFacturacion: valorMarcacion,
@@ -491,26 +517,6 @@ const Facturacion: React.FC = () => {
     if(response.response.message != "success") return;
   }
 
-  async function deleteContFacturacionTodo() {
-    const postData = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fecha_cont_facturacion: fecha,
-        hora_cont_facturacion: hora
-      }),
-    };
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido_vaciar`,
-      postData
-    );
-    const response = await res.json();
-    console.log(response.response.facturacion);
-    if(response.response.message != "success") return;
-  }
-
   useEffect(() => {
     getPaises();
     getValueCargo();
@@ -523,10 +529,29 @@ const Facturacion: React.FC = () => {
 
     getComprador();
 
-
-
-
   }, []);
+
+  //inicializar variables para uso de la pagina
+  function inicializarVariables(){
+    setValorMarketingName(JSON.stringify(facturaciones[0]?.marketingName_calFacturacion).replace(/"/g, ''));
+    setValorCliente(JSON.stringify(facturaciones[0]?.cliente_calFacturacion).replace(/"/g, ''));
+    setValorMarcacion(JSON.stringify(facturaciones[0]?.marcacion_calFacturacion).replace(/"/g, ''));
+    setValorPais(JSON.stringify(facturaciones[0]?.pais_calFacturacion).replace(/"/g, ''));
+    setValorConsignment(JSON.stringify(facturaciones[0]?.consignment_calFacturacion).replace(/"/g, ''));
+    setValorFarmCode(JSON.stringify(facturaciones[0]?.farmCode_calFacturacion).replace(/"/g, ''));
+    setValorDate(JSON.stringify(facturaciones[0]?.date_calFacturacion).replace(/"/g, ''));
+    setValorIncoterm(JSON.stringify(facturaciones[0]?.incoterm_calFacturacion).replace(/"/g, ''));
+    setValorCountryCode(JSON.stringify(facturaciones[0]?.countryCode_calFacturacion).replace(/"/g, ''));
+    setValorMawb(JSON.stringify(facturaciones[0]?.mawb_calFacturacion).replace(/"/g, ''));
+    setValorHawb(JSON.stringify(facturaciones[0]?.hawb_calFacturacion).replace(/"/g, ''));
+    setValorAirLine(JSON.stringify(facturaciones[0]?.airLine_calFacturacion).replace(/"/g, ''));
+    setValorCurrierFreight(JSON.stringify(facturaciones[0]?.currierFreight_calFacturacion).replace(/"/g, ''));
+    setValorRuc(JSON.stringify(facturaciones[0]?.ruc_calFacturacion).replace(/"/g, ''));
+    setValorNoEmbarque(JSON.stringify(facturaciones[0]?.noEmbarque_calFacturacion).replace(/"/g, ''));
+    setValorPersonInvoice(JSON.stringify(facturaciones[0]?.personInvoice_calFacturacion).replace(/"/g, ''));
+    setValorInvoice(JSON.stringify(facturaciones[0]?.invoice_calFacturacion).replace(/"/g, ''));
+    setValorUsdaOnly(JSON.stringify(facturaciones[0]?.usdaOnly_calFacturacion).replace(/"/g, ''));
+  }
 
 
   //asignacion valor a filtrar
@@ -832,22 +857,51 @@ const Facturacion: React.FC = () => {
           setValorNumeroFactura(response.numeroFactura);
           setValorNumeroFacturaGuardar(JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion));
 
-          alert(valorNumeroFacturaGuardar)
         }
           
                      
       }
 
-    const asignarNombreComprador = async event => {
-      setValorNombreFactura(event.target.value);
-    }
+      async function deleteContFacturacionTodo() {
+        const postData = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fecha_cont_facturacion: queryFecha,
+            hora_cont_facturacion: queryHora
+          }),
+        };
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido_vaciar`,
+          postData
+        );
+        const response = await res.json();
+        console.log(response.response.facturacion);
+        if(response.response.message != "success") return;
+      }
 
-    function asignarHoraYFecha(){
+      async function deleteDataFacturacionTodo() {
+        const postData = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fecha_cont_facturacion: queryFecha,
+            hora_cont_facturacion: queryHora
+          }),
+        };
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/facturacion_datos_vaciar`,
+          postData
+        );
+        const response = await res.json();
+        console.log(response.response.facturacion);
+        if(response.response.message != "success") return;
+      }
 
-      
-      alert(hora);
-      alert(fecha);
-    }
 
   //seccion codigo de modal insertar
   const htmlInsertar = 
@@ -1040,12 +1094,11 @@ const Facturacion: React.FC = () => {
   return (
     <Fragment>
 
-              <button onClick={() => {deleteContFacturacionTodo(); router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+              <button onClick={() => {router.back()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
                   REGRESAR
                 </span>
               </button>
-
 
               <div>
                               <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -1077,39 +1130,37 @@ const Facturacion: React.FC = () => {
             <span className='p-2'>
             FECHA:
               </span>
-            {valorHoraFechaSistema.toLocaleDateString()}
+            {queryFecha}
           </div>
           <div suppressHydrationWarning className='p-12'>
             <span className='p-2'>
             HORA:
               </span> 
-            {valorHoraFechaSistema.toLocaleTimeString()}
+            {queryHora}
           </div>
-        </div>
-
-
-        <div className='p-6 flex flex-row space-x-7'>
-            <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
-            <select className='text-center' onClick={() => {}} onChange={(event) => {  setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected></option>
-                        {opcionesComprador.map((opcion) => (
-                        <option value={opcion.value}>{opcion.label}</option>
-                        ))}
-            </select>
-
-            <input className='text-center' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion))}></input>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-            </svg>
-            <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(valorNumeroFactura[0]?.id_calFacturacion)+1)}></input>
-
+                  <div className='m-12'>
+                    <button onClick={() => {setShowModalBorrarFactura(true)}}  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                      <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                          ELIMINAR FACTURA
+                      </span>
+                    </button>            
+                </div>
         </div>
 
     {estadoPrimeraSeccion && 
     <div>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
-
+        <div className='p-6 flex flex-row space-x-7'>
+            <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
+            <input disabled className='text-center' value={compradorBusquedaFactura}></input>
+            <input disabled className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion))}></input>
+            <button onClick={() => {inicializarVariables()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                  CARGAR DATOS
+                </span>
+              </button>
+        </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
           <div className='pr-12'>
@@ -1126,25 +1177,23 @@ const Facturacion: React.FC = () => {
                 <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
             </a>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Marketing Name</label>
-            <input value={valorMarketingName} onChange={asignarMarketingName} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+            <input value={valorMarketingName} onChange={(event) => {asignarMarketingName(event)}} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={valorMarketingName} disabled required/>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Consignee Name and Address</label>
             <a class="flex flex-col p-6 bg-white border border-gray-200 shadow md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex flex-row items-center justify-between pb-4 leading-normal">
                     <label for="first_name" class="block text-sm w-1/5 font-medium text-gray-900 dark:text-white">CLIENTE:</label>
-                    <input value={valorCliente} onChange={asignarCliente} type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorCliente} onChange={(event) => {asignarCliente(event)}} type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" disabled required/>
                 </div>
                 <div class="flex flex-row items-center justify-between pb-4 leading-normal">
                     <label for="first_name" class="block text-sm w-2/5 font-medium text-gray-900 dark:text-white">MARCACION:</label>
-                    <input value={valorMarcacion} onChange={asignarMarcacion} type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input value={valorMarcacion} onChange={(event) => {asignarMarcacion(event)}} type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" disabled required/>
                 </div>
                 <div class="flex flex-col justify-between leading-normal">
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">País</label>
                     <div>
-                      <select value={valorPais} onChange={asignarPais} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option selected>Escoja un País</option>
-                          {opcionesPaises.map((opcion) => (
-                            <option value={opcion.value}>{opcion.label}</option>
-                          ))}
+                      <select disabled value={valorPais} onChange={(event) => {asignarPais(event)}} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option selected>{valorPais}</option>
+
                       </select>
                     </div>
                 </div>
@@ -1154,7 +1203,7 @@ const Facturacion: React.FC = () => {
                       <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Consignment</label>  
                     </div>
                     <div className='flex flex-col w-2/5 items-center'>
-                      <input value={valorConsignment} onChange={asignarConsignment} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                      <input disabled value={valorConsignment} onChange={(event) => {asignarConsignment(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     </div>
             </div>
           </div>
@@ -1162,42 +1211,39 @@ const Facturacion: React.FC = () => {
               <div class="grid mb-6 md:grid-cols-2">
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Farm Code</label>
-                    <input value={valorFarmCode} onChange={asignarFarmCode} type="text" id="first_name" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="GP" required/>
+                    <input disabled value={valorFarmCode} onChange={(event) => {asignarFarmCode(event)}} type="text" id="first_name" class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="GP" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                    <input value={valorDate} onChange={asignarDate} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="23/02/2022" required/>
+                    <input disabled value={valorDate} onChange={(event) => {asignarDate(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="23/02/2022" required/>
                 </div>
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">INCOTERM</label>
-                    <input value={valorIncoterm} onChange={asignarIncoterm} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="FCA-UIO" required/>
+                    <input disabled value={valorIncoterm} onChange={(event) => {asignarIncoterm(event)}} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="FCA-UIO" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Country Code</label>
-                    <input value={valorCountryCode} onChange={asignarCountryCode} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="EC" required/>
+                    <input disabled value={valorCountryCode} onChange={(event) => {asignarCountryCode(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="EC" required/>
                 </div>
               </div>
               <div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">MAWB No.</label>
-                    <input value={valorMawb} onChange={asignarMawb} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="14509595784" required/>
+                    <input disabled value={valorMawb} onChange={(event) => {asignarMawb(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="14509595784" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">HAWB</label>
-                    <input value={valorHawb} onChange={asignarHawb} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="893896" required/>
+                    <input disabled value={valorHawb} onChange={(event) => {asignarHawb(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="893896" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Air Line</label>
-                    <input value={valorAirLine} onChange={asignarAirLine} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input disabled value={valorAirLine} onChange={(event) => {asignarAirLine(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Currier & Freight Forwarder</label>
                     <div className='mb-6'>
-                      <select value={valorCurrierFreight} onChange={asignarCurrierFreight} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option selected>Escoja el Value Cargo</option>
-                          {opcionesValueCargo.map((opcionCargo) => (
-                            <option value={opcionCargo.valueCargo}>{opcionCargo.labelCargo}</option>
-                          ))}
+                      <select disabled value={valorCurrierFreight} onChange={(event) => {asignarCurrierFreight(event)}} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option selected>{valorCurrierFreight}</option>
                       </select>
                     </div>
                 </div>
@@ -1205,11 +1251,11 @@ const Facturacion: React.FC = () => {
               <div class="grid md:grid-cols-2">
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">R.U.C. No.</label>
-                    <input value={valorRuc} onChange={asignarRuc} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0502401011001" required/>
+                    <input disabled value={valorRuc} onChange={(event) => {asignarRuc(event)}} type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0502401011001" required/>
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">No EMBARQUE</label>
-                    <input value={valorNoEmbarque} onChange={asignarNoEmbarque} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input disabled value={valorNoEmbarque} onChange={(event) => {asignarNoEmbarque(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
                 <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">DAE No.005-2023-40-00139723</label>
               </div>    
@@ -1226,17 +1272,9 @@ const Facturacion: React.FC = () => {
     {estadoSegundaSeccion &&
     <div className='w-full p-12  bg-gradient-to-r from-lime-300 to-cyan-300'>
 
-        <div className=''>
-            <button type="button" className="ml-8 py-2.5 px-5 mr-12 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  onClick={() => {setShowModal(true); resetearVariables()}}>AGREGAR NUEVO</button>
-            <button className='bg-blue-400 ml-12 py-1 px-4 mr-2 mb-2' onClick={getContFacturacion}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-              </svg>
-            </button>
+<div className=''>
+
         </div>
-
-
                 <div className='w-full p-1 relative overflow-x-auto sm:rounded-lg '>
                   <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                     <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -1255,8 +1293,7 @@ const Facturacion: React.FC = () => {
                         <th scope="col" className="text-center px-6 py-3 text-xl">STEMS / BUNCH</th>
                         <th scope="col" className="text-center px-6 py-3 text-xl">UNIT PRICE</th>
                         <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL VALUE</th>
-                        <th scope="col" className="px-6 py-3"> <span className="sr-only">EDITAR</span> </th>
-                        <th scope="col" className="px-6 py-3"> <span className="sr-only">ELIMINAR</span> </th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -1280,33 +1317,6 @@ const Facturacion: React.FC = () => {
                           <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.unitPrice_cont_facturacion}</td>
                           <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.totalValue_cont_facturacion}</td>
 
-
-
-                          <td className="border border-lime-900 px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
-                              onClick={() =>{
-                                setShowModalEditar(true);
-                                asignarDataPorDefecto(
-                                  contFacturaciones.id_cont_facturacion, 
-                                  contFacturaciones.picesType_cont_facturacion,
-                                  contFacturaciones.totalPices_cont_facturacion,
-                                  contFacturaciones.eqFullBoxes_cont_facturacion,
-                                  contFacturaciones.productRosas_cont_facturacion,
-                                  contFacturaciones.longitud_cont_facturacion,
-                                  contFacturaciones.noBunches_cont_facturacion,
-                                  contFacturaciones.Indicator_cont_facturacion,
-                                  contFacturaciones.hts_cont_facturacion,
-                                  contFacturaciones.nandina_cont_facturacion,
-                                  contFacturaciones.totalStems_cont_facturacion,
-                                  contFacturaciones.stemsPerBunch_cont_facturacion,
-                                  contFacturaciones.unitPrice_cont_facturacion,
-                                  contFacturaciones.totalValue_cont_facturacion
-                                  );
-                                  resetearVariables();
-                                  }}
-                                  >EDITAR</a></td>
-                          <td className="border border-lime-900 px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(contFacturaciones.id_cont_facturacion);}}>ELIMINAR</a> </td>
                         </tr>
                       ))}
                       <tr>
@@ -1339,15 +1349,6 @@ const Facturacion: React.FC = () => {
 
                 </div>
                       
-                <div className='mb-12'>
-                <button onClick={() => { deleteContFacturacionTodo(); getContFacturacion()}} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-                  VACIAR CONTENIDO
-                </span>
-              </button>
-                </div>
-
-
                     
     </div >}
 
@@ -1359,28 +1360,20 @@ const Facturacion: React.FC = () => {
         <div className='flex flex-col-2'>
                 <div className='m-12 w-1/2'>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">Name and Title of person Preparing Invoice</label>
-                    <input value={valorPersonInvoice} onChange={asignarPersonInvoice} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input disabled value={valorPersonInvoice} onChange={(event) => {asignarPersonInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
         </div>
         <div className='flex flex-col-2'>
                 <div className='ml-12 w-1/2'>
-                    <input value={valorInvoice} onChange={asignarInvoice} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input disabled value={valorInvoice} onChange={(event) => {asignarInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
                 </div>
                 <div className='ml-12 w-1/2'>
-                    <input value={valorUsdaOnly} onChange={asignarUsdaOnly} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
+                    <input disabled value={valorUsdaOnly} onChange={(event) => {asignarUsdaOnly(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">USDA, APHIS, P.P.Q. Use Only</label>
                 </div>
-        </div>
-        <div className='m-12'>
-                    <button onClick={() => {addFacturacion();router.back()}}  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                      <span class="relative px-5 py-5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                          GUARDAR
-                      </span>
-                    </button>            
-                </div>
-        
+        </div>        
         
       </div>
     }
@@ -1416,6 +1409,18 @@ const Facturacion: React.FC = () => {
         <button onClick={() => {deleteContFacturacion(); getContFacturacion(); setShowModalEliminar(false); actualizarTotales() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         >Confirmar</button>
       </div>
+    </Modal>
+    <Modal isVisible={showModalBorrarFactura} onClose={() => setShowModalBorrarFactura(false)}>
+              <div className='flex items-center flex-col'>
+                <div>
+                  Desea confirmar la eliminación de ésta factura?
+                </div>
+                <div>
+                  <button onClick={() => { deleteContFacturacionTodo(); deleteDataFacturacionTodo(), router.back() }} type="button" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-emerald-500 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      >CONFIRMAR
+                  </button>
+                </div>
+              </div>
     </Modal>
     
     
