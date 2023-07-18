@@ -262,7 +262,7 @@ function App() {
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione fecha y hora</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {fecha.map((item, index) => (
-                        <option onClickCapture={(event) => {alert(fechaBusquedaFactura);asignarEstadoSeleccion(false); asignarBuscarFecha(event);getHora(event)}} key={index} value={item.fecha_calFacturacion}>
+                        <option onClickCapture={(event) => {asignarBuscarFecha(event);getHora(event)}} key={index} value={item.fecha_calFacturacion}>
                             {item.fecha_calFacturacion}
                         </option>
                         ))}
