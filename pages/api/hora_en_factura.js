@@ -5,12 +5,14 @@ export default async function handler(req, res){
 
     let message;
 
+    const { fecha_comp, nombre_comp } = req.query;
+
     if(req.method === "GET"){
 
         const hora = await query(
             {
-                query: "SELECT DISTINCT hora_calFacturacion FROM datos_facturacion",
-                values: [],
+                query: "SELECT hora_calFacturacion FROM datos_facturacion WHERE  fecha_calFacturacion =? AND comprador_calFacturacion =?",
+                values: ([fecha_comp, nombre_comp]),
             }
         );
         res.status(200).json({hora: hora});
