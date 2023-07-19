@@ -548,8 +548,7 @@ const Facturacion: React.FC = () => {
 
     getComprador();
 
-    alert("datos:" + compradorBusquedaFactura + fechaBusquedaFactura + horaBusquedaFactura);
-    alert(JSON.stringify(facturaciones[0]?.marketingName_calFacturacion))
+
   }, []);
 
   //inicializar variables para uso de la pagina
@@ -878,7 +877,7 @@ const Facturacion: React.FC = () => {
           setValorNumeroFactura(response.numeroFactura);
           setValorNumeroFacturaGuardar(JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion));
 
-          alert(valorNumeroFacturaGuardar)
+
         }
           
                      

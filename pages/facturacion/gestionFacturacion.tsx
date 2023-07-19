@@ -832,7 +832,6 @@ const Facturacion: React.FC = () => {
           setValorNumeroFactura(response.numeroFactura);
           setValorNumeroFacturaGuardar(JSON.stringify(valorNumeroFactura[0]?.id_calFacturacion));
 
-          alert(valorNumeroFacturaGuardar)
         }
           
                      
@@ -844,9 +843,7 @@ const Facturacion: React.FC = () => {
 
     function asignarHoraYFecha(){
 
-      
-      alert(hora);
-      alert(fecha);
+
     }
 
   //seccion codigo de modal insertar
