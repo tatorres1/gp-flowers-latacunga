@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-
 function App() {
 
     var direccion_salida = "./login";
@@ -41,6 +40,7 @@ function App() {
     }
 
     return (
+        
         <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={SalirSesion}>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
+import BarraFlotante from '../../components/ModalHeadBar';
 
 
 function App() {
@@ -24,13 +25,9 @@ function App() {
     }
 
     return (
-        <div className='w-full h-screen bg-gradient-to-r from-lime-300 to-cyan-300'>
-            <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
-                onClick={SalirSesion}>
-                <span className="font-black">
-                    SALIR
-                </span>
-            </button>
+        <Fragment>
+            <BarraFlotante></BarraFlotante>
+        <div className='w-full h-screen bg-gradient-to-r from-lime-300 to-cyan-300'>>
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={router.back}>
                 <span className="font-black">
@@ -57,7 +54,7 @@ function App() {
             </div>
 
         </div>
-
+        </Fragment>
     );
 }
 
