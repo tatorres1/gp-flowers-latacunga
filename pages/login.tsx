@@ -89,11 +89,11 @@ const Login = () => {
     for (let i = 0; i < usuarios.length; i++) {
       const usuario = usuarios[i];
 
-      if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'admin')) {
+      if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Administrador')) {
         setIngresaAdmin(true);
         router.push(direccion_admin);
         break;
-      } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'usuario')) {
+      } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Usuario')) {
         setIngresaUsuario(true);
         router.push(direccion_usuario);
         break;
