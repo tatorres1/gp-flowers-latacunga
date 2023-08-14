@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
+import BarraFlotante from '../../components/ModalHeadBar';
+
 
 
 interface Data {
@@ -108,6 +110,8 @@ const Reportes_admin: React.FC = () => {
   ]);
 
   return (
+    <Fragment>
+      <BarraFlotante></BarraFlotante>
     <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
       <button onClick={router.back} type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
         REGRESAR
@@ -197,7 +201,7 @@ const Reportes_admin: React.FC = () => {
     </div>
 
     </div >
-
+    </Fragment>
   );
 
 };

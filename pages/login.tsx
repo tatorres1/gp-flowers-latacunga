@@ -6,6 +6,13 @@ import { useRouter } from 'next/router'
 
 
 const Login = () => {
+
+  var direccion_registro = "./Registro";
+
+  function IrRegistro(){
+    router.push(direccion_registro);
+  }
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -82,11 +89,11 @@ const Login = () => {
     for (let i = 0; i < usuarios.length; i++) {
       const usuario = usuarios[i];
 
-      if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'admin')) {
+      if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Administrador')) {
         setIngresaAdmin(true);
         router.push(direccion_admin);
         break;
-      } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'usuario')) {
+      } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Usuario')) {
         setIngresaUsuario(true);
         router.push(direccion_usuario);
         break;
@@ -126,6 +133,7 @@ const Login = () => {
                   </div>
                 </div>
                 <button onClick={VerificarLogin} type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar Sesión</button>
+                <button onClick={IrRegistro} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrase</button>
               </form>
             </div>
         </div>
