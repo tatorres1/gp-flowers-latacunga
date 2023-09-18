@@ -81,15 +81,17 @@ function Registro ()  {
     function compararcodigosRegistro(){
         if(codigoRegistro == codigoRegistroConsultado
             && clave == claveConfirmacion && 
-            rol !== "" && usuario !== "" && clave !== ""){
+            rol !== "" && usuario !== "" && clave !== "" &&
+            codigoRegistro !== ""){
             addRegistro();
             alert("Usted ha sido registrado");
             Irlogin();
-        }else if(clave != claveConfirmacion
-            || rol == "" || usuario == "" || clave == ""){
-            alert('La clave no coincide o faltan campos por llenar')
-        }else{
+        }else if( codigoRegistro == "" || rol == "" || usuario == "" || clave == ""){
+            alert('faltan campos por llenar')
+        }else if (codigoRegistro !== codigoRegistroConsultado){
             alert("El código de registro es incorrecto")
+        }else if (clave != claveConfirmacion){
+            alert('La clave no coincide')
         };
     }
 
