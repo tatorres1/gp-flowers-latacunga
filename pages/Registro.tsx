@@ -120,21 +120,21 @@ function Registro ()  {
                     </div>
                     </div>
 
-                    <div class="sm:col-span-1">
+                    <div class="sm:col-span-full">
                     <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Clave</label>
                     <div class="mt-2">
                         <input required value={clave} onChange={asignarClave} type="text" name="first-name" id="first-name" autocomplete="given-name" class="p-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                     </div>
                     </div>
 
-                    <div class="sm:col-span-2">
+                    <div class="sm:col-span-full">
                     <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Confirmación de la Clave</label>
                     <div class="mt-2">
                         <input required value={claveConfirmacion} onChange={asignarClaveConfirmacion} type="text" name="first-name" id="first-name" autocomplete="given-name" class="p-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                     </div>
                     </div>
 
-                    <div class="sm:col-span-1">
+                    <div class="sm:col-span-full">
                     <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Rol</label>
                     <div class="mt-2">
                         <select required value={rol} onChange={(event) => {asignarRol(event); getCodigoParaValidar(event)}} id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
