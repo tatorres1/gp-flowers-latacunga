@@ -41,13 +41,13 @@ function App() {
             </div><br />
             <div className='mt-20'>
                 <div className='flex flex-col-3 justify-center  items-center'>
-                    <button type="button" className="text-6xl font-bold bg-green-400 hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="flex items-center p-8 text-calc(4vw + 16px) font-bold bg-white hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg text-center mr-2 mb-2"
                         onClick={IrAgregarFactura}
                     >AGREGAR FACTURA</button>
-                    <button type="button" className="text-6xl font-bold bg-pink-500 hover:bg-gradient-to-bl focus:ring-4 focus:ring-pink-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="flex items-center p-8 text-calc(4vw + 16px) font-bold bg-white hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg text-center mr-2 mb-2"
                         onClick={IrModificarFactura}
                     >MODIFICAR FACTURA</button>
-                    <button type="button" className="text-6xl font-bold bg-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="flex items-center p-8 text-calc(4vw + 16px) font-bold bg-white hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg text-center mr-2 mb-2"
                         onClick={IrEliminarFactura}
                     >ELIMINAR FACTURA</button>
                 </div>
