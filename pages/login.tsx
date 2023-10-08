@@ -122,12 +122,15 @@ const Login = () => {
 
   return (
     <div className='flex justify-center h-screen items-center bg-gradient-to-r from-cyan-500	 to-lime-400 '>
-      <div className="flex w-3/5 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-        <div className='ml-2 mr-36'>
+      <div className="flex w-1/2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div className='flex lg:block hidden  ml-2 mr-3'>
           <img src={'../assets/images/logo.png'} alt="" />
-        </div>
+        </div>   
         {/*Div de login */}
-        <div className="flex flex-col justify-between p-4 leading-normal">    
+        <div className="flex flex-col p-4 leading-normal">
+        <div className='flex lg:hidden ml-2 mr-3'>
+          <img src={'../assets/images/logo.png'} alt="" />
+        </div>   
             <div className=" md:p-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
               <form onSubmit={handleSubmit} className="space-y-8 " action="#">
                 <h5 className="text-xl font-medium text-gray-900 dark:text-white">GPFlowers</h5>

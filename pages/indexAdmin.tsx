@@ -44,9 +44,26 @@ function App() {
         router.push(direccion_comprador);
     }
 
+    const styles = {
+        container: {
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '40px'
+        },
+        bienvenidoTexto: {
+          fontSize: '24px',
+          color: 'black',
+        },
+        noBienvenidoTexto: {
+          fontSize: '24px',
+          color: 'black',
+        },
+      };
+      
+
     return (
         
-        <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
+        <div className='w-full min-h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={SalirSesion}>
                 <span className="font-black">
@@ -57,14 +74,20 @@ function App() {
                 <div className='lg:flex lg:justify-end lg:object-righT sm:justify-center sm:flex'>
                     <img src={'../assets/images/logo.png'} alt="" />
                 </div>
-            </div><br />
+            </div>
 
-            {(valorRol == "Usuario") &&
-             <a>Bienvenido {valorRol} {valorUsuario}</a>
-            }
-            {(valorRol == "Administrador") &&
-             <a>NO Bienvenido {valorRol} {valorUsuario}</a>
-            }
+            <div style={styles.container}>
+            {valorRol === 'Usuario' && (
+                <p style={styles.bienvenidoTexto}>
+                BIENVENIDO! - {valorRol} {valorUsuario}
+                </p>
+            )}
+            {valorRol === 'Administrador' && (
+                <p style={styles.noBienvenidoTexto}>
+                BIENVENIDO! - {valorRol} {valorUsuario}
+                </p>
+            )}
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-6 gap-1 p-20">
 
