@@ -85,22 +85,36 @@ const Login = () => {
     setIngresaAdmin(false);
     setIngresaAdmin(false);
 
+
+
     //busqueda y compara si el valor en input esta en el objeto consultado
     for (let i = 0; i < usuarios.length; i++) {
       const usuario = usuarios[i];
+      var envioRol = usuario.rol;
 
       if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Administrador')) {
         setIngresaAdmin(true);
-        router.push(direccion_admin);
+        router.push(
+          {
+            pathname: direccion_admin,
+            query: {valorUsername, envioRol}
+          }
+        );
         break;
       } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Usuario')) {
         setIngresaUsuario(true);
-        router.push(direccion_usuario);
+        router.push(
+          {
+            pathname: direccion_admin,
+            query: {valorUsername, envioRol}
+          }
+        );        
         break;
       } else if ((usuario.username !== valorUsername) && (usuario.password !== valorPassword)) {
         //alert("datos incorrectos");
         setEstiloUsername({ border: '2px solid red' });
         setMostrarError(true);
+        
       }
     };
   }
@@ -133,7 +147,7 @@ const Login = () => {
                   </div>
                 </div>
                 <button onClick={VerificarLogin} type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar Sesión</button>
-                <button onClick={IrRegistro} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrase</button>
+                <button onClick={IrRegistro} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrarse</button>
               </form>
             </div>
         </div>

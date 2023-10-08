@@ -14,6 +14,11 @@ function App() {
 
 
     const router = useRouter();
+
+    const {valorUsername, envioRol} = router.query;
+    const valorUsuario = decodeURIComponent(valorUsername);
+    const valorRol = decodeURIComponent(envioRol);
+
     function SalirSesion() {
         router.push(direccion_salida);
     }
@@ -53,6 +58,13 @@ function App() {
                     <img src={'../assets/images/logo.png'} alt="" />
                 </div>
             </div><br />
+
+            {(valorRol == "Usuario") &&
+             <a>Bienvenido {valorRol} {valorUsuario}</a>
+            }
+            {(valorRol == "Administrador") &&
+             <a>NO Bienvenido {valorRol} {valorUsuario}</a>
+            }
 
             <div className="grid grid-cols-1 md:grid-cols-6 gap-1 p-20">
 

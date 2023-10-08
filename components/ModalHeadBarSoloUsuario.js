@@ -42,8 +42,6 @@ const BarraFlotante = () => {
     }
 
     //esta parte recibe el valor del tipo de usuario
-    //cuando este modalheadbar es usado en alguna pagina, toma
-    //el valor mandado a esa pagina y lo usa
     const {tipoUsuario} = router.query;
 
     const valorTipoUsuario = decodeURIComponent(tipoUsuario);
@@ -59,14 +57,7 @@ const BarraFlotante = () => {
                 <a href="#" class="bg-white rounded-br-lg border-1 border-black w-1/6">
                     <img className='' src={'../assets/images/logo.png'} alt="" />
                 </a>
-                {
-                    (valorTipoUsuario == "usuario") &&
-                    <a>{valorTipoUsuario} es una persona distinguida</a>
-
-                }
-                <a>{
-                //valorTipoUsuario
-                }</a>
+                <a>{valorTipoUsuario}</a>
                     <div className="flex items-center justify-between mx-auto">
                     <ul className="flex space-x-4">
                         <li className="relative group">
