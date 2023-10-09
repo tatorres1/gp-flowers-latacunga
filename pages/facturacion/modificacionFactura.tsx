@@ -217,7 +217,7 @@ function App() {
     return (
         <Fragment>
             <BarraFlotante></BarraFlotante>
-        <div className='w-full h-full min-h-screen bg-gradient-to-r from-lime-300 to-cyan-300'>
+        <div className='w-full min-h-screen bg-gradient-to-r from-lime-300 to-cyan-300'>
 
             <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
                 onClick={router.back}>
@@ -230,7 +230,7 @@ function App() {
             {
                 seleccionComprador 
                 &&
-                <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
+                <div className='w-6/7 m-8 flex flex-col sm:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900">Seleccione el comprador</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {comprador.map((item, index) => (
@@ -262,7 +262,7 @@ function App() {
             {
                 seleccionAño 
                 &&
-                <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
+                <div className='w-6/7 m-8 flex flex-col sm:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 ">Seleccione fecha y hora</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         {fecha.map((item, index) => (

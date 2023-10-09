@@ -1128,7 +1128,7 @@ const Facturacion: React.FC = () => {
     <div className='w-full'>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
-        <div className='p-6 flex flex-row space-x-7'>
+        <div className='p-6 flex flex-col sm:flex-row space-x-7'>
             <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
             <input className='text-center' value={compradorBusquedaFactura}></input>
             <input className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion))}></input>
@@ -1140,9 +1140,9 @@ const Facturacion: React.FC = () => {
         </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
-          <div className='pr-12'>
+          <div className='w-1/2 p-2 sm:p-7'>
             <label for="first_name" class="block text-sm font-medium text-gray-900 ">Shipper Name and Address</label>
-            <a class="flex flex-col items-center mb-5 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
+            <a class="flex flex-col sm:flex-row items-center mb-5 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
                 <div class="flex flex-col justify-between p-4 leading-normal">
                     <h5 class="mb-2 text-xs font-bold tracking-tight text-gray-900 ">GP FLOWERS/MARIN CHACON PATRICIA</h5>
                     <div>
@@ -1151,18 +1151,18 @@ const Facturacion: React.FC = () => {
                     </div>                  
                     <p class="mb-2 text-xs tracking-tight text-gray-900 ">e_mail: paty_gpflowers@hotmail.com</p>
                 </div>
-                <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
+                <img class="w-1/2 rounded-t-lg  md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
             </a>
             <label for="first_name" class="block text-sm font-medium text-gray-900 ">Marketing Name</label>
             <input value={valorMarketingName} onChange={(event) => {asignarMarketingName(event)}} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder={valorMarketingName} required/>
             <label for="first_name" class="block text-sm font-medium text-gray-900 ">Consignee Name and Address</label>
             <a class="flex flex-col p-6 bg-white border border-gray-200 shadow md:max-w-xl ">
-                <div class="flex flex-row items-center justify-between pb-4 leading-normal">
-                    <label for="first_name" class="block text-sm w-1/5 font-medium text-gray-900 ">CLIENTE:</label>
+                <div class="flex flex-col lg:flex-row items-center justify-between pb-4 leading-normal">
+                    <label for="first_name" class="block text-sm font-medium text-gray-900 ">CLIENTE:</label>
                     <input value={valorCliente} onChange={(event) => {asignarCliente(event)}} type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="" required/>
                 </div>
-                <div class="flex flex-row items-center justify-between pb-4 leading-normal">
-                    <label for="first_name" class="block text-sm w-2/5 font-medium text-gray-900 dark:text-white">MARCACION:</label>
+                <div class="flex flex-col lg:flex-row items-center justify-between pb-4 leading-normal">
+                    <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-black">MARCACION:</label>
                     <input value={valorMarcacion} onChange={(event) => {asignarMarcacion(event)}} type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="" required/>
                 </div>
                 <div class="flex flex-col justify-between leading-normal">
@@ -1252,7 +1252,7 @@ const Facturacion: React.FC = () => {
                     <input value={valorPersonInvoice} onChange={(event) => {asignarPersonInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="" required/>
                 </div>
         </div>
-        <div className='flex flex-col-2'>
+        <div className='flex flex-col-2 p-7'>
                 <div className='ml-12 w-1/2'>
                     <input value={valorInvoice} onChange={(event) => {asignarInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
