@@ -238,7 +238,7 @@ function App() {
             {
                 seleccionComprador 
                 &&
-                <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
+                <div className='w-6/7 m-8 flex flex-col lg:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione el comprador</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {comprador.map((item, index) => (
@@ -270,7 +270,7 @@ function App() {
             {
                 seleccionAño 
                 &&
-                <div className='w-6/7 m-8 flex flex-row bg-white p-8'>
+                <div className='w-6/7 m-8 flex flex-col lg:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 dark:text-white">Seleccione fecha y hora</label>
                 <select id="years" size="20" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {fecha.map((item, index) => (

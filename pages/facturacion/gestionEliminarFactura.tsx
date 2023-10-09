@@ -1104,7 +1104,7 @@ const Facturacion: React.FC = () => {
 
               <div>
                               <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-                  <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+                  <div class="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">
                       <button onClick={()=> {setEstadoPrimeraSeccion(true);setEstadoSegundaSeccion(false);setEstadoTerceraSeccion(false)}} type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                           <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                               <path clip-rule="evenodd" fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"></path>
@@ -1127,14 +1127,14 @@ const Facturacion: React.FC = () => {
                 </div>
               </div>
 
-        <div suppressHydrationWarning className='flex flex-row'>
-          <div suppressHydrationWarning className='p-12'>
+        <div suppressHydrationWarning className='flex flex-col lg:flex-row'>
+          <div suppressHydrationWarning className='p-2 lg:p-12'>
             <span className='p-2'>
             FECHA:
               </span>
             {queryFecha}
           </div>
-          <div suppressHydrationWarning className='p-12'>
+          <div suppressHydrationWarning className='p-2 lg:p-12'>
             <span className='p-2'>
             HORA:
               </span> 
@@ -1153,7 +1153,7 @@ const Facturacion: React.FC = () => {
     <div>
       <div className='w-full flex flex-col text-xl items-center bg-green-100 rounded-lg'    >
         {/*seccion titulo*/}
-        <div className='p-6 flex flex-row space-x-7'>
+        <div className='p-6 flex flex-col lg:flex-row space-x-7'>
             <h5 className='align-middle p-5 text-4xl font-bold'>COMERCIAL</h5>
             <input disabled className='text-center' value={compradorBusquedaFactura}></input>
             <input disabled className='text-center rounded-sm border-emerald-400 border-8' value={JSON.stringify(parseInt(facturaciones[0]?.id_calFacturacion))}></input>
@@ -1165,7 +1165,7 @@ const Facturacion: React.FC = () => {
         </div>
         {/*seccion cabecera*/}
         <div className='flex flex-col-2 mb-12'>
-          <div className='pr-12'>
+          <div className='w-1/2 p-2 sm:p-7'>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Shipper Name and Address</label>
             <a class="flex flex-col items-center mb-5 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div class="flex flex-col justify-between p-4 leading-normal">
@@ -1176,18 +1176,18 @@ const Facturacion: React.FC = () => {
                     </div>                  
                     <p class="mb-2 text-xs tracking-tight text-gray-900 dark:text-white">e_mail: paty_gpflowers@hotmail.com</p>
                 </div>
-                <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
+                <img class="w-1/2 rounded-t-lg  md:rounded-none md:rounded-l-lg" src={'../assets/images/gp_flowers.jpg'} alt=""/>
             </a>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Marketing Name</label>
             <input value={valorMarketingName} onChange={(event) => {asignarMarketingName(event)}} type="text" id="first_name" className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={valorMarketingName} disabled required/>
             <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">Consignee Name and Address</label>
             <a class="flex flex-col p-6 bg-white border border-gray-200 shadow md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
-                <div class="flex flex-row items-center justify-between pb-4 leading-normal">
-                    <label for="first_name" class="block text-sm w-1/5 font-medium text-gray-900 dark:text-white">CLIENTE:</label>
+                <div class="flex flex-col lg:flex-row items-center justify-between pb-4 leading-normal">
+                    <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">CLIENTE:</label>
                     <input value={valorCliente} onChange={(event) => {asignarCliente(event)}} type="text" id="last_name" class="bg-gray-50 w-4/5 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" disabled required/>
                 </div>
-                <div class="flex flex-row items-center justify-between pb-4 leading-normal">
-                    <label for="first_name" class="block text-sm w-2/5 font-medium text-gray-900 dark:text-white">MARCACION:</label>
+                <div class="flex flex-col lg:flex-row items-center justify-between pb-4 leading-normal">
+                    <label for="first_name" class="block text-sm font-medium text-gray-900 dark:text-white">MARCACION:</label>
                     <input value={valorMarcacion} onChange={(event) => {asignarMarcacion(event)}} type="text" id="last_name" class="bg-gray-50 w-4/7 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" disabled required/>
                 </div>
                 <div class="flex flex-col justify-between leading-normal">
@@ -1365,8 +1365,8 @@ const Facturacion: React.FC = () => {
                     <input disabled value={valorPersonInvoice} onChange={(event) => {asignarPersonInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
         </div>
-        <div className='flex flex-col-2'>
-                <div className='ml-12 w-1/2'>
+        <div className='flex flex-col-2 p-7'>
+                <div className=' w-1/2'>
                     <input disabled value={valorInvoice} onChange={(event) => {asignarInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
