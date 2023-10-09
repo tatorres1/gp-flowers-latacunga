@@ -25,7 +25,7 @@ export default async function handler(req, res){
         const observacionesAlmacen = req.body.observaciones_materialAlmacen;
 
         const addAlmacen = await query({
-            query: "INSERT INTO material_almacen (cantidad_materialAlmacen, nombre_materialAlmacen, tipo_materialAlmacen, observaciones_materialAlmacen) VALUES (?,?,?,?)",              
+            query: "INSERT INTO almacen (cantidad_materialAlmacen, nombre_materialAlmacen, tipo_materialAlmacen, observaciones_materialAlmacen) VALUES (?,?,?,?)",              
             values: ([cantidadAlmacen,
                     nombreAlmacen,
                     tipoAlmacen,
@@ -54,7 +54,7 @@ export default async function handler(req, res){
 
         const updateAlmacen = await query({
 
-            query: "UPDATE material_almacen SET cantidad_materialAlmacen=?, nombre_materialAlmacen=?, tipo_materialAlmacen=?, observaciones_materialAlmacen=? WHERE id_materialAlmacen=?",
+            query: "UPDATE almacen SET cantidad_materialAlmacen=?, nombre_materialAlmacen=?, tipo_materialAlmacen=?, observaciones_materialAlmacen=? WHERE id_materialAlmacen=?",
             values: ([cantidadAlmacen,nombreAlmacen,tipoAlmacen, observacionesAlmacen,idAlmacen]),
                          
         });
@@ -82,7 +82,7 @@ export default async function handler(req, res){
     if (req.method === "DELETE") {
         const idAlmacen = req.body.id_materialAlmacen;
         const deleteAlmacen = await query({
-          query: "DELETE FROM material_almacen WHERE id_materialAlmacen = ?",
+          query: "DELETE FROM almacen WHERE id_materialAlmacen = ?",
           values: [idAlmacen],
         });
         const result = deleteAlmacen.affectedRows;

@@ -214,20 +214,20 @@ const Almacen: React.FC = () => {
     <Fragment>
             <BarraFlotante></BarraFlotante>
 
-    <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
+    <div className='w-full min-h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
       <button onClick={router.back} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
         <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
           REGRESAR
         </span>
       </button>
-      <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
+      <div className='lg:flex lg:justify-end lg:object-right sm:justify-center align-center p-4 pb-12 sm:flex w-1/2 sm:w-full'>
         <img src={'../assets/images/logo.png'} alt="" />
       </div>
 
       <form>
           <label className= "text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-          <div className="m-10 relative w-1/3">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <div className="px-2 relative lg:w-1/2 w-full">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-6 pointer-events-none">
               <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <input value={valorAFiltrar} onChange={asignarValorAFiltrar} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ingrese aquí su búsqueda"></input>
