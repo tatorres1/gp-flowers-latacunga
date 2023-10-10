@@ -44,7 +44,7 @@ const Cargo: React.FC = () => {
   }
 
   //filtra los datos de consulta
-  async function getFiltroComprador(){
+  async function getFiltroCargo(){
     
     const queryParams = new URLSearchParams({
       id_comp: valorAFiltrar ,
@@ -52,7 +52,7 @@ const Cargo: React.FC = () => {
     });
     
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/comprador_filtro?${queryParams.toString()}`,
+      `${process.env.NEXT_PUBLIC_URL}/api/cargo_filtro?${queryParams.toString()}`,
       {
         method: "GET",
         headers: {
@@ -62,10 +62,10 @@ const Cargo: React.FC = () => {
     );
     const response = await res.json();
     //en caso de no encontrar el elemento
-    if (response.comprador.length === 0) {
+    if (response.cargo.length === 0) {
       alert("No se encontraron resultados de la busqueda, vuelve hacerlo");
     } else {
-      setComprador(response.comprador);
+      setCargo(response.cargo);
     }
   }
 
@@ -167,13 +167,13 @@ const Cargo: React.FC = () => {
   //activar filtro
   async function AccionActivarFiltro(event){
     event.preventDefault();
-    await getFiltroComprador();
+    await getFiltroCargo();
 
   }
   //desactivar filtro
   async function AccionDesactivarFiltro(){
     setValorAFiltrar("");
-    getComprador();
+    getCargo();
   }
 
   return (
