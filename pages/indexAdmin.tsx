@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 function App() {
@@ -58,6 +58,10 @@ function App() {
             color: 'black',
         },
     };
+
+    useEffect(() => {
+        document.title = "GP-Flowers"
+    }, [])
 
 
     return (

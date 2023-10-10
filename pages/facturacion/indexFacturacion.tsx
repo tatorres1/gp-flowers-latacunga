@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BarraFlotante from '../../components/ModalHeadBar';
 
@@ -23,6 +23,10 @@ function App() {
     function IrEliminarFactura() {
         router.push(direccion_eliminarFactura);
     }
+
+    useEffect(() => {
+        document.title = "Facturación";
+    }, []);
 
     return (
         <Fragment>

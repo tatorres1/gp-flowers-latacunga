@@ -143,6 +143,7 @@ const Almacen: React.FC = () => {
   }
 
   useEffect(() => {
+    document.title = "Almacén";
     getAlmacen();
   }, []);
 
@@ -220,6 +221,9 @@ const Almacen: React.FC = () => {
           REGRESAR
         </span>
       </button>
+      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+          Almacén
+        </span>
       <div className='lg:flex lg:justify-end lg:object-right sm:justify-center align-center p-4 pb-12 sm:flex w-1/2 sm:w-full'>
         <img src={'../assets/images/logo.png'} alt="" />
       </div>

@@ -31,6 +31,7 @@ const BarraFlotante = () => {
   var direccion_facturacion = "../facturacion/indexFacturacion";
   var direccion_comprador = "../comprador/gestionComprador";
   var direccion_inicio = "../indexAdmin";
+  var direccion_valueCargo = "../cargo/gestionValueCargo";
 
   const router = useRouter();
 
@@ -197,6 +198,11 @@ const BarraFlotante = () => {
                   <li>
                     <a href={direccion_comprador.toString()} className="text-white hover:underline">
                       Compradores
+                    </a>
+                  </li>
+                  <li>
+                    <a href={direccion_valueCargo.toString()} className="text-white hover:underline">
+                      Cargo
                     </a>
                   </li>
                 </div>

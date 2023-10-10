@@ -542,6 +542,7 @@ const Facturacion: React.FC = () => {
   }
 
   useEffect(() => {
+    document.title = "Modificar Factura"
     getPaises();
     getValueCargo();
   
@@ -1088,7 +1089,9 @@ const Facturacion: React.FC = () => {
                   REGRESAR
                 </span>
               </button>
-
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                  Modificar Factura
+                </span>
               <div>
                 <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 ">
                   <div class="grid h-full min-w-screen max-w-lg grid-cols-2 mx-auto font-medium">

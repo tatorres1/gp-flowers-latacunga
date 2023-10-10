@@ -519,6 +519,7 @@ const Facturacion: React.FC = () => {
   }
 
   useEffect(() => {
+    document.title = "Eliminar Factura"
     getPaises();
     getValueCargo();
   
@@ -1101,7 +1102,9 @@ const Facturacion: React.FC = () => {
                   REGRESAR
                 </span>
               </button>
-
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                        Eliminar Factura
+              </span>
               <div>
                               <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
                   <div class="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">

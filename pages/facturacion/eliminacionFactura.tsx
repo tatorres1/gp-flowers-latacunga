@@ -201,6 +201,7 @@ function App() {
 
 
       useEffect(() => {
+        document.title = "Eliminar Factura";
         getComprador();
         getFecha();
       },[]);
@@ -220,13 +221,15 @@ function App() {
 
         <div className='w-full h-full bg-gradient-to-r from-lime-300 to-cyan-300'>
 
-            <button className="ml-8 mt-6 p-4 relative inline-flex  text-2xl text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600"
+            <button className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
                 onClick={router.back}>
-                <span className="font-black">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
                     REGRESAR
                 </span>
             </button>
-
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+                        Eliminar Factura
+            </span>
                 <br />
                 <br></br>
             <div className='flex bg-white text-4xl place-content-center content-center flex-wrap h-40'>
