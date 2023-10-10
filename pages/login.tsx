@@ -123,19 +123,18 @@ const Login = () => {
 
 
   return (
-    <div className='flex justify-center h-screen items-center bg-gradient-to-r from-cyan-500	 to-lime-400 '>
-      <div className="flex w-1/2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className='flex justify-center h-screen items-center bg-gradient-to-r from-cyan-500	 to-lime-400 p-5'>
+      <div className="flex p-5 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div className='flex lg:block hidden  ml-2 mr-3'>
           <img src={'../assets/images/logo.png'} alt="" />
         </div>   
         {/*Div de login */}
         <div className="flex flex-col p-4 leading-normal">
-        <div className='flex lg:hidden ml-2 mr-3'>
+        <div className='flex lg:hidden ml-2 mr-3 pb-5'>
           <img src={'../assets/images/logo.png'} alt="" />
         </div>   
             <div className=" md:p-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-              <form onSubmit={handleSubmit} className="space-y-8 " action="#">
-                <h5 className="text-xl font-medium text-gray-900 dark:text-white">GPFlowers</h5>
+              <form onSubmit={handleSubmit} className="space-y-3 " action="#">
                 <div className=''>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Usuario</label>
                   <input style={estiloUsername} value={valorUsername} onChange={asignarValorUsername} type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="usuario123" required />
