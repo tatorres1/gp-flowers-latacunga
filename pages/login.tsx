@@ -2,9 +2,6 @@ import { useState, useEffect } from 'react';
 //import usuarios from "../usuarios.json";
 import { useRouter } from 'next/router'
 
-
-
-
 const Login = () => {
 
   var direccion_registro = "./Registro";
@@ -91,6 +88,7 @@ const Login = () => {
     for (let i = 0; i < usuarios.length; i++) {
       const usuario = usuarios[i];
       var envioRol = usuario.rol;
+      var envioUser = usuario.username;
 
       if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Administrador')) {
         setIngresaAdmin(true);
@@ -100,6 +98,8 @@ const Login = () => {
             query: {valorUsername, envioRol}
           }
         );
+        localStorage.setItem("valorGlobalUsuario", envioUser);
+        localStorage.setItem("valorGlobal", envioRol); 
         break;
       } else if ((usuario.username === valorUsername) && (usuario.password === valorPassword) && (usuario.rol === 'Usuario')) {
         setIngresaUsuario(true);
@@ -108,7 +108,9 @@ const Login = () => {
             pathname: direccion_admin,
             query: {valorUsername, envioRol}
           }
-        );        
+        );
+        localStorage.setItem("valorGlobalUsuario", envioUser);
+        localStorage.setItem("valorGlobal", envioRol); 
         break;
       } else if ((usuario.username !== valorUsername) && (usuario.password !== valorPassword)) {
         //alert("datos incorrectos");

@@ -16,8 +16,8 @@ function App() {
     const router = useRouter();
 
     const {valorUsername, envioRol} = router.query;
-    const valorUsuario = decodeURIComponent(valorUsername);
-    const valorRol = decodeURIComponent(envioRol);
+    const valorUsuario = localStorage.getItem('valorGlobalUsuario');
+    const valorRol = localStorage.getItem('valorGlobal');
 
     function SalirSesion() {
         router.push(direccion_salida);
