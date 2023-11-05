@@ -180,6 +180,8 @@ const Flor: React.FC = () => {
     }
     useEffect(() => {
         getFlor();
+        getComprador();
+        getVariedad()
     }, []);
 
 
@@ -237,6 +239,141 @@ const Flor: React.FC = () => {
     const asignartVariedad = event => {
         setValortVariedad(event.target.value);
     }
+
+      //variables para data de comprador
+  const [comprador, setComprador] = useState([]);
+      //conseguir data sobre comprador 
+  async function getComprador() {
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+      postData);
+    const response = await res.json();
+    setComprador(response.comprador);
+  }
+
+  const opcionesComprador = comprador.map((vard) => ({
+    value: vard.nombre_comp,
+    label: vard.nombre_comp
+  }));
+
+  const [variedades, setVariedades] = useState([]);
+
+//funcion de consulta para variedad
+async function getVariedad() {
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/variedad`,
+      postData);
+    const response = await res.json();
+    setVariedades(response.variedad);
+  }
+
+  const opcionesVariedad = variedades.map((vard) => ({
+    value: vard.nombre_VariedadFlor,
+    label: vard.nombre_VariedadFlor
+  }));
+
+  const [Mallas, setMallas] = useState("");
+  const [tallosPorMalla, setTallosPorMalla] = useState("");
+  const [tallosSueltos, setTallosSueltos] = useState("");
+  const [totalTallos, setTotalTallos] = useState("");
+  const [bonches40, setBonches40] = useState("")
+  const [bonches50, setBonches50] = useState("")
+  const [bonches60, setBonches60] = useState("")
+  const [bonches70, setBonches70] = useState("")
+  const [bonches80, setBonches80] = useState("")
+  const [bonches90, setBonches90] = useState("")
+  const [totalBonches, setTotalBonches] = useState("")
+  const [tallosPorBonche, setTallosPorBonche] = useState("")
+  const [totalNacional, setTotalNacional] = useState("")
+  const [totalSobrantes, setTotalSobrantes] = useState("")
+  const [totalVariedad, setTotalVariedad] = useState("")
+
+
+  const asignarMallas = event => {
+    setMallas(event.target.value)
+    let calculo = (event.target.value * tallosPorMalla + Number(tallosSueltos));
+
+    setTotalTallos(calculo)
+  }
+
+  const asignarTallosMalla = event => {
+    setTallosPorMalla(event.target.value)
+    let calculo = (Mallas * event.target.value + Number(tallosSueltos));
+
+    setTotalTallos(calculo)
+  }
+
+  const asignarTallosSueltos = event => {
+    setTallosSueltos(event.target.value)
+    let calculo = (Mallas * tallosPorMalla + Number(event.target.value));
+
+    setTotalTallos(calculo)
+  }
+
+  const asignarBonches40 = event => {
+    setBonches40(event.target.value);
+    let calculo = (Number(event.target.value) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+
+    setTotalBonches(calculo)
+  }
+  const asignarBonches50 = event => {
+    setBonches50(event.target.value);
+    let calculo = (Number(bonches40) + Number(event.target.value) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+
+    setTotalBonches(calculo)
+  }
+  const asignarBonches60 = event => {
+    setBonches60(event.target.value);
+    let calculo = (Number(bonches40) + Number(bonches50) + Number(event.target.value) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+
+    setTotalBonches(calculo)
+  }
+  const asignarBonches70 = event => {
+    setBonches70(event.target.value);
+    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(event.target.value) + Number(bonches80) + Number(bonches90));
+
+    setTotalBonches(calculo)
+  }
+  const asignarBonches80 = event => {
+    setBonches80(event.target.value);
+    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(event.target.value) + Number(bonches90));
+
+    setTotalBonches(calculo)
+  }
+  const asignarBonches90 = event => {
+    setBonches90(event.target.value);
+    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(event.target.value));
+
+    setTotalBonches(calculo)
+  }  
+  const asignarTallosPorBonche = event => {
+    setTallosPorBonche(event.target.value);
+    let calculo = (Number(totalNacional) + Number(totalSobrantes) + Number(totalBonches*event.target.value));
+
+    setTotalVariedad(calculo)
+  }  
+  const asignarNacional = event => {
+    setTotalNacional(event.target.value);
+    let calculo = (Number(event.target.value) + Number(totalSobrantes) + Number(totalBonches*tallosPorBonche));
+
+    setTotalVariedad(calculo)
+  }  
+  const asignarSobrantes = event => {
+    setTotalSobrantes(event.target.value);
+    let calculo = (Number(totalNacional) + Number(event.target.value) + Number(totalBonches*tallosPorBonche));
+
+    setTotalVariedad(calculo)
+  }
 
     return (
         <Fragment>
@@ -366,6 +503,9 @@ const Flor: React.FC = () => {
                                         <div className="flex items-center justify-center">TOTAL BONCHES </div>
                                     </th>
                                     <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
+                                        <div className="flex items-center justify-center">TALLOS POR BONCHE </div>
+                                    </th>
+                                    <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
                                         <div className="flex items-center justify-center">TALLOS NACIONAL </div>
                                     </th>
                                     <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
@@ -391,54 +531,68 @@ const Flor: React.FC = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                        <select className='text-center' onClick={() => { }} onChange={(event) => { setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option selected></option>
+          {opcionesComprador.map((opcion) => (
+            <option value={opcion.value}>{opcion.label}</option>
+          ))}
+        </select>
                                     </td>
                                     <td className="p-2 border-r">
                                         <input value={valorVariedad} onChange={asignarVariedad} className="border p-1" id="grid-last-name" type="text" placeholder="" />
+                                        <select onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Escoja la Variedad</option>
+                {opcionesVariedad.map((opcion) => (
+                  <option value={opcion.value}>{opcion.label}</option>
+                ))}
+              </select>
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valortMallas} onChange={asignartMallas} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={Mallas} onChange={(event) => {asignarMallas(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallosxMalla} onChange={asignartTallosxMalla} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosPorMalla} onChange={(event) => {asignarTallosMalla(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallosSuelto} onChange={asignartallosSuelto} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosSueltos} onChange={(event) => {asignarTallosSueltos(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valortTallos} onChange={asignartTallos} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalTallos} className="border p-1" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos40} onChange={asignarTallos40} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches40} onChange={(event) => {asignarBonches40(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos50} onChange={asignarTallos50} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches50} onChange={(event) => {asignarBonches50(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos60} onChange={asignarTallos60} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches60} onChange={(event) => {asignarBonches60(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos70} onChange={asignarTallos70} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches70} onChange={(event) => {asignarBonches70(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos80} onChange={asignarTallos80} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches80} onChange={(event) => {asignarBonches80(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallos90} onChange={asignarTallos90} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches90} onChange={(event) => {asignarBonches90(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valortBonches} onChange={asignartBonches} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalBonches} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
+                                    <td className="p-2 border-r">
+                                        <input value={tallosPorBonche} onChange={(event) => {asignarTallosPorBonche(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                    </td>
+                                    <td className="p-2 border-r">
+                                        <input value={totalNacional} onChange={(event) => {asignarNacional(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                    </td>
+                                    <td className="p-2 border-r">
+                                        <input value={totalSobrantes} onChange={(event) => {asignarSobrantes(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
 
-                                    <td className="p-2 border-r">
-                                        <input value={valorTallosNacional} onChange={asignarTallosNacional} className="border P-1" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorTallosSobrante} onChange={asignarTallosSobrante} className="border P-1" id="grid-last-name" type="number" placeholder="" />
-
-                                    </td>
-                                    <td className="p-2 border-r">
-                                        <input value={valortVariedad} onChange={asignartVariedad} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalVariedad} className="border P-1" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                 </tr>
