@@ -80,22 +80,22 @@ const Flor: React.FC = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                PROVEEDOR: valorProveedor,
-                VARIEDAD: valorVariedad,
-                tMallas_gestionFlor: valortMallas,
-                tTallosxMalla_gestionflor: valorTallosxMalla,
-                tallosSueltos_gestionFlor: valorTallosSuelto,
-                tTallos_gestionFlor: valortTallos,
-                tallos40_gestionFlor: valorTallos40,
-                tallos50_gestionFlor: valorTallos50,
-                tallos60_gestionFlor: valorTallos60,
-                tallos70_gestionFlor: valorTallos70,
-                tallos80_gestionFlor: valorTallos80,
-                tallos90_gestionFlor: valorTallos90,
-                tBonches_gestionFlor: valortBonches,
-                tNacional_gestionFlor: valorTallosNacional,
-                talloSobrante_gestionFlor: valorTallosSobrante,
-                tVariedad_gestionFlor: valortVariedad,
+                proveedor_gestionFlor: guardarProveedor,
+                variedad_gestionFlor: guardarVariedad,
+                tMallas_gestionFlor: Mallas,
+                tTallosxMalla_gestionflor: tallosPorMalla,
+                tallosSueltos_gestionFlor: tallosSueltos,
+                tTallos_gestionFlor: totalTallos.toString(),
+                tallos40_gestionFlor: bonches40,
+                tallos50_gestionFlor: bonches50,
+                tallos60_gestionFlor: bonches60,
+                tallos70_gestionFlor: bonches70,
+                tallos80_gestionFlor: bonches80,
+                tallos90_gestionFlor: bonches90,
+                tBonches_gestionFlor: totalBonches.toString(),
+                tNacional_gestionFlor: totalNacional,
+                tallosSobrante_gestionFlor: totalSobrantes,
+                tVariedad_gestionFlor: totalVariedad.toString(),
 
             }),
         };
@@ -180,7 +180,7 @@ const Flor: React.FC = () => {
     }
     useEffect(() => {
         getFlor();
-        getComprador();
+        getProveedores();
         getVariedad()
     }, []);
 
@@ -193,9 +193,7 @@ const Flor: React.FC = () => {
     const asignarProveedor = event => {
         setProveedorNombre(event.target.value);
     }
-    const asignarVariedad = event => {
-        setValorVariedad(event.target.value);
-    }
+
     const asignartMallas = event => {
         setValortMallas(event.target.value);
     }
@@ -241,24 +239,24 @@ const Flor: React.FC = () => {
     }
 
       //variables para data de comprador
-  const [comprador, setComprador] = useState([]);
+  const [proveedores, setProveedores] = useState([]);
       //conseguir data sobre comprador 
-  async function getComprador() {
+  async function getProveedores() {
     const postData = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
       postData);
     const response = await res.json();
-    setComprador(response.comprador);
+    setProveedores(response.proveedores);
   }
 
-  const opcionesComprador = comprador.map((vard) => ({
-    value: vard.nombre_comp,
-    label: vard.nombre_comp
+  const opcionesComprador = proveedores.map((vard) => ({
+    value: vard.nombre_proveedor,
+    label: vard.nombre_proveedor
   }));
 
   const [variedades, setVariedades] = useState([]);
@@ -297,6 +295,10 @@ async function getVariedad() {
   const [totalNacional, setTotalNacional] = useState("")
   const [totalSobrantes, setTotalSobrantes] = useState("")
   const [totalVariedad, setTotalVariedad] = useState("")
+
+  const [guardarProveedor, setGuardarProveedor] = useState("")
+  const [guardarVariedad, setGuardarVariedad] = useState("")
+
 
 
   const asignarMallas = event => {
@@ -374,6 +376,14 @@ async function getVariedad() {
 
     setTotalVariedad(calculo)
   }
+
+  const asignarGuardarProveedor = event => {
+    setGuardarProveedor(event.target.value)
+  }
+  const asignarGuardarVariedad = event => {
+    setGuardarVariedad(event.target.value)
+  }
+  
 
     return (
         <Fragment>
@@ -460,13 +470,10 @@ async function getVariedad() {
                         <table className="w-full border mt-6">
                             <thead>
                                 <tr className="bg-gray-50 border-b">
-                                    <th className="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                        <div className="flex items-center justify-center"> ID </div>
-                                    </th>
-                                    <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
+                                    <th className="px-12 border-r cursor-pointer text-sm font-normal text-gray-900">
                                         <div className="flex items-center justify-center">PROVEEDOR</div>
                                     </th>
-                                    <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
+                                    <th className="px-12 border-r cursor-pointer text-sm font-normal text-gray-900">
                                         <div className="flex items-center justify-center"> VARIEDAD </div>
                                     </th>
                                     <th className="p-2 border-r cursor-pointer text-sm font-normal text-gray-900">
@@ -518,20 +525,8 @@ async function getVariedad() {
                             </thead>
                             <tbody>
                                 <tr className="bg-gray-50 text-center">
-                                    <td className=" border-r"> </td>
-                                    {/* <td className="p-2 border-r">
-                                        <input value={valorProveedor} onChange={asignarProveedor} id="grid-last-name" type="select" placeholder="" />
-                                    </td> */}
                                     <td className="p-2 border-r">
-                                        <select value={valorProveedor} onChange={asignarProveedor} id="grid-last-name">
-                                            <option value="">Seleccione un Proveedor</option>
-                                            {proveedor.map((PROVEEDOR) => (
-                                                <option key={PROVEEDOR.idProveedor} value={PROVEEDOR.idProveedor}>
-                                                    {PROVEEDOR.setProveedorNombre}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <select className='text-center' onClick={() => { }} onChange={(event) => { setValorNumeroFactura([]); getNumeroUltimaFactura(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <select className='text-center' onClick={() => { }} onChange={(event) => { asignarGuardarProveedor(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option selected></option>
           {opcionesComprador.map((opcion) => (
             <option value={opcion.value}>{opcion.label}</option>
@@ -539,60 +534,59 @@ async function getVariedad() {
         </select>
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={valorVariedad} onChange={asignarVariedad} className="border p-1" id="grid-last-name" type="text" placeholder="" />
-                                        <select onChange={asignarVariedad} class="w-20 h-20 bg-emerald-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Escoja la Variedad</option>
+                                        <select onChange={asignarGuardarVariedad} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected></option>
                 {opcionesVariedad.map((opcion) => (
                   <option value={opcion.value}>{opcion.label}</option>
                 ))}
               </select>
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={Mallas} onChange={(event) => {asignarMallas(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={Mallas} onChange={(event) => {asignarMallas(event)}} className="border w-12 h-10"  id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosPorMalla} onChange={(event) => {asignarTallosMalla(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosPorMalla} onChange={(event) => {asignarTallosMalla(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosSueltos} onChange={(event) => {asignarTallosSueltos(event)}} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosSueltos} onChange={(event) => {asignarTallosSueltos(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalTallos} className="border p-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalTallos} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches40} onChange={(event) => {asignarBonches40(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches40} onChange={(event) => {asignarBonches40(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches50} onChange={(event) => {asignarBonches50(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches50} onChange={(event) => {asignarBonches50(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches60} onChange={(event) => {asignarBonches60(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches60} onChange={(event) => {asignarBonches60(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches70} onChange={(event) => {asignarBonches70(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches70} onChange={(event) => {asignarBonches70(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches80} onChange={(event) => {asignarBonches80(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches80} onChange={(event) => {asignarBonches80(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches90} onChange={(event) => {asignarBonches90(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches90} onChange={(event) => {asignarBonches90(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalBonches} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalBonches} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosPorBonche} onChange={(event) => {asignarTallosPorBonche(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosPorBonche} onChange={(event) => {asignarTallosPorBonche(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalNacional} onChange={(event) => {asignarNacional(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalNacional} onChange={(event) => {asignarNacional(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalSobrantes} onChange={(event) => {asignarSobrantes(event)}} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalSobrantes} onChange={(event) => {asignarSobrantes(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalVariedad} className="border P-1" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalVariedad} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                 </tr>
@@ -611,7 +605,7 @@ async function getVariedad() {
                                 <input value={valorProveedor} onChange={asignarProveedor} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">VARIEDAD</label>
-                                <input value={valorVariedad} onChange={asignarVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+                                <input value={valorVariedad} onChange={asignarGuardarVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TOTAL MALLAS</label>
                                 <input value={valortMallas} onChange={asignartMallas} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />

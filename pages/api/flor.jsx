@@ -23,8 +23,8 @@ export default async function handler(req, res) {
     }*/
 
     if (req.method === "POST") {
-        const proveedorFlor = req.body.PROVEEDOR;
-        const variedadFlor = req.body.VARIEDAD;
+        const proveedorFlor = req.body.proveedor_gestionFlor;
+        const variedadFlor = req.body.variedad_gestionFlor;
         const tmallasFlor = req.body.tMallas_gestionFlor;
         const tTallosxmallaFlor = req.body.tTallosxMalla_gestionflor;
         const tallosSueltosFlor = req.body.tallosSueltos_gestionFlor;
@@ -36,13 +36,13 @@ export default async function handler(req, res) {
         const tallos80Flor = req.body.tallos80_gestionFlor;
         const tallos90Flor = req.body.tallos90_gestionFlor;
         const tBonchesFlor = req.body.tBonches_gestionFlor;
-        const tallosNacionalFlor = req.body.tNacional_gstionFlor;
-        const tallosSobrantesFlor = req.body.tallosSobrantes_gestionFlor;
+        const tallosNacionalFlor = req.body.tNacional_gestionFlor;
+        const tallosSobrantesFlor = req.body.tallosSobrante_gestionFlor;
         const tVariedadFlor = req.body.tVariedad_gestionFlor;
 
         const addFlor = await query({
-            query: "INSERT INTO flor (PROVEEDOR, VARIEDAD, tMallas_gestionFlor, tTallosxMalla_gestionflor, tallosSueltos_gestionFlor, tTallos_gestionFlor.tallos40_gestionFlor,tallos50_gestionFlor,tallos60_gestionFlor, tallos70_gestionFlor, tallos80_gestionFlor,tallos90_gestionFlor, tBonches_gestionFlor, tNacional_gstionFlor, tallosSobrantes_gestionFlor, tVariedad_gestionFlor ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            values: ([proveedorFlor, variedadFlor, tmallasFlor, tTallosxmallaFlor, tallosSueltosFlor, tTallosFlor, tallos40Flor, tallos50Flor, tallos60Flor, tallos70Flor, tallos80Flor, tallos90Flor, tBonchesFlor, tallosNacionalFlor, tallosSobrantesFlor, tVariedadFlor]),
+            query: "INSERT INTO flor (PROVEEDOR, VARIEDAD, tMallas_gestionFlor, tTallosxMalla_gestionflor, tallosSueltos_gestionFlor, tTallos_gestionFlor,tallos40_gestionFlor, tallos50_gestionFlor, tallos60_gestionFlor, tallos70_gestionFlor, tallos80_gestionFlor, talllos90_gestionFlor ,tBonches_gestionFlor, tallosNacional_gestionFlor, talloSobrante_gestionFlor, tVariedad_gestionFlor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            values: ([proveedorFlor, variedadFlor, tmallasFlor, tTallosxmallaFlor, tallosSueltosFlor, tTallosFlor,tallos40Flor, tallos50Flor, tallos60Flor, tallos70Flor, tallos80Flor, tallos90Flor,tBonchesFlor, tallosNacionalFlor, tallosSobrantesFlor, tVariedadFlor]),
         });
         let message = "";
         if (addFlor.insertId) {
