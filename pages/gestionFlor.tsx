@@ -6,6 +6,9 @@ import ModalFlor from "../components/ModalFlor";
 import { useRouter } from 'next/router';
 import { Select } from '@mui/material';
 import Proveedores from './proveedores/gestionProveedores';
+import BarraFlotante from '../components/ModalHeadBar';
+
+
 const Flor: React.FC = () => {
     const router = useRouter()
     const nombreFlorRef = useRef();
@@ -118,8 +121,8 @@ const Flor: React.FC = () => {
             },
             body: JSON.stringify({
                 id_gestionFlor: idFlor,
-                PROVEEDOR: valorProveedor,
-                VARIEDAD: valorVariedad,
+                proveedor_gestionFlor: valorProveedor,
+                variedad_gestionFlor: valorVariedad,
                 tMallas_gestionFlor: valortMallas,
                 tTallosxMalla_gestionflor: valorTallosxMalla,
                 tallosSueltos_gestionFlor: valorTallosSuelto,
@@ -387,16 +390,21 @@ async function getVariedad() {
 
     return (
         <Fragment>
-            <div className='bg-gradient-to-r from-lime-500 to-cyan-500 h-screen px-2 md:px-20 py-10'>
+
+            <BarraFlotante></BarraFlotante>
+
+            <button onClick={() => { router.back() }} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+          REGRESAR
+        </span>
+      </button>
+      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
+          Gestión de Flor
+      </span>
+
+            <div className='bg-gradient-to-r from-lime-500 to-cyan-500 h-screen-max px-2 md:px-20 py-10'>
                 <div className="relative space-y-20">
-                    <div className="flex items-start justify-between">
-                        <button className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-                            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-                                REGRESAR
-                            </span>
-                        </button>
-                        <img src={'../assets/images/logo.png'} className='w-40' alt="logo" />
-                    </div>
+
                     {created ? <div>Success!</div> :
                         null}
                     <div className='flex justify-between'>
@@ -605,7 +613,7 @@ async function getVariedad() {
                                 <input value={valorProveedor} onChange={asignarProveedor} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">VARIEDAD</label>
-                                <input value={valorVariedad} onChange={asignarGuardarVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+                                <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TOTAL MALLAS</label>
                                 <input value={valortMallas} onChange={asignartMallas} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
