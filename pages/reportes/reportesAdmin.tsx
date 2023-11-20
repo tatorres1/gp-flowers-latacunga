@@ -131,25 +131,13 @@ const Reportes_admin: React.FC = () => {
   }
 
   function crearReporteAlmacen() {
-    
-    // Crear un nuevo objeto jsPDF
-    const doc = new jsPDF();
-
-    // Definir las opciones para la tabla
-    const options = {
-      fontSize: 12,
-      pageOrientation: 'landscape',
-
-    };
-
-    doc.text("GP FLowers reporte", 10, 10);
-    // Llamar a la función autoTable para crear la tabla
-    autoTable(doc, { html: '#tabla2' },);
-
-
-    // Guardar el documento con la tabla usando la función save
-    doc.save('Reporte_Almacen.pdf');
-
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+    doc.text("ALMACEN (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaAlmacen',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Almacén_' + valorFecha + "_" + valorHora + '.pdf');
   }
   function crearReporteGestionFlor(){
     const doc = new jsPDF({
@@ -300,7 +288,7 @@ const Reportes_admin: React.FC = () => {
       </table>
 
 
-      <table id="tabla2" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+      <table id="tablaAlmacen" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
