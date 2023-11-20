@@ -22,6 +22,7 @@ const Reportes_admin: React.FC = () => {
     getProveedores();
     getAlmacen();
     getContFacturacion();
+    getDatosFacturacion();
     getCargo();
     getCompradores();
     getDataFlor();
@@ -54,6 +55,18 @@ const Reportes_admin: React.FC = () => {
     postData);
     const response = await res.json();
     setFacturacionCont(response.contFacturacion);
+  }
+  async function getDatosFacturacion(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_formulario`,
+    postData);
+    const response = await res.json();
+    setFacturacionDatos(response.facturacion);
   }
   async function getPersonal(){
     const postData = {
@@ -167,6 +180,7 @@ const Reportes_admin: React.FC = () => {
     
     doc.text("FACTURACION (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
     doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaFacturacionDatos',  styles: { fontSize: 4 }});
     autoTable(doc, { html: '#tablaFacturacion',  styles: { fontSize: 8 }});
     doc.save('Reporte_Facturacion_' + valorFecha + "_" + valorHora + '.pdf');
   }
@@ -313,10 +327,74 @@ const Reportes_admin: React.FC = () => {
             
           </tbody>
         </table>
+<table id="tablaFacturacionDatos" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">COMPRADOR</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NUMERO FACTURA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">FECHA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">HORA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">MARKETING</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CLIENTE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">MARCACION</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">PAIS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CONSIGNMENT</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">FARM CODE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">DATE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">INCOTERM</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">MAWB</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">HAWB</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">AIRLINE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CURRIER FREIGHT</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">RUC</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NO. EMBARQUE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">PERSON INVOICE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">INVOICE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">USDA ONLY</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">OBSERVACIONES</th>
 
+            </tr>
+          </thead>
+          <tbody>
+            
+            {facturacionDatos.map((factDat) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={factDat.id_calFacturacion}>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.comprador_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.numeroFactura_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.fecha_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.hora_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.id_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.marketingName_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.cliente_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.marcacion_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.pais_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.consignment_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.farmCode_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.date_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.incoterm_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.countryCode_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.mawb_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.hawb_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factDat.airLine_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.currierFreight_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.ruc_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.noEmbarque_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.personInvoice_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.invoice_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.usdaOnly_calFacturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factDat.observaciones_calFacturacion}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
         <table id="tablaFacturacion" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">FECHA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">HORA</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">PICES TYPE</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL PICES</th>
@@ -331,14 +409,14 @@ const Reportes_admin: React.FC = () => {
               <th scope="col" className="text-center px-6 py-3 text-xl">STEMS / BUNCH</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">UNIT PRICE</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL VALUE</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">FECHA</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">HORA</th>
             </tr>
           </thead>
           <tbody>
             
             {facturacionCont.map((factCont) => (
               <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={factCont.id_cont_facturacion}>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.fecha_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.hora_cont_facturacion}</td>
                 <td className='border border-lime-900 text-center text-lg'>{factCont.id_cont_facturacion}</td>
                 <td className='border border-lime-900 text-center text-lg'>{factCont.picesType_cont_facturacion}</td>
                 <td className='border border-lime-900 text-center text-lg'>{factCont.totalPices_cont_facturacion}</td>
@@ -353,8 +431,6 @@ const Reportes_admin: React.FC = () => {
                 <td className='border border-lime-900 text-center text-lg'>{factCont.stemsPerBunch_cont_facturacion}</td>
                 <td className='border border-lime-900 text-center text-lg'>{factCont.unitPrice_cont_facturacion}</td>
                 <td className='border border-lime-900 text-center text-lg '>{factCont.totalValue_cont_facturacion}</td>
-                <td className='border border-lime-900 text-center text-lg '>{factCont.fecha_cont_facturacion}</td>
-                <td className='border border-lime-900 text-center text-lg '>{factCont.hora_cont_facturacion}</td>
               </tr>
             ))}
             
