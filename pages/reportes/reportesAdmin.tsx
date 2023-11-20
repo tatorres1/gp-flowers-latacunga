@@ -215,8 +215,8 @@ const Reportes_admin: React.FC = () => {
     
     doc.text("PROVEEDORES (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
     doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
-    autoTable(doc, { html: '#tablaFacturacion',  styles: { fontSize: 8 }});
-    doc.save('Reporte_Facturacion_' + valorFecha + "_" + valorHora + '.pdf');
+    autoTable(doc, { html: '#tablaProveedores',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Proveedores_' + valorFecha + "_" + valorHora + '.pdf');
   }
 
 
@@ -272,7 +272,7 @@ const Reportes_admin: React.FC = () => {
           </tbody>
         </table>
 
-        <table id="tabla1" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+        <table id="tablaProveedores" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
@@ -439,6 +439,7 @@ const Reportes_admin: React.FC = () => {
             
           </tbody>
         </table>
+        
         <table id="tablaGestionFlor" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
