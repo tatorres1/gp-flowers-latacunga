@@ -8,7 +8,6 @@ import BarraFlotante from '../../components/ModalHeadBar';
 
 interface Data {
   tipo_reporte: string;
-  fecha_reporte: string;
   enlace: Function;
 }
 
@@ -22,12 +21,88 @@ const Reportes_admin: React.FC = () => {
   useEffect(() => {
     getProveedores();
     getAlmacen();
+    getContFacturacion();
+    getCargo();
+    getCompradores();
+    getDataFlor();
+    getPersonal();
   }, []);
 
   //traida de data de la api
   const [proveedores, setProveedores] = useState([]);
   const [almacen, setAlmacen] = useState([]);
+  const [facturacionCont, setFacturacionCont] = useState([]);
+  const [facturacionDatos, setFacturacionDatos] = useState([]);
+  const [cargo, setCargo] = useState([]);
+  const [compradores, setCompradores] = useState([]);
+  const [datosFlor, setDatosFlor] = useState([]);
+  const [personal, setPersonal] = useState([])
 
+  const [valorHoraFechaSistema, setValorFechaSistema] = useState(new Date());
+  const valorFecha = valorHoraFechaSistema.toLocaleDateString()
+  const valorHora = valorHoraFechaSistema.toLocaleTimeString()
+
+
+  async function getContFacturacion(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/facturacion_contenido_reporte`,
+    postData);
+    const response = await res.json();
+    setFacturacionCont(response.contFacturacion);
+  }
+  async function getPersonal(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/personal`,
+    postData);
+    const response = await res.json();
+    setPersonal(response.personal);
+  }
+  async function getCargo(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/value_cargo`,
+    postData);
+    const response = await res.json();
+    setCargo(response.cargo);
+  }
+  async function getCompradores(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/comprador`,
+    postData);
+    const response = await res.json();
+    setCompradores(response.comprador);
+  }
+  async function getDataFlor(){
+    const postData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/flor`,
+    postData);
+    const response = await res.json();
+    setDatosFlor(response.flor);
+  }
 
   async function getProveedores() {
     const postData = {
@@ -55,30 +130,6 @@ const Reportes_admin: React.FC = () => {
     setAlmacen(response.almacen);
   }
 
-
-  //se crean los reportes como tal
-  function crearReporteProveedores() {
-    
-    // Crear un nuevo objeto jsPDF
-    const doc = new jsPDF();
-
-    // Definir las opciones para la tabla
-    const options = {
-      fontSize: 12,
-      pageOrientation: 'landscape',
-
-    };
-
-    doc.text("GP FLowers reporte", 10, 10);
-    // Llamar a la función autoTable para crear la tabla
-    autoTable(doc, { html: '#tabla1' },);
-
-
-    // Guardar el documento con la tabla usando la función save
-    doc.save('Reporte_Proveedores.pdf');
-
-  }
-
   function crearReporteAlmacen() {
     
     // Crear un nuevo objeto jsPDF
@@ -100,47 +151,126 @@ const Reportes_admin: React.FC = () => {
     doc.save('Reporte_Almacen.pdf');
 
   }
+  function crearReporteGestionFlor(){
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+    doc.text("GESTION FLOR (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaGestionFlor',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Gestion_Flor_' + valorFecha + "_" + valorHora + '.pdf');
+  }
+  function crearReportePersonal(){
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+    doc.text("PERSONAL (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaPersonal',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Personal_' + valorFecha + "_" + valorHora + '.pdf');
+  }
+
+  function crearReporteFacturacion(){
+    const doc = new jsPDF({
+        
+        orientation: "landscape"
+      }
+    );
+    
+    doc.text("FACTURACION (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaFacturacion',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Facturacion_' + valorFecha + "_" + valorHora + '.pdf');
+  }
+  function crearReporteCargo(){
+    const doc = new jsPDF({
+        
+        orientation: "landscape"
+      }
+    );
+    
+    doc.text("VALUE CARGO (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaCargo',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Cargo_' + valorFecha + "_" + valorHora + '.pdf');
+  }
+  function crearReporteCompradores(){
+    const doc = new jsPDF({
+        
+        orientation: "landscape"
+      }
+    );
+    
+    doc.text("COMPRADORES (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaCompradores',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Compradores_' + valorFecha + "_" + valorHora + '.pdf');
+  }
+  function crearReporteProveedores(){
+    const doc = new jsPDF({
+        
+        orientation: "landscape"
+      }
+    );
+    
+    doc.text("PROVEEDORES (Fecha: " + valorFecha + " - Hora: " + valorHora + ")", 45, 10);
+    doc.addImage('../assets/images/logo.png', 'PNG', 13,3,30,10)
+    autoTable(doc, { html: '#tablaFacturacion',  styles: { fontSize: 8 }});
+    doc.save('Reporte_Facturacion_' + valorFecha + "_" + valorHora + '.pdf');
+  }
 
 
   const [data, setData] = useState<Data[]>([
-    { tipo_reporte: 'REPORTE VENTAS', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores },
-    { tipo_reporte: 'REPORTE PERSONAL', fecha_reporte: '25-10-2023', enlace: crearReporteAlmacen },
-    { tipo_reporte: 'REPORTE PROVEEDORES', fecha_reporte: '25-10-2023', enlace: crearReporteProveedores },
-    { tipo_reporte: 'REPORTE ALMACEN', fecha_reporte: '25-10-2023', enlace: crearReporteAlmacen },
+    { tipo_reporte: 'REPORTE GESTION FLOR', enlace: crearReporteGestionFlor },
+    { tipo_reporte: 'REPORTE PERSONAL', enlace: crearReportePersonal },
+    { tipo_reporte: 'REPORTE PROVEEDORES', enlace: crearReporteProveedores },
+    { tipo_reporte: 'REPORTE ALMACEN', enlace: crearReporteAlmacen },
+    { tipo_reporte: 'REPORTE FACTURACION', enlace: crearReporteFacturacion},
+    { tipo_reporte: 'REPORTE VALUE CARGO', enlace: crearReporteCargo},
+    { tipo_reporte: 'REPORTE COMPRADORES', enlace: crearReporteCompradores}
   ]);
 
   return (
     <Fragment>
       <BarraFlotante></BarraFlotante>
-    <div className='w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
+    <div className='py-5 w-full h-screen  bg-gradient-to-r from-lime-300 to-cyan-300'>
       <button onClick={router.back} type="button" className="ml-8 py-2.5 px-5 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
         REGRESAR
       </button>
-      <div className='lg:flex lg:justify-end lg:object-right sm:justify-center sm:flex'>
-        <img src={'../assets/images/logo.png'} alt="" />
-      </div><br /><br />
+      <div className='flex lg:justify-end flex justify-center lg:object-right sm:justify-center sm:flex py-12'>
+        <img className='lg:w-1/5 w-1/2' src={'../assets/images/logo.png'} alt="" />
+      </div>
 
-      <div className='w-full p-4 relative overflow-x-auto sm:rounded-lg'>
-        <table className='sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+      <div suppressHydrationWarning className='flex flex-col md:flex-row'>
+        <div suppressHydrationWarning className='px-5 pb-3'>
+          <span className='p-2'>
+            FECHA:
+          </span>
+          {valorHoraFechaSistema.toLocaleDateString()}
+        </div>
+        <div suppressHydrationWarning className='px-5'>
+          <span className='p-2'>
+            HORA:
+          </span>
+          {valorHoraFechaSistema.toLocaleTimeString()}
+        </div>
+      </div>
+
+      <div className='flex justify-center  p-4 relative overflow-x-auto sm:rounded-lg'>
+        <table className='md:w-1/2 lg:w-1/2 sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-            <tr>
-              <th scope="col" className="px-6 py-3"><span className="sr-only">VER</span> </th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">TIPO DE REPORTE</th>
-              <th scope="col" className="text-center px-6 py-3 text-xl">FECHA GENERADA</th>
-            </tr>
+
           </thead>
           <tbody>
             {data.map(row => (
               <tr className='"bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600' key={row.tipo_reporte}>
-                <td className="border border-lime-900 px-6 py-4 text-center">
-                  <a onClick={row.enlace} href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">VER</a></td>
                 <td className='border border-lime-900 text-center text-lg text-green-500'>{row.tipo_reporte}</td>
-                <td className='border border-lime-900 text-center text-lg'>{row.fecha_reporte}</td>
+                <td className="border border-lime-900 px-6 py-4 text-center">
+                  <a onClick={row.enlace} href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">DESCARGAR</a></td>
               </tr>
             ))}
           </tbody>
         </table>
-
 
         <table id="tabla1" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -196,8 +326,170 @@ const Reportes_admin: React.FC = () => {
           </tbody>
         </table>
 
+        <table id="tablaFacturacion" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">PICES TYPE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL PICES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">EQ. FULL BOXES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">PRODUCT ROSAS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">LONGITUD</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NO. BUNCHES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">INDICATOR</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">HTS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NANDINA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL STEMS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">STEMS / BUNCH</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">UNIT PRICE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL VALUE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">FECHA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">HORA</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {facturacionCont.map((factCont) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={factCont.id_cont_facturacion}>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.id_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.picesType_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.totalPices_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.eqFullBoxes_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.productRosas_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.longitud_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.noBunches_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.Indicator_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.hts_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.nandina_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.totalStems_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.stemsPerBunch_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg'>{factCont.unitPrice_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.totalValue_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.fecha_cont_facturacion}</td>
+                <td className='border border-lime-900 text-center text-lg '>{factCont.hora_cont_facturacion}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
 
+        <table id="tablaCargo" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {cargo.map((cargo) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={cargo.id}>
+                <td className='border border-lime-900 text-center text-lg'>{cargo.id}</td>
+                <td className='border border-lime-900 text-center text-lg'>{cargo.name}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
+        <table id="tablaCompradores" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {compradores.map((compra) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={compra.id_comp}>
+                <td className='border border-lime-900 text-center text-lg'>{compra.id_comp}</td>
+                <td className='border border-lime-900 text-center text-lg'>{compra.nombre_comp}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
+        <table id="tablaPersonal" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">CARGO</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">DIRECCION</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TELEFONO</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {personal.map((perso) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={perso.id_personal}>
+                <td className='border border-lime-900 text-center text-lg'>{perso.id_personal}</td>
+                <td className='border border-lime-900 text-center text-lg'>{perso.cedula_personal}</td>
+                <td className='border border-lime-900 text-center text-lg'>{perso.nombre_personal}</td>
+                <td className='border border-lime-900 text-center text-lg'>{perso.cargo_personal}</td>
+                <td className='border border-lime-900 text-center text-lg'>{perso.direccion_personal}</td>
+                <td className='border border-lime-900 text-center text-lg'>{perso.telefono_personal}</td>
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
+        <table id="tablaGestionFlor" style={{display:'none'}} className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">PROVEEDOR</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">VARIEDAD</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL MALLAS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS POR MALLA</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS SUELTOS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL TALLOS</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 40cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 50cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 60cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 70cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 80cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS 90cm</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL BONCHES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS NACIONAL</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TALLOS SOBRANTES</th>
+              <th scope="col" className="text-center px-6 py-3 text-xl">TOTAL DE VARIEDAD</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {datosFlor.map((flor) => (
+              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={flor.id_gestionFlor}>
+                <td className='border border-lime-900 text-center text-lg'>{flor.id_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.PROVEEDOR}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.VARIEDAD}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tMallas_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tTallosxMalla_gestionflor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallosSueltos_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tTallos_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallos40_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallos50_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallos60_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallos70_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallos80_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.talllos90_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tBonches_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tallosNacional_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.talloSobrante_gestionFlor}</td>
+                <td className='border border-lime-900 text-center text-lg'>{flor.tVariedad_gestionFlor}</td>
 
+   
+              </tr>
+            ))}
+            
+            
+          </tbody>
+        </table>
     </div>
 
     </div >
