@@ -4,32 +4,15 @@ import ModalEditar from "../components/ModalEditar";
 import ModalEliminar from "../components/ModalEliminar";
 import ModalFlor from "../components/ModalFlor";
 import { useRouter } from 'next/router';
-import { Select } from '@mui/material';
-import Proveedores from './proveedores/gestionProveedores';
+// import Proveedores from './proveedores/gestionProveedores';
 import BarraFlotante from '../components/ModalHeadBar';
 
 
 const Flor: React.FC = () => {
     const router = useRouter()
-    const nombreFlorRef = useRef();
-    const idFlorToUpdateRef = useRef();
-    const proveedorFlorRef = useRef();
-    const variedadToUpdateRef = useRef();
-    const tMallasFlorToUpdateRef = useRef();
-    const tTallosxMallaFlorToUpdateRef = useRef();
-    const tallosSueltosFlorToUpdateRef = useRef();
-    const tTallosFlorToUpdateRef = useRef();
-    const tallos40FlorToUpdateRef = useRef();
-    const tallos50FlorToUpdateRef = useRef();
-    const tallos60FlorToUpdateRef = useRef();
-    const tallos70FlorToUpdateRef = useRef();
-    const tallos80FlorToUpdateRef = useRef();
-    const tallos90FlorToUpdateRef = useRef();
-    const tBonchesToUpdateRef = useRef();
-    const tallosNacionalFlorToUpdateRef = useRef();
-    const tallosSobrantesFlorToUpdateRef = useRef();
-    const tVariedadFlorToUpdateRef = useRef();
+
     const [idFlor, setIdFlor] = useState<number | null>(null);
+    const [id_gestionFlor, setid_gestionFlor] = useState<number | null>(null);
     const [idProveedor, setIdProveedor] = useState([]);
     const [flor, setFlor] = useState([]);
     const [proveedor, setProveedor] = useState([]);
@@ -39,12 +22,60 @@ const Flor: React.FC = () => {
     const [deleted, setDeleted] = useState(false);
     const [deletedError, setDeletedError] = useState(false);
     const [editError, setEditError] = useState(false);
+
     //control de modal, declaracion de const
     const [showModal, setShowModal] = useState(false);
     const [showModalFlor, setShowModalFlor] = useState(false);
     const [showModalEditar, setShowModalEdit] = useState(false);
     const [showModalEliminar, setShowModalEliminar] = useState(false);
+    //valor id para al dar click que ejecute query de delete
+    const [valorBorrar, setValorBorrar] = useState("");
 
+    //valor que se usa de filtro
+    const [valorAFiltrar, setValorAFiltrar] = useState("");
+
+    const asignarValorAFiltrar = event => {
+        setValorAFiltrar(event.target.value);
+    }
+
+    //filtra los datos de consulta
+    async function getFiltroFlor() {
+
+        const queryParams = new URLSearchParams({
+            id_gestionFlor: valorAFiltrar,
+            PROVEEDOR: valorAFiltrar,
+            VARIEDAD: valorAFiltrar
+        });
+
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/almacen_filtro?${queryParams.toString()}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        const response = await res.json();
+        //en caso de no encontrar el elemento
+        if (response.almacen.length === 0) {
+            alert("No se encontraron resultados, vuelve a buscar");
+        } else {
+            setFlor(response.almacen);
+        }
+
+    }
+
+    async function AccionActivarFiltro(event) {
+        event.preventDefault();
+        await getFiltroFlor();
+
+    }
+    //desactivar filtro
+    async function AccionDesactivarFiltro() {
+        setValorAFiltrar("");
+        getFlor();
+    }
     //control de valores de ingreso
     const [valorProveedor, setProveedorNombre] = useState([]);
     const [valorVariedad, setValorVariedad] = useState();
@@ -241,181 +272,184 @@ const Flor: React.FC = () => {
         setValortVariedad(event.target.value);
     }
 
-      //variables para data de comprador
-  const [proveedores, setProveedores] = useState([]);
-      //conseguir data sobre comprador 
-  async function getProveedores() {
-    const postData = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
-      postData);
-    const response = await res.json();
-    setProveedores(response.proveedores);
-  }
+    //variables para data de comprador
+    const [proveedores, setProveedores] = useState([]);
+    //conseguir data sobre comprador 
+    async function getProveedores() {
+        const postData = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/proveedores`,
+            postData);
+        const response = await res.json();
+        setProveedores(response.proveedores);
+    }
 
-  const opcionesComprador = proveedores.map((vard) => ({
-    value: vard.nombre_proveedor,
-    label: vard.nombre_proveedor
-  }));
+    const opcionesComprador = proveedores.map((vard) => ({
+        value: vard.nombre_proveedor,
+        label: vard.nombre_proveedor
+    }));
 
-  const [variedades, setVariedades] = useState([]);
+    const [variedades, setVariedades] = useState([]);
 
-//funcion de consulta para variedad
-async function getVariedad() {
-    const postData = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/variedad`,
-      postData);
-    const response = await res.json();
-    setVariedades(response.variedad);
-  }
+    //funcion de consulta para variedad
+    async function getVariedad() {
+        const postData = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/variedad`,
+            postData);
+        const response = await res.json();
+        setVariedades(response.variedad);
+    }
 
-  const opcionesVariedad = variedades.map((vard) => ({
-    value: vard.nombre_VariedadFlor,
-    label: vard.nombre_VariedadFlor
-  }));
+    const opcionesVariedad = variedades.map((vard) => ({
+        value: vard.nombre_VariedadFlor,
+        label: vard.nombre_VariedadFlor
+    }));
 
-  const [Mallas, setMallas] = useState("");
-  const [tallosPorMalla, setTallosPorMalla] = useState("");
-  const [tallosSueltos, setTallosSueltos] = useState("");
-  const [totalTallos, setTotalTallos] = useState("");
-  const [bonches40, setBonches40] = useState("")
-  const [bonches50, setBonches50] = useState("")
-  const [bonches60, setBonches60] = useState("")
-  const [bonches70, setBonches70] = useState("")
-  const [bonches80, setBonches80] = useState("")
-  const [bonches90, setBonches90] = useState("")
-  const [totalBonches, setTotalBonches] = useState("")
-  const [tallosPorBonche, setTallosPorBonche] = useState("")
-  const [totalNacional, setTotalNacional] = useState("")
-  const [totalSobrantes, setTotalSobrantes] = useState("")
-  const [totalVariedad, setTotalVariedad] = useState("")
+    const [Mallas, setMallas] = useState("");
+    const [tallosPorMalla, setTallosPorMalla] = useState("");
+    const [tallosSueltos, setTallosSueltos] = useState("");
+    const [totalTallos, setTotalTallos] = useState("");
+    const [bonches40, setBonches40] = useState("")
+    const [bonches50, setBonches50] = useState("")
+    const [bonches60, setBonches60] = useState("")
+    const [bonches70, setBonches70] = useState("")
+    const [bonches80, setBonches80] = useState("")
+    const [bonches90, setBonches90] = useState("")
+    const [totalBonches, setTotalBonches] = useState("")
+    const [tallosPorBonche, setTallosPorBonche] = useState("")
+    const [totalNacional, setTotalNacional] = useState("")
+    const [totalSobrantes, setTotalSobrantes] = useState("")
+    const [totalVariedad, setTotalVariedad] = useState("")
 
-  const [guardarProveedor, setGuardarProveedor] = useState("")
-  const [guardarVariedad, setGuardarVariedad] = useState("")
+    const [guardarProveedor, setGuardarProveedor] = useState("")
+    const [guardarVariedad, setGuardarVariedad] = useState("")
 
 
 
-  const asignarMallas = event => {
-    setMallas(event.target.value)
-    let calculo = (event.target.value * tallosPorMalla + Number(tallosSueltos));
+    const asignarMallas = event => {
+        setMallas(event.target.value)
+        let calculo = (event.target.value * tallosPorMalla + Number(tallosSueltos));
 
-    setTotalTallos(calculo)
-  }
+        setTotalTallos(calculo)
+    }
 
-  const asignarTallosMalla = event => {
-    setTallosPorMalla(event.target.value)
-    let calculo = (Mallas * event.target.value + Number(tallosSueltos));
+    const asignarTallosMalla = event => {
+        setTallosPorMalla(event.target.value)
+        let calculo = (Mallas * event.target.value + Number(tallosSueltos));
 
-    setTotalTallos(calculo)
-  }
+        setTotalTallos(calculo)
+    }
 
-  const asignarTallosSueltos = event => {
-    setTallosSueltos(event.target.value)
-    let calculo = (Mallas * tallosPorMalla + Number(event.target.value));
+    const asignarTallosSueltos = event => {
+        setTallosSueltos(event.target.value)
+        let calculo = (Mallas * tallosPorMalla + Number(event.target.value));
 
-    setTotalTallos(calculo)
-  }
+        setTotalTallos(calculo)
+    }
 
-  const asignarBonches40 = event => {
-    setBonches40(event.target.value);
-    let calculo = (Number(event.target.value) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+    const asignarBonches40 = event => {
+        setBonches40(event.target.value);
+        let calculo = (Number(event.target.value) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
 
-    setTotalBonches(calculo)
-  }
-  const asignarBonches50 = event => {
-    setBonches50(event.target.value);
-    let calculo = (Number(bonches40) + Number(event.target.value) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+        setTotalBonches(calculo)
+    }
+    const asignarBonches50 = event => {
+        setBonches50(event.target.value);
+        let calculo = (Number(bonches40) + Number(event.target.value) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(bonches90));
 
-    setTotalBonches(calculo)
-  }
-  const asignarBonches60 = event => {
-    setBonches60(event.target.value);
-    let calculo = (Number(bonches40) + Number(bonches50) + Number(event.target.value) + Number(bonches70) + Number(bonches80) + Number(bonches90));
+        setTotalBonches(calculo)
+    }
+    const asignarBonches60 = event => {
+        setBonches60(event.target.value);
+        let calculo = (Number(bonches40) + Number(bonches50) + Number(event.target.value) + Number(bonches70) + Number(bonches80) + Number(bonches90));
 
-    setTotalBonches(calculo)
-  }
-  const asignarBonches70 = event => {
-    setBonches70(event.target.value);
-    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(event.target.value) + Number(bonches80) + Number(bonches90));
+        setTotalBonches(calculo)
+    }
+    const asignarBonches70 = event => {
+        setBonches70(event.target.value);
+        let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(event.target.value) + Number(bonches80) + Number(bonches90));
 
-    setTotalBonches(calculo)
-  }
-  const asignarBonches80 = event => {
-    setBonches80(event.target.value);
-    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(event.target.value) + Number(bonches90));
+        setTotalBonches(calculo)
+    }
+    const asignarBonches80 = event => {
+        setBonches80(event.target.value);
+        let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(event.target.value) + Number(bonches90));
 
-    setTotalBonches(calculo)
-  }
-  const asignarBonches90 = event => {
-    setBonches90(event.target.value);
-    let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(event.target.value));
+        setTotalBonches(calculo)
+    }
+    const asignarBonches90 = event => {
+        setBonches90(event.target.value);
+        let calculo = (Number(bonches40) + Number(bonches50) + Number(bonches60) + Number(bonches70) + Number(bonches80) + Number(event.target.value));
 
-    setTotalBonches(calculo)
-  }  
-  const asignarTallosPorBonche = event => {
-    setTallosPorBonche(event.target.value);
-    let calculo = (Number(totalNacional) + Number(totalSobrantes) + Number(totalBonches*event.target.value));
+        setTotalBonches(calculo)
+    }
+    const asignarTallosPorBonche = event => {
+        setTallosPorBonche(event.target.value);
+        let calculo = (Number(totalNacional) + Number(totalSobrantes) + Number(totalBonches * event.target.value));
 
-    setTotalVariedad(calculo)
-  }  
-  const asignarNacional = event => {
-    setTotalNacional(event.target.value);
-    let calculo = (Number(event.target.value) + Number(totalSobrantes) + Number(totalBonches*tallosPorBonche));
+        setTotalVariedad(calculo)
+    }
+    const asignarNacional = event => {
+        setTotalNacional(event.target.value);
+        let calculo = (Number(event.target.value) + Number(totalSobrantes) + Number(totalBonches * tallosPorBonche));
 
-    setTotalVariedad(calculo)
-  }  
-  const asignarSobrantes = event => {
-    setTotalSobrantes(event.target.value);
-    let calculo = (Number(totalNacional) + Number(event.target.value) + Number(totalBonches*tallosPorBonche));
+        setTotalVariedad(calculo)
+    }
+    const asignarSobrantes = event => {
+        setTotalSobrantes(event.target.value);
+        let calculo = (Number(totalNacional) + Number(event.target.value) + Number(totalBonches * tallosPorBonche));
 
-    setTotalVariedad(calculo)
-  }
+        setTotalVariedad(calculo)
+    }
 
-  const asignarGuardarProveedor = event => {
-    setGuardarProveedor(event.target.value)
-  }
-  const asignarGuardarVariedad = event => {
-    setGuardarVariedad(event.target.value)
-  }
-  
+    const asignarGuardarProveedor = event => {
+        setGuardarProveedor(event.target.value)
+    }
+    const asignarGuardarVariedad = event => {
+        setGuardarVariedad(event.target.value)
+    }
+
 
     return (
         <Fragment>
 
             <BarraFlotante></BarraFlotante>
 
-            <button onClick={() => { router.back() }} className="mt-6 mx-8 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-          REGRESAR
-        </span>
-      </button>
-      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-cyan-500 rounded-md group-hover:bg-opacity-0 font-black">
-          Gestión de Flor
-      </span>
+
+
 
             <div className='bg-gradient-to-r from-lime-500 to-cyan-500 h-screen-max px-2 md:px-20 py-10'>
-                <div className="relative space-y-20">
+                <div className="relative space-y-10">
+                    <button onClick={() => { router.back() }} className="bg-green-700 px-5 py-2.5 rounded-md group-hover:bg-opacity-0 font-bold text-white" >
+                        REGRESAR
+                    </button>
 
                     {created ? <div>Success!</div> :
                         null}
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between gap-2' >
                         <button type="button" className="py-2.5 px-5 text-sm font-medium rounded-lg bg-blue-600 ring-0 text-white hover:bg-blue-700" onClick={() => setShowModalFlor(true)} >AGREGAR NUEVO</button>
-                        <div className="relative w-1/3">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+
+                        <form className='grow'>
+                            <div className="px-2 relative lg:w-1/2 w-full">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-6 pointer-events-none">
+                                    <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                </div>
+                                <input value={valorAFiltrar} onChange={asignarValorAFiltrar} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ingrese aquí su búsqueda"></input>
+                                <button onClick={AccionActivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mx-16 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">BUSCAR</button>
+                                <button onClick={AccionDesactivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">X</button>
+
                             </div>
-                            <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
-                            <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
-                        </div>
+
+                        </form>
                     </div>
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -535,62 +569,62 @@ async function getVariedad() {
                                 <tr className="bg-gray-50 text-center">
                                     <td className="p-2 border-r">
                                         <select className='text-center' onClick={() => { }} onChange={(event) => { asignarGuardarProveedor(event) }} size="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected></option>
-          {opcionesComprador.map((opcion) => (
-            <option value={opcion.value}>{opcion.label}</option>
-          ))}
-        </select>
+                                            <option selected></option>
+                                            {opcionesComprador.map((opcion) => (
+                                                <option value={opcion.value}>{opcion.label}</option>
+                                            ))}
+                                        </select>
                                     </td>
                                     <td className="p-2 border-r">
                                         <select onChange={asignarGuardarVariedad} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected></option>
-                {opcionesVariedad.map((opcion) => (
-                  <option value={opcion.value}>{opcion.label}</option>
-                ))}
-              </select>
+                                            <option selected></option>
+                                            {opcionesVariedad.map((opcion) => (
+                                                <option value={opcion.value}>{opcion.label}</option>
+                                            ))}
+                                        </select>
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={Mallas} onChange={(event) => {asignarMallas(event)}} className="border w-12 h-10"  id="grid-last-name" type="number" placeholder="" />
+                                        <input value={Mallas} onChange={(event) => { asignarMallas(event) }} className="border w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosPorMalla} onChange={(event) => {asignarTallosMalla(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosPorMalla} onChange={(event) => { asignarTallosMalla(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosSueltos} onChange={(event) => {asignarTallosSueltos(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosSueltos} onChange={(event) => { asignarTallosSueltos(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
                                         <input value={totalTallos} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches40} onChange={(event) => {asignarBonches40(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches40} onChange={(event) => { asignarBonches40(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches50} onChange={(event) => {asignarBonches50(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches50} onChange={(event) => { asignarBonches50(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches60} onChange={(event) => {asignarBonches60(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches60} onChange={(event) => { asignarBonches60(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches70} onChange={(event) => {asignarBonches70(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches70} onChange={(event) => { asignarBonches70(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches80} onChange={(event) => {asignarBonches80(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches80} onChange={(event) => { asignarBonches80(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={bonches90} onChange={(event) => {asignarBonches90(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={bonches90} onChange={(event) => { asignarBonches90(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
                                         <input value={totalBonches} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={tallosPorBonche} onChange={(event) => {asignarTallosPorBonche(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={tallosPorBonche} onChange={(event) => { asignarTallosPorBonche(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalNacional} onChange={(event) => {asignarNacional(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalNacional} onChange={(event) => { asignarNacional(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
                                     </td>
                                     <td className="p-2 border-r">
-                                        <input value={totalSobrantes} onChange={(event) => {asignarSobrantes(event)}} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
+                                        <input value={totalSobrantes} onChange={(event) => { asignarSobrantes(event) }} className="border p-1 w-12 h-10" id="grid-last-name" type="number" placeholder="" />
 
                                     </td>
                                     <td className="p-2 border-r">
