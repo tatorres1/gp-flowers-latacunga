@@ -48,7 +48,7 @@ const Flor: React.FC = () => {
         });
 
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_URL}/api/almacen_filtro?${queryParams.toString()}`,
+            `${process.env.NEXT_PUBLIC_URL}/api/flor_filtro?${queryParams.toString()}`,
             {
                 method: "GET",
                 headers: {
@@ -58,10 +58,10 @@ const Flor: React.FC = () => {
         );
         const response = await res.json();
         //en caso de no encontrar el elemento
-        if (response.almacen.length === 0) {
+        if (response.flor.length === 0) {
             alert("No se encontraron resultados, vuelve a buscar");
         } else {
-            setFlor(response.almacen);
+            setFlor(response.flor);
         }
 
     }
@@ -634,7 +634,7 @@ const Flor: React.FC = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button onClick={() => { addFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
+                        <button onClick={() => { addFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
                             Guardar flor
                         </button>
                     </div>
