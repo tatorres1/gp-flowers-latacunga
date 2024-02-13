@@ -634,7 +634,7 @@ const Flor: React.FC = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button onClick={() => { addFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
+                        <button onClick={() => { addFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
                             Guardar flor
                         </button>
                     </div>
@@ -644,10 +644,10 @@ const Flor: React.FC = () => {
                         <form className="w-full max-w-lg">
                             <div className="w-full md:w-full px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">PROVEEDOR</label>
-                                <input value={valorProveedor} onChange={asignarProveedor} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+                                <input value={valorProveedor} onChange={asignarProveedor} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-proveedor" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">VARIEDAD</label>
-                                <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" />
+                                <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-variedad" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TOTAL MALLAS</label>
                                 <input value={valortMallas} onChange={asignartMallas} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
@@ -692,7 +692,7 @@ const Flor: React.FC = () => {
                                 </label>
                                 <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
 
-                                <button onClick={() => { addFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editFlor}>
+                                <button onClick={() => { addFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editFlor}>
                                     Terminar y Guardar
                                 </button>
                             </div>
