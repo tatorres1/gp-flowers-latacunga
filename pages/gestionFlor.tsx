@@ -76,6 +76,11 @@ const Flor: React.FC = () => {
         setValorAFiltrar("");
         getFlor();
     }
+    async function actualizarContenido(event) {
+        event.preventDefault();
+        await getFlor();
+    }
+
     //control de valores de ingreso
     const [valorProveedor, setProveedorNombre] = useState([]);
     const [valorVariedad, setValorVariedad] = useState();
@@ -139,6 +144,7 @@ const Flor: React.FC = () => {
         );
         const response = await res.json();
         if (response.response.message != "Agregado") return;
+        getFlor();
         setCreated(true);
         setShowModalFlor(false);
     }
@@ -435,7 +441,7 @@ const Flor: React.FC = () => {
 
                     {created ? <div>Success!</div> :
                         null}
-                    <div className='flex justify-between gap-2' >
+                    <div className='flex justify-between gap-2 lg:flex-row flex-col' >
                         <button type="button" className="py-2.5 px-5 text-sm font-medium rounded-lg bg-blue-600 ring-0 text-white hover:bg-blue-700" onClick={() => setShowModalFlor(true)} >AGREGAR NUEVO</button>
 
                         <form className='grow'>
@@ -448,9 +454,21 @@ const Flor: React.FC = () => {
                                 <button onClick={AccionDesactivarFiltro} type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">X</button>
 
                             </div>
-
+                            
                         </form>
                     </div>
+                    
+                    <button className='bg-blue-400 ml-12 py-1 px-4 mr-2 mb-2' onClick={() => {actualizarContenido(event)}}>
+              <div className='flex flex-row space-x-4'>
+                  <a>
+                    Actualizar
+                  </a>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                </div>
+            </button>
+
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -634,7 +652,7 @@ const Flor: React.FC = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button onClick={() => { addFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
+                        <button onClick={(event) => { addFlor(); actualizarContenido(event); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
                             Guardar flor
                         </button>
                     </div>
@@ -692,7 +710,7 @@ const Flor: React.FC = () => {
                                 </label>
                                 <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
 
-                                <button onClick={() => { addFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editFlor}>
+                                <button onClick={() => { editFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editFlor}>
                                     Terminar y Guardar
                                 </button>
                             </div>
