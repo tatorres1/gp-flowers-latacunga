@@ -157,23 +157,23 @@ const Flor: React.FC = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                id_gestionFlor: idFlor,
-                proveedor_gestionFlor: valorProveedor,
-                variedad_gestionFlor: valorVariedad,
-                tMallas_gestionFlor: valortMallas,
-                tTallosxMalla_gestionflor: valorTallosxMalla,
-                tallosSueltos_gestionFlor: valorTallosSuelto,
-                tTallos_gestionFlor: valortTallos,
-                tallos40_gestionFlor: valorTallos40,
-                tallos50_gestionFlor: valorTallos50,
-                tallos60_gestionFlor: valorTallos60,
-                tallos70_gestionFlor: valorTallos70,
-                tallos80_gestionFlor: valorTallos80,
-                tallos90_gestionFlor: valorTallos90,
-                tBonches_gestionFlor: valortBonches,
-                tallosNacional_gestionFlor: valorTallosNacional,
-                talloSobrante_gestionFlor: valorTallosSobrante,
-                tVariedad_gestionFlor: valortVariedad,
+                id_gestionFlor: 2,
+                proveedor_gestionFlor: "sad",
+                variedad_gestionFlor: "4",
+                tMallas_gestionFlor: 543,
+                tTallosxMalla_gestionflor: 346,
+                tallosSueltos_gestionFlor: 234,
+                tTallos_gestionFlor: 12,
+                tallos40_gestionFlor: 123,
+                tallos50_gestionFlor: 543,
+                tallos60_gestionFlor: 532,
+                tallos70_gestionFlor: 23,
+                tallos80_gestionFlor: 23,
+                tallos90_gestionFlor: 90,
+                tBonches_gestionFlor: 11,
+                tallosNacional_gestionFlor: 234,
+                talloSobrante_gestionFlor: 75,
+                tVariedad_gestionFlor: 88,
             }),
         };
 
@@ -710,7 +710,7 @@ const Flor: React.FC = () => {
                                 </label>
                                 <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
 
-                                <button onClick={() => { editFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={editFlor}>
+                                <button onClick={() => { editFlor(); getFlor(); setShowModalFlor(false); }} type="submit" className="ml-8 py-2.5 px-5 mr-2 mb-2 mt-6 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" >
                                     Terminar y Guardar
                                 </button>
                             </div>
