@@ -664,7 +664,7 @@ const Flor: React.FC = () => {
                     </div>
                 </ModalFlor>
                 <ModalEditar isVisible={showModalEditar} onClose={() => setShowModalEdit(false)}>
-                    <div style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+                    <div style={{ maxHeight: '45vh', overflowY: 'auto' }}>
                         <form className="w-full max-w-lg">
                             <div className="w-full md:w-full px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">PROVEEDOR</label>
