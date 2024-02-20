@@ -724,12 +724,15 @@ const Flor: React.FC = () => {
                     </div>
                 </ModalEditar>
                 <ModalEliminar isVisible={showModalEliminar} onClose={() => setShowModalEliminar(false)}>
+                    <div className='flex flex-col items-center'>
                     <label className="font-bold text-2xl m-16">Estas seguro de eliminar? </label>
                     <br></br>
-                    <button type="button" className="place-self-end ml-96 text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-m px-5 py-2.5 " onClick={deleteFlor}>
+                    <button type="button" className="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-m px-5 py-2.5 " onClick={deleteFlor}>
                         Si, eliminar
                     </button>
 
+                    </div>
+                    
                 </ModalEliminar>
             </div>
         </Fragment>
