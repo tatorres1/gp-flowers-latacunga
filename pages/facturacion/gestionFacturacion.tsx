@@ -1074,14 +1074,14 @@ const Facturacion: React.FC = () => {
         </div>
       </div>
 
-      <div suppressHydrationWarning className='flex flex-row'>
-        <div suppressHydrationWarning className='p-12'>
+      <div suppressHydrationWarning className='flex lg:flex-row flex-col'>
+        <div suppressHydrationWarning className='p-6'>
           <span className='p-2'>
             FECHA:
           </span>
           {valorHoraFechaSistema.toLocaleDateString()}
         </div>
-        <div suppressHydrationWarning className='p-12'>
+        <div suppressHydrationWarning className='p-6'>
           <span className='p-2'>
             HORA:
           </span>

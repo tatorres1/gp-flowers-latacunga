@@ -44,7 +44,7 @@ function App() {
                 </div>
             </div><br />
             <div className='mt-20'>
-                <div className='flex flex-col-3 justify-center  items-center'>
+                <div className='flex flex-col lg:flex-row justify-center  items-center'>
                     <button type="button" className="flex items-center p-8 text-calc(4vw + 16px) font-bold bg-white hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg text-center mr-2 mb-2"
                         onClick={IrAgregarFactura}
                     >AGREGAR FACTURA</button>

@@ -236,7 +236,7 @@ function App() {
                 &&
                 <div className='w-6/7 m-8 flex flex-col sm:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900">Seleccione el comprador</label>
-                <select id="years" size="10" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <select onChange={(event) => {asignarEstadoSeleccion(false); asignarBuscarComprador(event)}} id="years" size="10" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {comprador.map((item, index) => (
                         <option onClickCapture={(event) => {asignarEstadoSeleccion(false); asignarBuscarComprador(event)}} key={index} value={item.comprador_calFacturacion} className='text-2xl'>
                             {item.comprador_calFacturacion}
@@ -268,14 +268,14 @@ function App() {
                 &&
                 <div className='w-6/7 m-8 flex flex-col sm:flex-row bg-white p-8'>
                 <label for="years" class="block m-12 text-4xl font-medium text-gray-900 ">Seleccione fecha y hora</label>
-                <select id="years" size="5" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                <select onChange={(event) => {asignarBuscarFecha(event);getHora(event)}} id="years" size="5" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         {fecha.map((item, index) => (
                         <option onClickCapture={(event) => {asignarBuscarFecha(event);getHora(event)}} key={index} value={item.fecha_calFacturacion} className='text-2xl'>
                             {item.fecha_calFacturacion}
                         </option>
                         ))}
                 </select>
-                <select id="years" size="5" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                <select onChange={(event) => {asignarEstadoSeleccion(false); asignarBuscarHora(event); }} id="years" size="5" class="bg-gray-50 text-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         {hora.map((item, index) => (
                         <option onClickCapture={(event) => {asignarEstadoSeleccion(false); asignarBuscarHora(event); }} key={index} value={item.hora_calFacturacion} className='text-2xl'>
                             {item.hora_calFacturacion}
