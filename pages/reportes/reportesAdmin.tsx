@@ -265,9 +265,9 @@ const Reportes_admin: React.FC = () => {
           </thead>
           <tbody>
             {data.map(row => (
-              <tr className='"bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600' key={row.tipo_reporte}>
-                <td className='border border-lime-900 text-center text-lg text-green-500'>{row.tipo_reporte}</td>
-                <td className="border border-lime-900 px-6 py-4 text-center">
+              <tr className='"bg-white bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600' key={row.tipo_reporte}>
+                <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{row.tipo_reporte}</td>
+                <td className="px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white ">
                   <a onClick={row.enlace} href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">DESCARGAR</a></td>
               </tr>
             ))}

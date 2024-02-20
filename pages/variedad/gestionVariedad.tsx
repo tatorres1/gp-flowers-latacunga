@@ -212,8 +212,8 @@ const Variedad: React.FC = () => {
               onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
             <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-        <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">NOMBRE</th>
@@ -224,13 +224,13 @@ const Variedad: React.FC = () => {
           <tbody>
             
             {variedad.map((variedad) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={variedad.id_variedadFlor}>
-                <td className='border border-lime-900 text-center text-lg'>{variedad.id_variedadFlor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{variedad.nombre_VariedadFlor}</td>
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={variedad.id_variedadFlor}>
+                <td className='px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white'>{variedad.id_variedadFlor}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{variedad.nombre_VariedadFlor}</td>
 
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(variedad.id_variedadFlor, variedad.nombre_variedadFlor);}}>EDITAR</a></td>
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(variedad.id_variedadFlor);}}>ELIMINAR</a> </td>
               </tr>
             ))}

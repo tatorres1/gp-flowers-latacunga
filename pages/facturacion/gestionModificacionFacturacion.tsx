@@ -1299,8 +1299,8 @@ const Facturacion: React.FC = () => {
             </button>
         </div>
                 <div className='w-full p-1 relative overflow-x-auto sm:rounded-lg '>
-                  <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 '>
-                    <thead className='text-gray-700 uppercase bg-gray-50 '>
+                  <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
                         <th scope="col" className="text-center px-6 py-3 text-xl">PICES TYPE</th>
@@ -1323,27 +1323,27 @@ const Facturacion: React.FC = () => {
                     <tbody>
                       
                       {valueContFacturaciones.map((contFacturaciones) => (
-                        <tr className="bg-white border-b " key={contFacturaciones.id_cont_facturacion}>
-                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.id_cont_facturacion}
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={contFacturaciones.id_cont_facturacion}>
+                          <td className='px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white'>{contFacturaciones.id_cont_facturacion}
                           </td>
-                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.picesType_cont_facturacion}
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{contFacturaciones.picesType_cont_facturacion}
                           </td>
-                          <td className='border border-lime-900 text-center text-lg'>{contFacturaciones.totalPices_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.eqFullBoxes_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.productRosas_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.longitud_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.noBunches_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.Indicator_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.hts_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.nandina_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.totalStems_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.stemsPerBunch_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.unitPrice_cont_facturacion}</td>
-                          <td className='border border-lime-900 text-center text-lg '>{contFacturaciones.totalValue_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{contFacturaciones.totalPices_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.eqFullBoxes_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.productRosas_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.longitud_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.noBunches_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.Indicator_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.hts_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.nandina_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.totalStems_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.stemsPerBunch_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.unitPrice_cont_facturacion}</td>
+                          <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white '>{contFacturaciones.totalValue_cont_facturacion}</td>
 
 
 
-                          <td className="border border-lime-900 px-6 py-4 text-center">
+                          <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="#" className="font-medium text-blue-600 hover:underline" 
                               onClick={() =>{
                                 setShowModalEditar(true);
@@ -1366,7 +1366,7 @@ const Facturacion: React.FC = () => {
                                   resetearVariables();
                                   }}
                                   >EDITAR</a></td>
-                          <td className="border border-lime-900 px-6 py-4 text-center">
+                          <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(contFacturaciones.id_cont_facturacion);}}>ELIMINAR</a> </td>
                         </tr>
                       ))}

@@ -245,8 +245,8 @@ const Proveedores: React.FC = () => {
               onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
             <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-        <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
@@ -260,16 +260,16 @@ const Proveedores: React.FC = () => {
           <tbody>
             
             {proveedores.map((proveedores) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
-                <td className='border border-lime-900 text-center text-lg'>{proveedores.id_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg'>{proveedores.cedula_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.nombre_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.telefono_proveedor}</td>
-                <td className='border border-lime-900 text-center text-lg '>{proveedores.observaciones_proveedor}</td>
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={proveedores.id_proveedor}>
+                <td className='px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white'>{proveedores.id_proveedor}</td>
+                <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{proveedores.cedula_proveedor}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{proveedores.nombre_proveedor}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{proveedores.telefono_proveedor}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{proveedores.observaciones_proveedor}</td>
 
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(proveedores.id_proveedor, proveedores.cedula_proveedor, proveedores.nombre_proveedor, proveedores.telefono_proveedor, proveedores.observaciones_proveedor);}}>EDITAR</a></td>
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(proveedores.id_proveedor);}}>ELIMINAR</a> </td>
               </tr>
             ))}

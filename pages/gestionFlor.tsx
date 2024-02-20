@@ -465,7 +465,7 @@ const Flor: React.FC = () => {
                     </div>
                     
                     <button className='bg-blue-400 ml-12 py-1 px-4 mr-2 mb-2' onClick={() => {actualizarContenido(event)}}>
-              <div className='flex flex-row space-x-4'>
+                <div className='flex flex-row space-x-4'>
                   <a>
                     Actualizar
                   </a>
@@ -473,11 +473,11 @@ const Flor: React.FC = () => {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                   </svg>
                 </div>
-            </button>
+                </button>
 
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 font-medium"># </th>
                                     <th scope="col" className="px-6 py-3 text-base">PROVEEDOR</th>
@@ -502,27 +502,27 @@ const Flor: React.FC = () => {
                             </thead>
                             <tbody>
                                 {flor.map((flor) => (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={flor.id_gestionFlor}>
-                                        <td className="px-6 py-4">{flor.id_gestionFlor}</td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.PROVEEDOR}</td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-lime-500">{flor.VARIEDAD}</td>
-                                        <td className="px-6 py-4">{flor.tMallas_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tTallosxMalla_gestionflor}</td>
-                                        <td className="px-6 py-4">{flor.tallosSueltos_gestionFlor}</td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tTallos_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos40_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos50_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos60_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos70_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos80_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.talllos90_gestionFlor}</td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tBonches_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallosNacional_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.talloSobrante_gestionFlor}</td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tVariedad_gestionFlor}</td>
-                                        <td className="px-6 py-4 text-right">
+                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={flor.id_gestionFlor}>
+                                        <td className="px-6 py-4 text-center">{flor.id_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.PROVEEDOR}</td>
+                                        <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-lime-500">{flor.VARIEDAD}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tMallas_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tTallosxMalla_gestionflor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallosSueltos_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tTallos_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallos40_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallos50_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallos60_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallos70_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallos80_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.talllos90_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tBonches_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.tallosNacional_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center">{flor.talloSobrante_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tVariedad_gestionFlor}</td>
+                                        <td className="px-6 py-4 text-center text-right">
                                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleEdit(flor.id_gestionFlor)}>EDITAR</a></td>
-                                        <td className="px-6 py-4 text-right">
+                                        <td className="px-6 py-4 text-center text-right">
                                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleDelete(flor.id_gestionFlor)}>ELIMINAR</a> </td>
                                     </tr>
                                 ))}

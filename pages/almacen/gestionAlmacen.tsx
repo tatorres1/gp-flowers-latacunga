@@ -248,8 +248,8 @@ const Almacen: React.FC = () => {
               onClick={() => setShowModal(true)}>AGREGAR NUEVO</button>
 
             <div className='w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-        <table className=' sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
               <th scope="col" className="text-center px-6 py-3 text-xl">CANTIDAD</th>
@@ -263,16 +263,16 @@ const Almacen: React.FC = () => {
           <tbody>
             
             {almacen.map((almacen) => (
-              <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={almacen.id_materialAlmacen}>
-                <td className='border border-lime-900 text-center text-lg'>{almacen.id_materialAlmacen}</td>
-                <td className='border border-lime-900 text-center text-lg'>{almacen.cantidad_materialAlmacen}</td>
-                <td className='border border-lime-900 text-center text-lg '>{almacen.nombre_materialAlmacen}</td>
-                <td className='border border-lime-900 text-center text-lg '>{almacen.tipo_materialAlmacen}</td>
-                <td className='border border-lime-900 text-center text-lg '>{almacen.observaciones_materialAlmacen}</td>
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={almacen.id_materialAlmacen}>
+                <td className='px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white'>{almacen.id_materialAlmacen}</td>
+                <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{almacen.cantidad_materialAlmacen}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{almacen.nombre_materialAlmacen}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white '>{almacen.tipo_materialAlmacen}</td>
+                <td className='px-6 py-4 text-center font-medium whitespace-nowrap dark:text-white'>{almacen.observaciones_materialAlmacen}</td>
 
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() =>{setShowModalEditar(true);asignarDataPorDefecto(almacen.id_materialAlmacen, almacen.cantidad_materialAlmacen, almacen.nombre_materialAlmacen, almacen.tipo_materialAlmacen, almacen.observaciones_materialAlmacen);}}>EDITAR</a></td>
-                <td className="border border-lime-900 px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setShowModalEliminar(true); asignarValorBorrar(almacen.id_materialAlmacen);}}>ELIMINAR</a> </td>
               </tr>
             ))}

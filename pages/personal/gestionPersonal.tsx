@@ -235,8 +235,8 @@ const Personal: React.FC = () => {
                     null}
 
                 <div className='scroll-smooth md:scroll-auto  w-full p-8 relative overflow-x-auto sm:rounded-lg'>
-                    <table className='scroll-smooth md:scroll-auto  sm:rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                        <thead className='text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                    <table className="overflowY: 'auto' scroll-smooth w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="text-center px-6 py-3 text-xl">ID</th>
                                 <th scope="col" className="text-center px-6 py-3 text-xl">CEDULA</th>
@@ -250,17 +250,17 @@ const Personal: React.FC = () => {
                         </thead>
                         <tbody>
                             {personal.map((personal) => (
-                                <tr className="bg-gray-800 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600" key={personal.id_personal}>
-                                    <td className='border border-lime-900 text-center text-lg'>{personal.id_personal}</td>
-                                    <td className='border border-lime-900 text-center text-lg'>{personal.cedula_personal}</td>
-                                    <td className='border border-lime-900 text-center text-lg '>{personal.nombre_personal}</td>
-                                    <td className='border border-lime-900 text-center text-lg '>{personal.cargo_personal}</td>
-                                    <td className='border border-lime-900 text-center text-lg '>{personal.direccion_personal}</td>
-                                    <td className='border border-lime-900 text-center text-lg '>{personal.telefono_personal}</td>
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={personal.id_personal}>
+                                    <td className='px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white'>{personal.id_personal}</td>
+                                    <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{personal.cedula_personal}</td>
+                                    <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{personal.nombre_personal}</td>
+                                    <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{personal.cargo_personal}</td>
+                                    <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{personal.direccion_personal}</td>
+                                    <td className='px-6 py-4  text-center font-medium whitespace-nowrap dark:text-white'>{personal.telefono_personal}</td>
 
-                                    <td className="border border-lime-900 px-6 py-4 text-center">
+                                    <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleEdit(personal.id_personal)}>EDITAR</a></td>
-                                    <td className="border border-lime-900 px-6 py-4 text-center">
+                                    <td className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => handleDelete(personal.id_personal)}>ELIMINAR</a> </td>
                                 </tr>
                             ))}

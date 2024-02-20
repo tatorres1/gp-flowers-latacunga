@@ -57,13 +57,13 @@ function App() {
             }
             <div className='mt-20'>
                 <div className='flex flex-col-3 justify-center  items-center'>
-                    <button type="button" className="text-6xl font-bold bg-green-400 hover:bg-gradient-to-bl focus:ring-4 focus:ring-green-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="text-6xl font-bold bg-green-400 hover:bg-gradient-to-bl  hover:ring-8 focus:ring-4 focus:ring-green-200 rounded-lg p-8 text-center mr-4"
                         onClick={IrGestionFlores}
                     >GESTION FLOR</button>
-                    <button type="button" className="text-6xl font-bold bg-pink-500 hover:bg-gradient-to-bl focus:ring-4 focus:ring-pink-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="text-6xl font-bold bg-pink-500 hover:bg-gradient-to-bl hover:ring-8 focus:ring-4 focus:ring-pink-200 rounded-lg p-8 text-center mr-4"
                         onClick={IrAlmacen}
                     >ALMACEN</button>
-                    <button type="button" className="text-6xl font-bold bg-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg p-8 text-center mr-4"
+                    <button type="button" className="text-6xl font-bold bg-blue-600 hover:bg-gradient-to-bl hover:ring-8 focus:ring-4 focus:outline-none focus:ring-green-200 rounded-lg p-8 text-center mr-4"
                         onClick={IrProveedores}
                     >PROVEEDORES</button>
                 </div>
