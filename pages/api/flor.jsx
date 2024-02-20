@@ -89,10 +89,10 @@ export default async function handler(req, res) {
         const tBonchesFlor = req.body.tBonches_gestionFlor;
         const tallosNacionalFlor = req.body.tallosNacional_gestionFlor;
         const tallosSobrantesFlor = req.body.talloSobrante_gestionFlor;
-        const tVariedadFlor = req.body.variedad_gestionFlor;
+        const tVariedadFlor = req.body.tVariedad_gestionFlor;
         
         const updateFlor = await query({
-            query: "UPDATE flor SET PROVEEDOR = ?,VARIEDAD = ?, tMallas_gestionFlor = ?, tTallosxMalla_gestionflor = ?, tallosSueltos_gestionFlor = ? tTallos_gestionFlor = ? tallos40_gestionFlor = ? tallos50_gestionFlor = ? tallos60_gestionFlor = ? tallos70_gestionFlor = ? tallos80_gestionFlor = ? talllos90_gestionFlor = ? tBonches_gestionFlor=? tallosNacional_gestionFlor=? talloSobrante_gestionFlor=? tVariedad_gestionFlor = ? WHERE id_gestionFlor = ? ",
+            query: "UPDATE flor SET PROVEEDOR = ?, VARIEDAD = ?, tMallas_gestionFlor = ?, tTallosxMalla_gestionflor = ?, tallosSueltos_gestionFlor = ?, tTallos_gestionFlor = ?, tallos40_gestionFlor = ?, tallos50_gestionFlor = ?, tallos60_gestionFlor = ?, tallos70_gestionFlor = ?, tallos80_gestionFlor = ?, talllos90_gestionFlor = ?, tBonches_gestionFlor = ?, tallosNacional_gestionFlor = ?, talloSobrante_gestionFlor = ?, tVariedad_gestionFlor = ?   WHERE id_gestionFlor = ? ",
             values: [proveedorFlor, variedadFlor, tmallasFlor, tTallosxmallaFlor, tallosSueltosFlor, tTallosFlor, tallos40Flor, tallos50Flor, tallos60Flor, tallos70Flor, tallos80Flor, tallos90Flor, tBonchesFlor, tallosNacionalFlor, tallosSobrantesFlor, tVariedadFlor, idFlor],
         });
         let message = '';

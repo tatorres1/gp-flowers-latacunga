@@ -158,22 +158,24 @@ const Flor: React.FC = () => {
             },
             body: JSON.stringify({
                 id_gestionFlor: 2,
-                proveedor_gestionFlor: "sad",
-                variedad_gestionFlor: "4",
-                tMallas_gestionFlor: 543,
-                tTallosxMalla_gestionflor: 346,
-                tallosSueltos_gestionFlor: 234,
-                tTallos_gestionFlor: 12,
-                tallos40_gestionFlor: 123,
-                tallos50_gestionFlor: 543,
-                tallos60_gestionFlor: 532,
-                tallos70_gestionFlor: 23,
-                tallos80_gestionFlor: 23,
+                proveedor_gestionFlor: "COSA",
+                variedad_gestionFlor: "COSA 2",
+                tMallas_gestionFlor: 666,
+                tTallosxMalla_gestionflor: 6660,
+                tallosSueltos_gestionFlor: 666,
+                tTallos_gestionFlor: 6660,
+                tallos40_gestionFlor: 40,
+                tallos50_gestionFlor: 50,
+                tallos60_gestionFlor: 60,
+                tallos70_gestionFlor: 70,
+                tallos80_gestionFlor: 80,
                 tallos90_gestionFlor: 90,
-                tBonches_gestionFlor: 11,
-                tallosNacional_gestionFlor: 234,
-                talloSobrante_gestionFlor: 75,
-                tVariedad_gestionFlor: 88,
+                tBonches_gestionFlor: 666,
+                tallosNacional_gestionFlor: 6660,
+                talloSobrante_gestionFlor: 666,
+                tVariedad_gestionFlor: 6600,
+
+                
             }),
         };
 
@@ -509,7 +511,7 @@ const Flor: React.FC = () => {
                                         <td className="px-6 py-4">{flor.tallos60_gestionFlor}</td>
                                         <td className="px-6 py-4">{flor.tallos70_gestionFlor}</td>
                                         <td className="px-6 py-4">{flor.tallos80_gestionFlor}</td>
-                                        <td className="px-6 py-4">{flor.tallos90_gestionFlor}</td>
+                                        <td className="px-6 py-4">{flor.talllos90_gestionFlor}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flor.tBonches_gestionFlor}</td>
                                         <td className="px-6 py-4">{flor.tallosNacional_gestionFlor}</td>
                                         <td className="px-6 py-4">{flor.talloSobrante_gestionFlor}</td>
