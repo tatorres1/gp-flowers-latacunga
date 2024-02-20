@@ -116,7 +116,7 @@ const Login = () => {
         //alert("datos incorrectos");
         setEstiloUsername({ border: '2px solid red' });
         setMostrarError(true);
-        
+        continue;
       }
     };
   }
