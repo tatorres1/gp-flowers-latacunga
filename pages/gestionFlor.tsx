@@ -157,23 +157,23 @@ const Flor: React.FC = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                id_gestionFlor: 2,
-                proveedor_gestionFlor: "COSA",
-                variedad_gestionFlor: "COSA 2",
-                tMallas_gestionFlor: 666,
-                tTallosxMalla_gestionflor: 6660,
-                tallosSueltos_gestionFlor: 666,
-                tTallos_gestionFlor: 6660,
-                tallos40_gestionFlor: 40,
-                tallos50_gestionFlor: 50,
-                tallos60_gestionFlor: 60,
-                tallos70_gestionFlor: 70,
-                tallos80_gestionFlor: 80,
-                tallos90_gestionFlor: 90,
-                tBonches_gestionFlor: 666,
-                tallosNacional_gestionFlor: 6660,
-                talloSobrante_gestionFlor: 666,
-                tVariedad_gestionFlor: 6600,
+                id_gestionFlor: idFlor,
+                proveedor_gestionFlor: valorProveedor,
+                variedad_gestionFlor: valorVariedad,
+                tMallas_gestionFlor: valortMallas,
+                tTallosxMalla_gestionflor: valorTallosxMalla,
+                tallosSueltos_gestionFlor: valorTallosSuelto,
+                tTallos_gestionFlor: valortTallos,
+                tallos40_gestionFlor: valorTallos40,
+                tallos50_gestionFlor: valorTallos50,
+                tallos60_gestionFlor: valorTallos60,
+                tallos70_gestionFlor: valorTallos70,
+                tallos80_gestionFlor: valorTallos80,
+                tallos90_gestionFlor: valorTallos90,
+                tBonches_gestionFlor: valortBonches,
+                tallosNacional_gestionFlor: valorTallosNacional,
+                talloSobrante_gestionFlor: valorTallosSobrante,
+                tVariedad_gestionFlor: valortVariedad,
 
                 
             }),
@@ -234,6 +234,10 @@ const Flor: React.FC = () => {
 
     const asignarProveedor = event => {
         setProveedorNombre(event.target.value);
+    }
+
+    const asignarVariedad = event => {
+        setValorVariedad(event.target.value);
     }
 
     const asignartMallas = event => {
@@ -667,7 +671,7 @@ const Flor: React.FC = () => {
                                 <input value={valorProveedor} onChange={asignarProveedor} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-proveedor" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">VARIEDAD</label>
-                                <input value={valortVariedad} onChange={asignartVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-variedad" type="text" placeholder="" />
+                                <input value={valorVariedad} onChange={asignarVariedad} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-variedad" type="text" placeholder="" />
 
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" form="grid-last-name">TOTAL MALLAS</label>
                                 <input value={valortMallas} onChange={asignartMallas} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" />
