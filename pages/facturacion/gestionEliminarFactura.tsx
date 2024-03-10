@@ -1368,13 +1368,13 @@ const Facturacion: React.FC = () => {
                     <input disabled value={valorPersonInvoice} onChange={(event) => {asignarPersonInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border mb-6 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                 </div>
         </div>
-        <div className='flex flex-col-2 p-7'>
-                <div className=' w-1/2'>
+        <div className='flex flex-col-2 mb-12'>
+                <div className='p-2 w-1/2 lg:p-12 lg:w-1/2'>
                     <input disabled value={valorInvoice} onChange={(event) => {asignarInvoice(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
                     <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
                 </div>
-                <div className='ml-12 w-1/2'>
+                <div className='p-2 w-1/2 lg:p-12 lg:w-1/2'>
                     <input disabled value={valorUsdaOnly} onChange={(event) => {asignarUsdaOnly(event)}} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required/>
                     <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">USDA, APHIS, P.P.Q. Use Only</label>
                 </div>

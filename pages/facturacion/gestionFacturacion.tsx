@@ -1365,12 +1365,12 @@ const Facturacion: React.FC = () => {
             </div>
           </div>
           <div className='flex flex-col-2'>
-            <div className='ml-12 w-1/2'>
+            <div className='p-2 w-1/2 lg:p-12 lg:w-1/2'>
               <input value={valorInvoice} onChange={asignarInvoice} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
               <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">CUSTOM USE ONLY</label>
               <label for="last_name" class="block text-sm font-medium text-gray-900 dark:text-white">The flowers and plants on this invoice where wholly grown in ECUADOR</label>
             </div>
-            <div className='ml-12 w-1/2'>
+            <div className='p-2 w-1/2 lg:p-12 lg:w-1/2'>
               <input value={valorUsdaOnly} onChange={asignarUsdaOnly} type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
               <label for="last_name" class="bg-rose-300 border-black border-2 pl-12 block text-sm font-medium text-gray-900 dark:text-white">USDA, APHIS, P.P.Q. Use Only</label>
             </div>
