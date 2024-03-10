@@ -106,7 +106,7 @@ function App() {
                 )}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 ">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-9 ">
 
                 <div>
                     <button type="button" className="flex flex-col items-center text-calc(4vw + 16px) font-bold bg-white hover:bg-gradient-to-bl hover:ring-8 focus:ring-4 rounded-lg focus:ring-green-200 rounded-lg text-center mr-2 mb-2"
