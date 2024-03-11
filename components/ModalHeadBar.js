@@ -67,7 +67,7 @@ const BarraFlotante = () => {
   const valorTipoUsuario = decodeURIComponent(tipoUsuario);
 
   return (
-    <div className="">
+    <div className="pb-12 bg-gradient-to-r from-lime-300 to-cyan-300">
       <button
         onClick={toggleBarra}
         className="bg-blue-500 text-white p-2 rounded-md absolute top-4 right-4 md:hidden"
