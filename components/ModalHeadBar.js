@@ -178,6 +178,14 @@ const BarraFlotante = () => {
                           Eliminar Factura
                         </a>
                       </li>
+                      <li>
+                        <a
+                          href="../facturacion/impresionFactura"
+                          className="block hover:bg-blue-100 px-2 py-1 rounded"
+                        >
+                          Imprimir Factura
+                        </a>
+                      </li>
                     </ul>
                   </li>
                   <li>
